@@ -24,6 +24,10 @@ public class InGameCharacterController : MonoBehaviour {
 	public Joystick joystick;
 	public Color color;
 
+	public GameObject plane;
+
+	private bool stun = false;
+
 	Ray raycast;
 	RaycastHit hit = new RaycastHit();
 
@@ -76,7 +80,6 @@ public class InGameCharacterController : MonoBehaviour {
 			slidingVel = slowSpellVel;
 		}
 		if(rBody.velocity == Vector3.zero && InGameManager.Instance.HasGameStarted()){
-			Debug.Log("velocity 0");
 			rBody.transform.position = new Vector3(rBody.transform.position.x, rBody.transform.position.y +0.3f, rBody.transform.position.z);
 		}
 	}
@@ -111,7 +114,7 @@ public class InGameCharacterController : MonoBehaviour {
 	{
 
 		RotateCharacterToGround();
-		if(InGameManager.Instance.HasGameStarted() && isControlledByPlayer)
+		if(InGameManager.Instance.HasGameStarted() && isControlledByPlayer && !stun)
 			rBody.velocity = transform.right * slidingVel;
 
 	}
@@ -119,23 +122,27 @@ public class InGameCharacterController : MonoBehaviour {
 	void RotateCharacterToGround(){
 		Vector3 fwd = transform.TransformDirection(Vector3.right);
 		Debug.DrawRay(transform.position,fwd*3f, Color.green);
-		if (Physics.Raycast(transform.position, fwd, out hit, 3f))
+		if (Physics.Raycast(transform.position, fwd, out hit, 2.5f))
      	{
 			Debug.DrawLine(hit.transform.localPosition, hit.normal*3f,Color.red, 3f);
-			if(Vector3.Angle(transform.up, hit.normal) <= 60f){
-				Debug.Log(Vector3.Angle(transform.up, hit.normal));	
+			if(Vector3.Angle(transform.up, hit.normal) <= 80f ){
+				Debug.Log("-60");
 				transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;}
 			else if(Vector3.Angle(transform.up, hit.normal) >= 90f && hit.transform.gameObject.tag == "Wall"){
+				Debug.Log("+90");
 				transform.rotation = Quaternion.FromToRotation(transform.right, hit.normal) * transform.rotation;
+			}else if(hit.transform.gameObject.tag != "item"){
+				transform.rotation = Quaternion.FromToRotation(transform.right, -transform.right) * transform.rotation;
+				rBody.velocity = Vector3.zero;
 			} 
 		}else{
 			Vector3 dwn = transform.TransformDirection(Vector3.down);
-			if (Physics.Raycast(transform.position, dwn, out hit, 3f)){
+			if (Physics.Raycast(transform.position, dwn, out hit, 5f)){
+				Debug.Log("hit down");
 				transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 			}
 			else{
-				//  Vector3 newRight = new Vector3(transform.right.x, -transform.right.y, transform.right.z);
-				//  transform.rotation = Quaternion.FromToRotation(transform.right, newRight) *transform.rotation;
+				transform.rotation = Quaternion.FromToRotation(transform.up, plane.transform.up) * transform.rotation;
 			}
 			
 		}
@@ -146,10 +153,8 @@ public class InGameCharacterController : MonoBehaviour {
 		if (Mathf.Abs(horizontalInput) > inputDelay || Mathf.Abs(verticalInput) > inputDelay) {
 			//move
 			float rotateVel = 0;
-			if(isGrounded)
-				rotateVel = normalRotateVel;
-			if(isSliding)
-				rotateVel = slideRotateVel;
+
+			rotateVel = slideRotateVel;
 			
 			float heading = Mathf.Atan2(verticalInput, horizontalInput);
 			targetRotation = Quaternion.Lerp (transform.rotation, Quaternion.Euler (new Vector3 (0, -heading*Mathf.Rad2Deg,0 )), Time.deltaTime * rotateVel);
@@ -175,15 +180,28 @@ public class InGameCharacterController : MonoBehaviour {
 			isSliding = true;
 			isGrounded = false;
 		}
-		//Point cube
+
+				//Point cube
 		if(col.gameObject.layer == 11){
 			controllingPlayer.points++;
 			Destroy(col.gameObject);
 		}
 
+		if(col.gameObject.layer == 12){
+			controllingPlayer.points = controllingPlayer.points+5;
+			Destroy(col.gameObject);
+		}
+
+		if(col.gameObject.layer == 13){
+			controllingPlayer.points = controllingPlayer.points+20;
+			Destroy(col.gameObject);
+		}
+
+
 		//Spell
 		if(col.gameObject.layer == 14){
 			controllingPlayer.spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
+			GameUIManager.Instance.SetSkill(controllingPlayer.gameUiPosition, controllingPlayer.spell.spellName);
 			Debug.Log(controllingPlayer.spell.spellName);
 			Destroy(col.gameObject);
 		}
@@ -199,13 +217,28 @@ public class InGameCharacterController : MonoBehaviour {
 		if(col.gameObject.layer == 16){
 			if(col.gameObject.GetComponent<Spell4BombBehaviour>().player != controllingPlayer){
 				controllingPlayer.points -= 10;
-				col.gameObject.GetComponent<PlayerBehaviour>().points += 10;
+				col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
+				stun = true;
+				rBody.velocity= new Vector3(0f, 10f, 0f);
+				StartCoroutine(RotateSelf());
 				Destroy(col.gameObject);
 			}else{
 				
 			}
 			
 		}
+
+	}
+
+	private IEnumerator RotateSelf(){
+		int i = 0;
+		while (i < 80){
+			transform.Rotate(Vector3.up * 80f * Time.deltaTime);
+			yield return new WaitForFixedUpdate();
+			i++;
+		}
+		Debug.Log(stun);
+		stun = false;
 	}
 
 	/// <summary>

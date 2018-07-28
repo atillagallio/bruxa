@@ -24,6 +24,9 @@ public class GameUIManager : Singleton<GameUIManager> {
 		}
 	}
 
+	public void SetSkill(int pos, string skillName){
+		playersUIs[pos].GetComponentInChildren<TextMeshProUGUI>().text = skillName;
+	}
 	public void UpdateUISkillCD(int position,int timer, int type){
 		Image playerImg = playersUIs[position].GetComponent<Image>();
 
@@ -44,8 +47,7 @@ public class GameUIManager : Singleton<GameUIManager> {
 	public IEnumerator FillGauge(float fill, Image playerImg){
 		while(playerImg.fillAmount < 1){
 			playerImg.fillAmount += fill/100;
-			yield return new WaitForSecondsRealtime(0.1f);
-			Debug.Log(playerImg.fillAmount);	
+			yield return new WaitForSecondsRealtime(0.1f);	
 			
 		}
 	}

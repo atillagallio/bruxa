@@ -17,6 +17,8 @@ public class InGameManager : Singleton<InGameManager> {
     public GameObject gameCharacter;
     public GameObject playerPrefab;
 
+    private bool gameFinished = false;
+
     public int matchDuration = 5*60;
     public List<Color> colors;
     public TextMeshProUGUI timerText;
@@ -25,7 +27,12 @@ public class InGameManager : Singleton<InGameManager> {
     public GameObject pointPrefab;
     public GameObject bombPrefab;
 
+    public GameObject superPointPrefab;
+    public GameObject megaPointPrefab;
     public GameObject getSpellPrefab;
+
+    public List<GameObject> rareSpaws;
+
 
     public bool spell1Lock = false;
     public bool spell2Forward = false;
@@ -103,10 +110,31 @@ public class InGameManager : Singleton<InGameManager> {
         SetSpellList();
         InstantiatePlayers();
         GameUIManager.Instance.instantiateUI(players);
-        InstantiatePoints(30);
-        InstantiateSpells(10);
+        InstantiatePoints(30, pointPrefab);
+        InstantiatePoints(10, superPointPrefab);
+        InstantiateSpells(5);
         StartCoroutine(runStartCounter(3));
+        StartCoroutine(respawn());
 
+    }
+
+    public IEnumerator respawn(){
+        int i = 1;
+        while(!gameFinished){
+            yield return new WaitForSecondsRealtime(2f);
+            InstantiatePoints(1, pointPrefab);
+            if(i%10 == 0){
+                InstantiatePoints(1, superPointPrefab);
+                InstantiateSpells(3);
+            }
+            if(i%30 == 0){
+                foreach (GameObject gb in rareSpaws){
+                if(gb.transform.childCount == 0)
+                     Instantiate(megaPointPrefab, gb.transform.position, Quaternion.identity);
+        }
+            }
+            i++;
+        }
     }
 
     public bool HasGameStarted(){
@@ -127,10 +155,10 @@ public class InGameManager : Singleton<InGameManager> {
 		}  
     }
 
-    private void InstantiatePoints(int number){
+    private void InstantiatePoints(int number, GameObject prefab){
         int i = 0;
         while(i < number){
-            Instantiate(pointPrefab, GetARandomTreePos(), Quaternion.identity);
+            Instantiate(prefab, GetARandomTreePos(30), Quaternion.identity);
             i++;
         }
     }
@@ -138,7 +166,7 @@ public class InGameManager : Singleton<InGameManager> {
     private void InstantiateSpells(int number){
         int i = 0;
         while(i < number){
-            Instantiate(getSpellPrefab, GetARandomTreePos(), Quaternion.identity);
+            Instantiate(getSpellPrefab, GetARandomTreePos(2), Quaternion.identity);
             i++;
         }
     }   
@@ -151,12 +179,13 @@ public class InGameManager : Singleton<InGameManager> {
             if(player != charController.controllingPlayer){
                 player.spell.UseSpell();
                 player.spell = null;
+                GameUIManager.Instance.SetSkill(player.gameUiPosition, "");
             }
         }else if(player.spell.type == 1){
             if(player == charController.controllingPlayer){
                 player.spell.UseSpell();
                 player.spell = null;
-
+                GameUIManager.Instance.SetSkill(player.gameUiPosition, "");
             }
         }
     }
@@ -165,13 +194,21 @@ public class InGameManager : Singleton<InGameManager> {
             InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
             if(charController.controllingPlayer != null){
                 GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition,player.GetCDTimer(),1);
-                Debug.Log(charController.controllingPlayer.name);
                 StartCoroutine(charController.controllingPlayer.TakeControllCooldown());
             }
             charController.controllingPlayer = player;
             charController.joystick = player.GetJoystick();
             charController.isControlledByPlayer = true;
             charController.color = player.GetColor();
+            int i = 0;
+            foreach(GameObject playerObj in players){
+                if(playerObj == player.gameObject)
+                    charController.transform.GetChild(i).gameObject.SetActive(true);
+                else
+                    charController.transform.GetChild(i).gameObject.SetActive(false);
+                i++;
+
+            }
             GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition,player.GetCDTimer(),0);
         }
     }
@@ -192,7 +229,7 @@ public class InGameManager : Singleton<InGameManager> {
 
     }
 
-    public Vector3 GetARandomTreePos(){
+    public Vector3 GetARandomTreePos(int pos){
 
     Mesh planeMesh = plane.GetComponent<MeshFilter>().mesh;
     Bounds bounds = planeMesh.bounds;
@@ -201,7 +238,7 @@ public class InGameManager : Singleton<InGameManager> {
     float minZ = plane.transform.position.z - plane.transform.localScale.z * bounds.size.z * 0.5f;
 
     Vector3 newVec = new Vector3(Random.Range (minX*3, -minX),
-                                 plane.transform.position.y+ 2,
+                                 plane.transform.position.y+ pos,
                                  Random.Range (minZ*3, -minZ));
     return newVec;
     }
@@ -214,7 +251,12 @@ public class InGameManager : Singleton<InGameManager> {
             i++;
             GameUIManager.Instance.UpdateTimer(i);
         }
-        Debug.Log("Game Over");
+        gameFinished = true;
+        string txt = "";
+        foreach(GameObject player in players){
+            txt += player.GetComponent<PlayerBehaviour>().name + " -> " + player.GetComponent<PlayerBehaviour>().points; 
+            Debug.Log(txt);
+            }
     }
 
 }

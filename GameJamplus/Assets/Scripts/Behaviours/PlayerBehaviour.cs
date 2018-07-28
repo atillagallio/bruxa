@@ -13,7 +13,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	//private List<Spells> spells;
 	private bool inCooldown = false;
-	private int cdTimer = 5;
+	private int cdTimer = 3;
 
 	private bool takePlayerControlAxis;
 	private bool useSpellControl;
