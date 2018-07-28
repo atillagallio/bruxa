@@ -9,11 +9,14 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	public int gameUiPosition;
 
+	public Spell spell;
+
 	//private List<Spells> spells;
 	private bool inCooldown = false;
 	private int cdTimer = 5;
 
 	private bool takePlayerControlAxis;
+	private bool useSpellControl;
 
 	public int points = 0;
 	// Use this for initialization
@@ -23,6 +26,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	
 	void GetControls (){
 		takePlayerControlAxis = Input.GetButtonDown(playerJoystick.input.Fire1);
+		useSpellControl = Input.GetButtonDown(playerJoystick.input.Fire3);	
 	}
 
 	public int GetCDTimer(){
@@ -52,6 +56,11 @@ public class PlayerBehaviour : MonoBehaviour {
 				InGameManager.Instance.ChangeCharacterControl(this);
 				inCooldown = true;
 				
+			}
+		}
+		if(useSpellControl && InGameManager.Instance.HasGameStarted()){
+			if(spell != null){
+				InGameManager.Instance.PlayerUseSpell(this);
 			}
 		}
 	}

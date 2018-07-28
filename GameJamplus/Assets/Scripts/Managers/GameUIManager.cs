@@ -42,15 +42,12 @@ public class GameUIManager : Singleton<GameUIManager> {
 	}
 
 	public IEnumerator FillGauge(float fill, Image playerImg){
-		while(playerImg.fillAmount <= 100){
+		while(playerImg.fillAmount < 1){
 			playerImg.fillAmount += fill/100;
 			yield return new WaitForSecondsRealtime(0.1f);
-			Debug.Log(fill);
-			
+			Debug.Log(playerImg.fillAmount);	
 			
 		}
-
-
 	}
 
 

@@ -21,18 +21,90 @@ public class InGameManager : Singleton<InGameManager> {
     public List<Color> colors;
     public TextMeshProUGUI timerText;
     private List<GameObject> players;
-
     public GameObject plane;
+    public GameObject pointPrefab;
+    public GameObject bombPrefab;
 
-    public GameObject pointPrefab; 
+    public GameObject getSpellPrefab;
+
+    public bool spell1Lock = false;
+    public bool spell2Forward = false;
+    public bool spell3Slow = false;
+
+    public TextMeshProUGUI spellText;
+
+    public List<Spell> spellList;
+
+    public void SetSpellList(){
+        spellList = new List<Spell>();
+        spellList.Add(new Spell1Locker());
+        spellList.Add(new Spell2Forward());
+        spellList.Add(new Spell3Slow());
+        spellList.Add(new Spell4Bomb());
+    }
+    public void UseSpell1Lock(){
+        spell1Lock = true;
+        StartCoroutine(Spell1Duration(2));
+    }
+
+    public void UseSpell2Forward(){
+        spell2Forward = true;
+        StartCoroutine(Spell2Duration(2));
+    }
+
+    public void UseSpell3Slow(){
+        spell3Slow = true;
+        StartCoroutine(Spell3Duration(3));
+    }
+
+    public void UseSpell4Bomb(){
+        GameObject bomb = Instantiate(bombPrefab, gameCharacter.transform.position, Quaternion.identity);
+        Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
+        bombBehaviour.player = gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer;
+        Debug.Log(gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer);
+    }
+
+
+    //JESUS PRECISO REFATORAR ESSAS CORROUTINA MAS N HJ NA MORAL
+    private IEnumerator Spell1Duration(int seconds){
+        int i = 0;
+        while(i < seconds){
+            yield return new WaitForSecondsRealtime(1f);
+            i++;
+        }
+        spell1Lock = false;
+        spellText.text = "";
+    } 
+
+    private IEnumerator Spell2Duration(int seconds){
+        int i = 0;
+        while(i < seconds){
+            yield return new WaitForSecondsRealtime(1f);
+            i++;
+        }
+        spell2Forward = false;
+        spellText.text = "";
+    }
+    private IEnumerator Spell3Duration(int seconds){
+        int i = 0;
+        while(i < seconds){
+            yield return new WaitForSecondsRealtime(1f);
+            i++;
+        }
+        spell3Slow = false;
+        spellText.text = "";
+    } 
+
     void Start()
     {
         colors.Add(Color.blue);
         colors.Add(Color.green);
         colors.Add(Color.cyan);
+        SetSpellList();
         InstantiatePlayers();
         GameUIManager.Instance.instantiateUI(players);
         InstantiatePoints(30);
+        InstantiateSpells(10);
         StartCoroutine(runStartCounter(3));
 
     }
@@ -62,17 +134,46 @@ public class InGameManager : Singleton<InGameManager> {
             i++;
         }
     }
-    public void ChangeCharacterControl(PlayerBehaviour player){
-        InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
-        if(charController.controllingPlayer != null){
-            GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition,player.GetCDTimer(),1);
-            StartCoroutine(charController.controllingPlayer.TakeControllCooldown());
+
+    private void InstantiateSpells(int number){
+        int i = 0;
+        while(i < number){
+            Instantiate(getSpellPrefab, GetARandomTreePos(), Quaternion.identity);
+            i++;
         }
-        charController.controllingPlayer = player;
-        charController.joystick = player.GetJoystick();
-        charController.isControlledByPlayer = true;
-        charController.color = player.GetColor();
-        GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition,player.GetCDTimer(),0);
+    }   
+
+    
+
+    public void PlayerUseSpell(PlayerBehaviour player){
+        InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
+        if(player.spell.type == 0){
+            if(player != charController.controllingPlayer){
+                player.spell.UseSpell();
+                player.spell = null;
+            }
+        }else if(player.spell.type == 1){
+            if(player == charController.controllingPlayer){
+                player.spell.UseSpell();
+                player.spell = null;
+
+            }
+        }
+    }
+    public void ChangeCharacterControl(PlayerBehaviour player){
+        if(!spell1Lock){
+            InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
+            if(charController.controllingPlayer != null){
+                GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition,player.GetCDTimer(),1);
+                Debug.Log(charController.controllingPlayer.name);
+                StartCoroutine(charController.controllingPlayer.TakeControllCooldown());
+            }
+            charController.controllingPlayer = player;
+            charController.joystick = player.GetJoystick();
+            charController.isControlledByPlayer = true;
+            charController.color = player.GetColor();
+            GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition,player.GetCDTimer(),0);
+        }
     }
 
     private IEnumerator runStartCounter(int timer){
@@ -99,9 +200,9 @@ public class InGameManager : Singleton<InGameManager> {
     float minX = plane.transform.position.x - plane.transform.localScale.x * bounds.size.x * 0.5f;
     float minZ = plane.transform.position.z - plane.transform.localScale.z * bounds.size.z * 0.5f;
 
-    Vector3 newVec = new Vector3(Random.Range (minX, -minX),
-                                 plane.transform.position.y,
-                                 Random.Range (minZ, -minZ));
+    Vector3 newVec = new Vector3(Random.Range (minX*3, -minX),
+                                 plane.transform.position.y+ 2,
+                                 Random.Range (minZ*3, -minZ));
     return newVec;
     }
     private IEnumerator MatchTimer()

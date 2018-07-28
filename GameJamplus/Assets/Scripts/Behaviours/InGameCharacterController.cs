@@ -10,6 +10,7 @@ public class InGameCharacterController : MonoBehaviour {
 	public float upVel = 5f;
 	public float slideRotateVel = 2;
 	public float normalRotateVel = 5;
+	public float slowSpellVel = 2;
 	private float slidingVel;
 
 	Quaternion targetRotation;
@@ -26,7 +27,6 @@ public class InGameCharacterController : MonoBehaviour {
 	Ray raycast;
 	RaycastHit hit = new RaycastHit();
 
-	int secondsInTheAir = 0;
 	public Quaternion TargetRotation
 	{
 		get {return targetRotation;}
@@ -47,6 +47,7 @@ public class InGameCharacterController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetInput();
+		if(!InGameManager.Instance.spell2Forward)
 			Turn();
 		if(isSliding)
 			Slide();		
@@ -71,6 +72,9 @@ public class InGameCharacterController : MonoBehaviour {
 		}else{
 			slidingVel = forwardVel;
 		}
+		if(InGameManager.Instance.spell3Slow){
+			slidingVel = slowSpellVel;
+		}
 		if(rBody.velocity == Vector3.zero && InGameManager.Instance.HasGameStarted()){
 			Debug.Log("velocity 0");
 			rBody.transform.position = new Vector3(rBody.transform.position.x, rBody.transform.position.y +0.3f, rBody.transform.position.z);
@@ -83,6 +87,7 @@ public class InGameCharacterController : MonoBehaviour {
 			//move
 
 				if(IsFacingRightDirection())
+
 					rBody.velocity = new Vector3(verticalInput, 0f, horizontalInput) * forwardVel;
 				else
 					rBody.velocity = new Vector3(verticalInput, 0f, horizontalInput) * forwardVel / 10;
@@ -129,10 +134,9 @@ public class InGameCharacterController : MonoBehaviour {
 				transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 			}
 			else{
-				// Vector3 newRight = new Vector3(transform.right.x, -transform.right.y, transform.right.z);
-				// transform.rotation = Quaternion.FromToRotation(transform.right, newRight) *transform.rotation;
+				//  Vector3 newRight = new Vector3(transform.right.x, -transform.right.y, transform.right.z);
+				//  transform.rotation = Quaternion.FromToRotation(transform.right, newRight) *transform.rotation;
 			}
-
 			
 		}
 	}
@@ -175,6 +179,32 @@ public class InGameCharacterController : MonoBehaviour {
 		if(col.gameObject.layer == 11){
 			controllingPlayer.points++;
 			Destroy(col.gameObject);
+		}
+
+		//Spell
+		if(col.gameObject.layer == 14){
+			controllingPlayer.spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
+			Debug.Log(controllingPlayer.spell.spellName);
+			Destroy(col.gameObject);
+		}
+
+	}
+
+	/// <summary>
+	/// OnTriggerEnter is called when the Collider other enters the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerEnter(Collider col)
+	{			//Bomb
+		if(col.gameObject.layer == 16){
+			if(col.gameObject.GetComponent<Spell4BombBehaviour>().player != controllingPlayer){
+				controllingPlayer.points -= 10;
+				col.gameObject.GetComponent<PlayerBehaviour>().points += 10;
+				Destroy(col.gameObject);
+			}else{
+				
+			}
+			
 		}
 	}
 
