@@ -186,17 +186,20 @@ public class InGameCharacterController : MonoBehaviour {
 				//Point cube
 		if(col.gameObject.layer == 11){
 			AudioSource.PlayClipAtPoint(pointSound, transform.position);
+			gameObject.transform.GetChild(7).GetComponent<ParticleSystem>().Play();
 			controllingPlayer.points++;
 			Destroy(col.gameObject);
 		}
 
 		if(col.gameObject.layer == 12){
 			controllingPlayer.points = controllingPlayer.points+5;
+			gameObject.transform.GetChild(8).GetComponent<ParticleSystem>().Play();
 			Destroy(col.gameObject);
 		}
 
 		if(col.gameObject.layer == 13){
 			controllingPlayer.points = controllingPlayer.points+20;
+			gameObject.transform.GetChild(9).GetComponent<ParticleSystem>().Play();
 			Destroy(col.gameObject);
 		}
 
