@@ -17,6 +17,8 @@ public class InGameManager : Singleton<InGameManager> {
     public GameObject gameCharacter;
     public GameObject playerPrefab;
 
+    public GameObject endGameCanvas;
+
     private bool gameFinished = false;
 
     public int matchDuration = 5*60;
@@ -51,12 +53,12 @@ public class InGameManager : Singleton<InGameManager> {
     }
     public void UseSpell1Lock(){
         spell1Lock = true;
-        StartCoroutine(Spell1Duration(2));
+        StartCoroutine(Spell1Duration(4));
     }
 
     public void UseSpell2Forward(){
         spell2Forward = true;
-        StartCoroutine(Spell2Duration(2));
+        StartCoroutine(Spell2Duration(3));
     }
 
     public void UseSpell3Slow(){
@@ -75,11 +77,13 @@ public class InGameManager : Singleton<InGameManager> {
     //JESUS PRECISO REFATORAR ESSAS CORROUTINA MAS N HJ NA MORAL
     private IEnumerator Spell1Duration(int seconds){
         int i = 0;
+        gameCharacter.transform.GetChild(6).gameObject.SetActive(true);
         while(i < seconds){
             yield return new WaitForSecondsRealtime(1f);
             i++;
         }
         spell1Lock = false;
+        gameCharacter.transform.GetChild(6).gameObject.SetActive(false);
         spellText.text = "";
     } 
 
@@ -107,6 +111,7 @@ public class InGameManager : Singleton<InGameManager> {
         colors.Add(Color.blue);
         colors.Add(Color.green);
         colors.Add(Color.cyan);
+        colors.Add(Color.red);
         SetSpellList();
         InstantiatePlayers();
         GameUIManager.Instance.instantiateUI(players);
@@ -145,11 +150,11 @@ public class InGameManager : Singleton<InGameManager> {
         players = new List<GameObject>();
         int inputPos = 0;
         foreach (string input in Input.GetJoystickNames()){
-			GameObject player = Instantiate(playerPrefab,Vector3.zero, Quaternion.identity);
+			Debug.Log(input + " ->" + colors[inputPos].ToString());
+            GameObject player = Instantiate(playerPrefab,Vector3.zero, Quaternion.identity);
             PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
             playerController.gameUiPosition = inputPos;
             playerController.SetPlayerInfo(new Joystick(input, inputPos), colors[inputPos]);
-            Debug.Log(input + " ->" + colors[inputPos].ToString());
             inputPos++;
             players.Add(player);
 		}  
@@ -201,16 +206,31 @@ public class InGameManager : Singleton<InGameManager> {
             charController.isControlledByPlayer = true;
             charController.color = player.GetColor();
             int i = 0;
+            bool hasChar = false;
             foreach(GameObject playerObj in players){
+
                 if(playerObj == player.gameObject)
+                {
+                    hasChar = true;
+                    StartCoroutine(changeWitchParticle(charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>()));
                     charController.transform.GetChild(i).gameObject.SetActive(true);
+                }
                 else
                     charController.transform.GetChild(i).gameObject.SetActive(false);
                 i++;
 
             }
+            if(!hasChar)
+                charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
             GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition,player.GetCDTimer(),0);
         }
+    }
+
+    private IEnumerator changeWitchParticle(ParticleSystem particle){
+        particle.Play();
+        yield return new WaitForSecondsRealtime(0.5f);
+        particle.Stop();
+
     }
 
     private IEnumerator runStartCounter(int timer){
@@ -254,9 +274,11 @@ public class InGameManager : Singleton<InGameManager> {
         gameFinished = true;
         string txt = "";
         foreach(GameObject player in players){
-            txt += player.GetComponent<PlayerBehaviour>().name + " -> " + player.GetComponent<PlayerBehaviour>().points; 
+            txt += player.GetComponent<PlayerBehaviour>().name + " -> "+player.GetComponent<PlayerBehaviour>().gameUiPosition +" -> " + player.GetComponent<PlayerBehaviour>().points; 
             Debug.Log(txt);
-            }
+        }
+        endGameCanvas.SetActive(true);
+        endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;
     }
 
 }

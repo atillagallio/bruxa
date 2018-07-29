@@ -138,7 +138,6 @@ public class InGameCharacterController : MonoBehaviour {
 		}else{
 			Vector3 dwn = transform.TransformDirection(Vector3.down);
 			if (Physics.Raycast(transform.position, dwn, out hit, 5f)){
-				Debug.Log("hit down");
 				transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 			}
 			else{
@@ -231,6 +230,7 @@ public class InGameCharacterController : MonoBehaviour {
 	}
 
 	private IEnumerator RotateSelf(){
+		gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Play();
 		int i = 0;
 		while (i < 80){
 			transform.Rotate(Vector3.up * 80f * Time.deltaTime);
@@ -239,6 +239,7 @@ public class InGameCharacterController : MonoBehaviour {
 		}
 		Debug.Log(stun);
 		stun = false;
+		gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Stop();
 	}
 
 	/// <summary>
