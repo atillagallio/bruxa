@@ -8,6 +8,9 @@ public class GameUIManager : Singleton<GameUIManager> {
 
 	public TextMeshProUGUI timerText;
 	public List<GameObject> playersUIs;
+	public Sprite noSkillUISprite;
+
+	public List<Sprite> spriteList;
 
 	// Use this for initialization
 	void Start () {
@@ -18,14 +21,18 @@ public class GameUIManager : Singleton<GameUIManager> {
 		int i = 0;
 		foreach (GameObject player in players){
 			GameObject curPlayerUI = playersUIs[i];
-			curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
+			//curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
 			playersUIs[i].SetActive(true);
 			i++;
 		}
 	}
 
-	public void SetSkill(int pos, string skillName){
+	public void SetSkill(int pos, string skillName, int id = 0){
 		playersUIs[pos].GetComponentInChildren<TextMeshProUGUI>().text = skillName;
+		playersUIs[pos].transform.GetChild(2).GetComponent<Image>().sprite = spriteList[id];
+		 if(skillName == ""){
+		 	playersUIs[pos].transform.GetChild(2).GetComponent<Image>().sprite = noSkillUISprite;
+		 }
 	}
 	public void UpdateUISkillCD(int position,int timer, int type){
 		Image playerImg = playersUIs[position].GetComponent<Image>();

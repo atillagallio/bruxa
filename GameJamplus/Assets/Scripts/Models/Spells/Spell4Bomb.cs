@@ -9,6 +9,7 @@ public class Spell4Bomb : Spell {
 	public Spell4Bomb () {
 		spellName = "Bomb";
 		type = 1;
+		id = 3;
 	}
 
 	public override void UseSpell(){

@@ -9,6 +9,7 @@ public class Spell3Slow : Spell {
 	public Spell3Slow () {
 		spellName = "Slow";
 		type = 0;
+		id = 2;
 	}
 
 	public override void UseSpell(){

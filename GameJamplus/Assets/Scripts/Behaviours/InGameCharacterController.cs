@@ -200,7 +200,7 @@ public class InGameCharacterController : MonoBehaviour {
 		//Spell
 		if(col.gameObject.layer == 14){
 			controllingPlayer.spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
-			GameUIManager.Instance.SetSkill(controllingPlayer.gameUiPosition, controllingPlayer.spell.spellName);
+			GameUIManager.Instance.SetSkill(controllingPlayer.gameUiPosition, controllingPlayer.spell.spellName, controllingPlayer.spell.id);
 			Debug.Log(controllingPlayer.spell.spellName);
 			Destroy(col.gameObject);
 		}

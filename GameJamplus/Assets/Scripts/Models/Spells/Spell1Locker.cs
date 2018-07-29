@@ -8,6 +8,8 @@ public class Spell1Locker : Spell {
 	public Spell1Locker () {
 		spellName = "Locker";
 		type = 1;
+		spellIcon = Resources.Load <Sprite> ("Sprites/pena");
+		Debug.Log(spellIcon);
 	}
 
 	public override void UseSpell(){
@@ -16,4 +18,4 @@ public class Spell1Locker : Spell {
 
 	}
 	
-}
+}  

@@ -9,6 +9,8 @@ public class Spell2Forward : Spell {
 	public Spell2Forward () {
 		spellName = "Forward";
 		type = 0;
+		id = 1;
+		spellIcon = Resources.Load <Sprite> ("Sprites/gato_preto");
 	}
 
 	public override void UseSpell(){

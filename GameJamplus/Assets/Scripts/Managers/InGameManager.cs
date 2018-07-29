@@ -33,8 +33,6 @@ public class InGameManager : Singleton<InGameManager> {
     public GameObject megaPointPrefab;
     public GameObject getSpellPrefab;
 
-    public List<GameObject> rareSpaws;
-
 
     public bool spell1Lock = false;
     public bool spell2Forward = false;
@@ -89,11 +87,15 @@ public class InGameManager : Singleton<InGameManager> {
 
     private IEnumerator Spell2Duration(int seconds){
         int i = 0;
+        gameCharacter.transform.GetChild(5).gameObject.SetActive(true);
+        
         while(i < seconds){
             yield return new WaitForSecondsRealtime(1f);
             i++;
         }
         spell2Forward = false;
+        gameCharacter.transform.GetChild(5).GetComponent<ParticleSystem>().Stop();
+        gameCharacter.transform.GetChild(5).gameObject.SetActive(false);
         spellText.text = "";
     }
     private IEnumerator Spell3Duration(int seconds){
@@ -129,14 +131,9 @@ public class InGameManager : Singleton<InGameManager> {
             yield return new WaitForSecondsRealtime(2f);
             InstantiatePoints(1, pointPrefab);
             if(i%10 == 0){
-                InstantiatePoints(1, superPointPrefab);
-                InstantiateSpells(3);
-            }
-            if(i%30 == 0){
-                foreach (GameObject gb in rareSpaws){
-                if(gb.transform.childCount == 0)
-                     Instantiate(megaPointPrefab, gb.transform.position, Quaternion.identity);
-        }
+                InstantiatePoints(4, superPointPrefab);
+                InstantiateSpells(5);
+                InstantiatePoints(2, megaPointPrefab);
             }
             i++;
         }
@@ -195,7 +192,6 @@ public class InGameManager : Singleton<InGameManager> {
         }
     }
     public void ChangeCharacterControl(PlayerBehaviour player){
-        if(!spell1Lock){
             InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
             if(charController.controllingPlayer != null){
                 GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition,player.GetCDTimer(),1);
@@ -223,7 +219,7 @@ public class InGameManager : Singleton<InGameManager> {
             if(!hasChar)
                 charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
             GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition,player.GetCDTimer(),0);
-        }
+    
     }
 
     private IEnumerator changeWitchParticle(ParticleSystem particle){
@@ -278,7 +274,13 @@ public class InGameManager : Singleton<InGameManager> {
             Debug.Log(txt);
         }
         endGameCanvas.SetActive(true);
-        endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;
+        
+        foreach(GameObject player in players){
+            EndGame.Instance.playerList.Add(player.GetComponent<PlayerBehaviour>());
+        }
+        EndGame.Instance.FindWinner();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+        //endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;
     }
 
 }

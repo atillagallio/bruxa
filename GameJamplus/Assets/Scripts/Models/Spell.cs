@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public abstract class Spell{
 
-	public Image spellIcon;
+	public Sprite spellIcon;
 	public string spellName;
 	public int type;
+
+	public int id;
 
 	public abstract void UseSpell();
 

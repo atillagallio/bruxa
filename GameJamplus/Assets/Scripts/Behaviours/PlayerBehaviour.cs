@@ -51,7 +51,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void CheckButtonPress(){
 		if(takePlayerControlAxis && InGameManager.Instance.HasGameStarted()){
-			if(!inCooldown){
+			if(!inCooldown && !InGameManager.Instance.spell1Lock){
 				Debug.Log("player " + playerJoystick.name + "Trying to get control");
 				InGameManager.Instance.ChangeCharacterControl(this);
 				inCooldown = true;
