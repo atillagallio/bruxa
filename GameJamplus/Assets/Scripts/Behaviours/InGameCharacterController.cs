@@ -34,6 +34,10 @@ public class InGameCharacterController : MonoBehaviour {
 	public AudioClip pointSound;
 	public AudioClip spellGetSound;
 
+	public AudioClip mineSetSound;
+	public AudioClip mineExplode;
+
+	public List<AudioClip> witchesLaughter;
 	public Quaternion TargetRotation
 	{
 		get {return targetRotation;}
@@ -227,6 +231,7 @@ public class InGameCharacterController : MonoBehaviour {
 				col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
 				stun = true;
 				rBody.velocity= new Vector3(0f, 10f, 0f);
+				AudioSource.PlayClipAtPoint(mineExplode, transform.position);
 				StartCoroutine(RotateSelf());
 				Destroy(col.gameObject);
 			}else{

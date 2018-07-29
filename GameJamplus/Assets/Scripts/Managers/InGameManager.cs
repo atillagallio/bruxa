@@ -65,6 +65,9 @@ public class InGameManager : Singleton<InGameManager> {
     }
 
     public void UseSpell4Bomb(){
+
+        AudioClip mine = gameCharacter.GetComponent<InGameCharacterController>().mineSetSound;
+        AudioSource.PlayClipAtPoint(mine, gameCharacter.transform.position);
         GameObject bomb = Instantiate(bombPrefab, gameCharacter.transform.position, Quaternion.identity);
         Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
         bombBehaviour.player = gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer;
@@ -181,6 +184,7 @@ public class InGameManager : Singleton<InGameManager> {
             if(player != charController.controllingPlayer){
                 player.spell.UseSpell();
                 player.spell = null;
+                AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
                 GameUIManager.Instance.SetSkill(player.gameUiPosition, "");
             }
         }else if(player.spell.type == 1){
@@ -203,6 +207,7 @@ public class InGameManager : Singleton<InGameManager> {
             charController.color = player.GetColor();
             int i = 0;
             bool hasChar = false;
+            AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
             foreach(GameObject playerObj in players){
 
                 if(playerObj == player.gameObject)
