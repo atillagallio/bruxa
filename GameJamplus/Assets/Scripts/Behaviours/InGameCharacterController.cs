@@ -31,6 +31,9 @@ public class InGameCharacterController : MonoBehaviour {
 	Ray raycast;
 	RaycastHit hit = new RaycastHit();
 
+	public AudioClip pointSound;
+	public AudioClip spellGetSound;
+
 	public Quaternion TargetRotation
 	{
 		get {return targetRotation;}
@@ -182,6 +185,7 @@ public class InGameCharacterController : MonoBehaviour {
 
 				//Point cube
 		if(col.gameObject.layer == 11){
+			AudioSource.PlayClipAtPoint(pointSound, transform.position);
 			controllingPlayer.points++;
 			Destroy(col.gameObject);
 		}
@@ -199,6 +203,7 @@ public class InGameCharacterController : MonoBehaviour {
 
 		//Spell
 		if(col.gameObject.layer == 14){
+			AudioSource.PlayClipAtPoint(spellGetSound, transform.position);
 			controllingPlayer.spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
 			GameUIManager.Instance.SetSkill(controllingPlayer.gameUiPosition, controllingPlayer.spell.spellName, controllingPlayer.spell.id);
 			Debug.Log(controllingPlayer.spell.spellName);
