@@ -18,7 +18,7 @@ public class GameOverUIManager : MonoBehaviour {
 	void Start () {
 		fade.StartImageFade();
 		PlayerBehaviour ed = EndGame.Instance.winner;
-		playerNameText.text = "Player " + ed.gameUiPosition+1;
+		playerNameText.text = "Player " + (ed.gameUiPosition+1);
 		pointsText.text = ed.points.ToString();
 		witches[ed.gameUiPosition].sprite = witchesWinners[ed.gameUiPosition];
 	}
