@@ -32,6 +32,8 @@ public class InGameCharacterController : MonoBehaviour {
 	RaycastHit hit = new RaycastHit();
 
 	public AudioClip pointSound;
+	public AudioClip pointBigSound;
+	public AudioClip pointMegaSound;
 	public AudioClip spellGetSound;
 
 	public AudioClip mineSetSound;
@@ -197,11 +199,13 @@ public class InGameCharacterController : MonoBehaviour {
 
 		if(col.gameObject.layer == 12){
 			controllingPlayer.points = controllingPlayer.points+5;
+			AudioSource.PlayClipAtPoint(pointBigSound, transform.position);
 			gameObject.transform.GetChild(8).GetComponent<ParticleSystem>().Play();
 			Destroy(col.gameObject);
 		}
 
 		if(col.gameObject.layer == 13){
+			AudioSource.PlayClipAtPoint(pointMegaSound, transform.position);
 			controllingPlayer.points = controllingPlayer.points+20;
 			gameObject.transform.GetChild(9).GetComponent<ParticleSystem>().Play();
 			Destroy(col.gameObject);

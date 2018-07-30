@@ -42,6 +42,8 @@ public class InGameManager : Singleton<InGameManager> {
 
     public List<Spell> spellList;
 
+    public List<string> realJoysticks;
+
     public void SetSpellList(){
         spellList = new List<Spell>();
         spellList.Add(new Spell1Locker());
@@ -146,10 +148,19 @@ public class InGameManager : Singleton<InGameManager> {
         return gameStarted;
     }
 
+    void PopulateRealJoysticks()
+	{
+		realJoysticks = new List<string>();
+		foreach (string name in Input.GetJoystickNames()){
+			if(name != "")
+				realJoysticks.Add(name);
+		}
+	}
     void InstantiatePlayers(){
         players = new List<GameObject>();
         int inputPos = 0;
-        foreach (string input in Input.GetJoystickNames()){
+        PopulateRealJoysticks();
+        foreach (string input in realJoysticks){
 			Debug.Log(input + " ->" + colors[inputPos].ToString());
             GameObject player = Instantiate(playerPrefab,Vector3.zero, Quaternion.identity);
             PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();

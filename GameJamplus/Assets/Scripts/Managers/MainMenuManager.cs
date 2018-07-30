@@ -9,9 +9,12 @@ public class MainMenuManager : MonoBehaviour {
 	public List<GameObject> controllers;
 
 	public int numberOfControllers = 0;
+
+	public List<string> realJoysticks;
 	// Use this for initialization
 	void Start () {
-
+		PopulateRealJoysticks();
+	
 	}
 	
 	// Update is called once per frame
@@ -21,16 +24,26 @@ public class MainMenuManager : MonoBehaviour {
 		}
 	}
 
+	void PopulateRealJoysticks()
+	{
+		realJoysticks = new List<string>();
+		foreach (string name in Input.GetJoystickNames()){
+			if(name != "")
+				realJoysticks.Add(name);
+		}
+	}
 	void Update () {
 		int i= 0;
 		if(Input.GetButtonDown("Submit")){
 			UnityEngine.SceneManagement.SceneManager.LoadScene("Gameplay 1");
 		}
-		if(numberOfControllers != Input.GetJoystickNames().Length){
+		if(numberOfControllers != realJoysticks.Count){
 			TurnOffAllControllers();
-			foreach (string name in Input.GetJoystickNames()){
-				controllers[i].SetActive(true);
-				i++;
+			foreach (string name in realJoysticks){
+				if(i<=3){
+					controllers[i].SetActive(true);
+					i++;
+				}
 			}
 			playerCount.text = i + " Players";
 		}	 

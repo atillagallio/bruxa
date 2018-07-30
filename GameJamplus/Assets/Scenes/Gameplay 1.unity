@@ -4926,6 +4926,8 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   plane: {fileID: 0}
   pointSound: {fileID: 8300000, guid: 10d53690541e15a418889ef55f916036, type: 3}
+  pointBigSound: {fileID: 8300000, guid: b085edaa110f5c943b846d78be4ec3f0, type: 3}
+  pointMegaSound: {fileID: 8300000, guid: 06238c1cb823291438a07052ce366626, type: 3}
   spellGetSound: {fileID: 8300000, guid: 0f67cf6c310925a47aa58fcd8144cbc3, type: 3}
   mineSetSound: {fileID: 8300000, guid: 7fe96b3630ee82144a8b41e1d75864dc, type: 3}
   mineExplode: {fileID: 8300000, guid: e06f5a5d2fee9574da4d0499737e06cc, type: 3}
@@ -16863,15 +16865,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 075f5ca6c880fd444b3ca9a5c4be4b1a, type: 2}
+  m_sharedMaterial: {fileID: 21491841145559630, guid: 075f5ca6c880fd444b3ca9a5c4be4b1a,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -16888,8 +16891,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 120
+  m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18364,6 +18367,7 @@ MonoBehaviour:
   spell2Forward: 0
   spell3Slow: 0
   spellText: {fileID: 1737847253}
+  realJoysticks: []
 --- !u!1 &1991582298
 GameObject:
   m_ObjectHideFlags: 0
