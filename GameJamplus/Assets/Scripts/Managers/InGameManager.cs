@@ -44,6 +44,8 @@ public class InGameManager : Singleton<InGameManager> {
 
     public List<string> realJoysticks;
 
+    public bool changeBlock = false;
+
     public void SetSpellList(){
         spellList = new List<Spell>();
         spellList.Add(new Spell1Locker());
@@ -206,6 +208,23 @@ public class InGameManager : Singleton<InGameManager> {
                 GameUIManager.Instance.SetSkill(player.gameUiPosition, "");
             }
         }
+    }
+
+    public void UseChangeBlockSkill(PlayerBehaviour player){
+        InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
+        if(player == charController.controllingPlayer){
+            AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
+            changeBlock = true;
+            Debug.Log("BlockSkill");
+            StartCoroutine(BlockDuration());
+        }
+    }
+
+    private IEnumerator BlockDuration(){
+        gameCharacter.transform.GetChild(10).gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        changeBlock = false; 
+        gameCharacter.transform.GetChild(10).gameObject.SetActive(false);
     }
     public void ChangeCharacterControl(PlayerBehaviour player){
             InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();

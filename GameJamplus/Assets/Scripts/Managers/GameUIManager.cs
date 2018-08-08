@@ -10,6 +10,7 @@ public class GameUIManager : Singleton<GameUIManager> {
 	public List<GameObject> playersUIs;
 	public Sprite noSkillUISprite;
 
+	public GameObject blockedTextObj;
 	public List<Sprite> spriteList;
 
 	// Use this for initialization
@@ -64,6 +65,17 @@ public class GameUIManager : Singleton<GameUIManager> {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void StartBlockedAnimation()
+	{
+		StartCoroutine(BlockedAnimationCorroutine());
+	}
+
+	private IEnumerator BlockedAnimationCorroutine(){
+		blockedTextObj.SetActive(true);
+		yield return new WaitForSeconds(1f);
+		blockedTextObj.SetActive(false);
 	}
 
 	public void UpdateTimer(int time)

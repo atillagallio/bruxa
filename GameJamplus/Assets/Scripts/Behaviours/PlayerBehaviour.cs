@@ -13,6 +13,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	//private List<Spells> spells;
 	private bool inCooldown = false;
+	private bool inblockChangeSkillCooldown = false;
 	private int cdTimer = 3;
 
 	private bool takePlayerControlAxis;
@@ -52,10 +53,27 @@ public class PlayerBehaviour : MonoBehaviour {
 	void CheckButtonPress(){
 		if(takePlayerControlAxis && InGameManager.Instance.HasGameStarted()){
 			if(!inCooldown && !InGameManager.Instance.spell1Lock){
-				Debug.Log("player " + playerJoystick.name + "Trying to get control");
-				InGameManager.Instance.ChangeCharacterControl(this);
-				inCooldown = true;
+				if(InGameManager.Instance.changeBlock){
+					GameUIManager.Instance.StartBlockedAnimation();
+					inCooldown = true;
+					Debug.Log("PLAYER UI POS ->" + gameUiPosition);
+					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),0);
+					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),1);
+					StartCoroutine(TakeControllCooldown());
+					
+				}else{
+					Debug.Log("player " + playerJoystick.name + "Trying to get control");
+					InGameManager.Instance.ChangeCharacterControl(this);
+					inCooldown = true;
+					inblockChangeSkillCooldown = false;
+				}
 				
+			}else{
+				if(!inblockChangeSkillCooldown){
+					InGameManager.Instance.UseChangeBlockSkill(this);
+					inblockChangeSkillCooldown = true;
+					StartCoroutine(BlockChangeSkillCooldown());
+				}
 			}
 		}
 		if(useSpellControl && InGameManager.Instance.HasGameStarted()){
@@ -63,6 +81,12 @@ public class PlayerBehaviour : MonoBehaviour {
 				InGameManager.Instance.PlayerUseSpell(this);
 			}
 		}
+	}
+
+	private IEnumerator BlockChangeSkillCooldown(){
+		
+		yield return new WaitForSecondsRealtime(5f);
+		inblockChangeSkillCooldown = false; 
 	}
 
 	public IEnumerator TakeControllCooldown()
