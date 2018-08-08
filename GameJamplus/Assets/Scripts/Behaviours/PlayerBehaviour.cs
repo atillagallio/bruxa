@@ -11,6 +11,10 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	public Spell spell;
 
+	private IEnumerator takeControllCoroutine;
+	private IEnumerator blockCdCoroutine;
+	
+
 	//private List<Spells> spells;
 	private bool inCooldown = false;
 	private bool inblockChangeSkillCooldown = false;
@@ -59,7 +63,11 @@ public class PlayerBehaviour : MonoBehaviour {
 					Debug.Log("PLAYER UI POS ->" + gameUiPosition);
 					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),0);
 					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),1);
-					StartCoroutine(TakeControllCooldown());
+					if(takeControllCoroutine != null){
+						StopCoroutine(takeControllCoroutine);
+					}
+					takeControllCoroutine = TakeControllCooldown();
+					StartCoroutine(takeControllCoroutine);
 					
 				}else{
 					Debug.Log("player " + playerJoystick.name + "Trying to get control");
@@ -72,7 +80,11 @@ public class PlayerBehaviour : MonoBehaviour {
 				if(!inblockChangeSkillCooldown){
 					InGameManager.Instance.UseChangeBlockSkill(this);
 					inblockChangeSkillCooldown = true;
-					StartCoroutine(BlockChangeSkillCooldown());
+					if(blockCdCoroutine != null){
+						StopCoroutine(blockCdCoroutine);
+					}
+					blockCdCoroutine = BlockChangeSkillCooldown();
+					StartCoroutine(blockCdCoroutine);
 				}
 			}
 		}

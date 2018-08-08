@@ -13,6 +13,8 @@ public class GameUIManager : Singleton<GameUIManager> {
 	public GameObject blockedTextObj;
 	public List<Sprite> spriteList;
 
+	private IEnumerator timerCr;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -47,7 +49,12 @@ public class GameUIManager : Singleton<GameUIManager> {
 			
 			float percentage = timer*10f;
 
-			StartCoroutine(FillGauge(100f/percentage,playerImg));
+			if(timerCr != null){
+				StopCoroutine(timerCr);
+			}
+			timerCr = FillGauge(100f/percentage,playerImg);
+
+			StartCoroutine(timerCr);
 		}	
 
 	}
