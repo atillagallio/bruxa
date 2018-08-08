@@ -135,10 +135,8 @@ public class InGameCharacterController : MonoBehaviour {
      	{
 			Debug.DrawLine(hit.transform.localPosition, hit.normal*3f,Color.red, 3f);
 			if(Vector3.Angle(transform.up, hit.normal) <= 80f ){
-				Debug.Log("-60");
 				transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;}
 			else if(Vector3.Angle(transform.up, hit.normal) >= 90f && hit.transform.gameObject.tag == "Wall"){
-				Debug.Log("+90");
 				transform.rotation = Quaternion.FromToRotation(transform.right, hit.normal) * transform.rotation;
 			}else if(hit.transform.gameObject.tag != "item"){
 				transform.rotation = Quaternion.FromToRotation(transform.right, -transform.right) * transform.rotation;

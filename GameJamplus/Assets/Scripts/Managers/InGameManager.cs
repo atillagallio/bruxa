@@ -70,7 +70,8 @@ public class InGameManager : Singleton<InGameManager> {
 
         AudioClip mine = gameCharacter.GetComponent<InGameCharacterController>().mineSetSound;
         AudioSource.PlayClipAtPoint(mine, gameCharacter.transform.position);
-        GameObject bomb = Instantiate(bombPrefab, gameCharacter.transform.position, Quaternion.identity);
+        Vector3 bombPos = new Vector3(gameCharacter.transform.position.x,gameCharacter.transform.position.y +3, gameCharacter.transform.position.z);
+        GameObject bomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
         Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
         bombBehaviour.player = gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer;
         Debug.Log(gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer);
