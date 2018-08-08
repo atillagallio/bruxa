@@ -229,12 +229,13 @@ public class InGameCharacterController : MonoBehaviour {
 	{			//Bomb
 		if(col.gameObject.layer == 16){
 			if(col.gameObject.GetComponent<Spell4BombBehaviour>().player != controllingPlayer){
-				controllingPlayer.points -= 10;
-				col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
+				//controllingPlayer.points -= 10;
+				//col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
 				stun = true;
 				rBody.velocity= new Vector3(0f, 10f, 0f);
 				AudioSource.PlayClipAtPoint(mineExplode, transform.position);
-				StartCoroutine(RotateSelf());
+				StartCoroutine(StunEffect(col.gameObject.GetComponent<Spell4BombBehaviour>().player));
+				
 				Destroy(col.gameObject);
 			}else{
 				
@@ -243,8 +244,7 @@ public class InGameCharacterController : MonoBehaviour {
 		}
 
 	}
-
-	private IEnumerator RotateSelf(){
+	private IEnumerator StunEffect(PlayerBehaviour player){
 		gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Play();
 		int i = 0;
 		while (i < 80){
@@ -255,6 +255,8 @@ public class InGameCharacterController : MonoBehaviour {
 		Debug.Log(stun);
 		stun = false;
 		gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Stop();
+		InGameManager.Instance.ChangeCharacterControl(player);
+
 	}
 
 	/// <summary>
