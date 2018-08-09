@@ -71,8 +71,18 @@ public class InGameCharacterController : MonoBehaviour {
 
 	void GetInput()
 	{
-		horizontalInput = Input.GetAxis(joystick.input.Horizontal);
-		verticalInput = Input.GetAxis(joystick.input.Vertical);
+		if(InGameManager.Instance.spell5Drunk){
+			if(ConfigurationTestBruxaManager.Instance.skill5DrunkType  == 0){ 
+				horizontalInput = -Input.GetAxis(joystick.input.Horizontal);
+				verticalInput = -Input.GetAxis(joystick.input.Vertical);
+			}else{
+				horizontalInput = Input.GetAxis(joystick.input.Vertical);
+				verticalInput = Input.GetAxis(joystick.input.Horizontal);
+			}
+		}else{
+			horizontalInput = Input.GetAxis(joystick.input.Horizontal);
+			verticalInput = Input.GetAxis(joystick.input.Vertical);			
+		}
 	}
 
 	/// <summary>

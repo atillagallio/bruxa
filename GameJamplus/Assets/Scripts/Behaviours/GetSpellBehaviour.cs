@@ -25,6 +25,10 @@ public class GetSpellBehaviour : MonoBehaviour {
 			spell = new Spell4Bomb();
 			gameObject.transform.GetChild(2).gameObject.SetActive(true);
 		}
+		if(randomValue == 5){
+			spell = new Spell5Drunk();
+			gameObject.transform.GetChild(4).gameObject.SetActive(true);
+		}
 		
 	}
 	

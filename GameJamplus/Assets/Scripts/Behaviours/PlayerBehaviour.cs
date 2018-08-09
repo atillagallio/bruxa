@@ -2,112 +2,117 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehaviour : MonoBehaviour {
+public class PlayerBehaviour : MonoBehaviour
+{
 
-	private Joystick playerJoystick;
-	private Color playerColor;
+    private Joystick playerJoystick;
+    private Color playerColor;
 
-	public int gameUiPosition;
+    public int gameUiPosition;
 
-	public Spell spell;
+    public Spell spell;
 
-	private IEnumerator takeControllCoroutine;
-	private IEnumerator blockCdCoroutine;
-	
+    public bool isInControl = false;
+    //private List<Spells> spells;
+    public float switchCooldown = 0;
+    private bool InSwitchCooldown
+    {
+        get
+        {
+            return switchCooldown <= ConfigurationTestBruxaManager.Instance.switchCooldown;
+        }
+    }
+    public float parryCoolDown = 0;
+    private int cdTimer = 3;
 
-	//private List<Spells> spells;
-	private bool inCooldown = false;
-	private bool inblockChangeSkillCooldown = false;
-	private int cdTimer = 3;
+    private bool switchButton;
+    private bool spellButton;
 
-	private bool takePlayerControlAxis;
-	private bool useSpellControl;
+    public int points = 0;
+    private bool parryButton;
+    // Use this for initialization
+    void Start()
+    {
+        switchCooldown = ConfigurationTestBruxaManager.Instance.switchCooldown;
+    }
 
-	public int points = 0;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	void GetControls (){
-		takePlayerControlAxis = Input.GetButtonDown(playerJoystick.input.Fire1);
-		useSpellControl = Input.GetButtonDown(playerJoystick.input.Fire3);	
-	}
+    void GetControls()
+    {
+        switchButton = Input.GetButtonDown(playerJoystick.input.Fire1);
+        spellButton = Input.GetButtonDown(playerJoystick.input.Fire3);
+        parryButton = Input.GetButtonDown(playerJoystick.input.Fire1);
+    }
 
-	public int GetCDTimer(){
-		return cdTimer;
-	}
-	public Joystick GetJoystick(){
-		return playerJoystick;
-	}
+    public int GetCDTimer()
+    {
+        return cdTimer;
+    }
+    public Joystick GetJoystick()
+    {
+        return playerJoystick;
+    }
 
-	public Color GetColor(){
-		return playerColor;
-	}
-	public void SetPlayerInfo(Joystick _joystick, Color _color){
-		playerJoystick = _joystick;
-		playerColor = _color;
-	}
-	// Update is called once per frame
-	void Update () {
-		GetControls();
-		CheckButtonPress();
-	}
+    public Color GetColor()
+    {
+        return playerColor;
+    }
+    public void SetPlayerInfo(Joystick _joystick, Color _color)
+    {
+        playerJoystick = _joystick;
+        playerColor = _color;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        GetControls();
+        CheckButtonPress();
 
-	void CheckButtonPress(){
-		if(takePlayerControlAxis && InGameManager.Instance.HasGameStarted()){
-			if(!inCooldown && !InGameManager.Instance.spell1Lock){
-				if(InGameManager.Instance.changeBlock){
-					GameUIManager.Instance.StartBlockedAnimation();
-					inCooldown = true;
-					Debug.Log("PLAYER UI POS ->" + gameUiPosition);
-					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),0);
-					GameUIManager.Instance.UpdateUISkillCD(gameUiPosition,GetCDTimer(),1);
-					if(takeControllCoroutine != null){
-						StopCoroutine(takeControllCoroutine);
-					}
-					takeControllCoroutine = TakeControllCooldown();
-					StartCoroutine(takeControllCoroutine);
-					
-				}else{
-					Debug.Log("player " + playerJoystick.name + "Trying to get control");
-					InGameManager.Instance.ChangeCharacterControl(this);
-					inCooldown = true;
-					inblockChangeSkillCooldown = false;
-				}
-				
-			}else{
-				if(!inblockChangeSkillCooldown){
-					InGameManager.Instance.UseChangeBlockSkill(this);
-					inblockChangeSkillCooldown = true;
-					if(blockCdCoroutine != null){
-						StopCoroutine(blockCdCoroutine);
-					}
-					blockCdCoroutine = BlockChangeSkillCooldown();
-					StartCoroutine(blockCdCoroutine);
-				}
-			}
-		}
-		if(useSpellControl && InGameManager.Instance.HasGameStarted()){
-			if(spell != null){
-				InGameManager.Instance.PlayerUseSpell(this);
-			}
-		}
-	}
+        parryCoolDown += Time.deltaTime;
+        switchCooldown += Time.deltaTime;
+    }
 
-	private IEnumerator BlockChangeSkillCooldown(){
-		
-		yield return new WaitForSecondsRealtime(5f);
-		inblockChangeSkillCooldown = false; 
-	}
+    void CheckButtonPress()
+    {
+        if (!InGameManager.Instance.HasGameStarted()) return;
+        if (!isInControl)
+        {
+            if (switchButton)
+            {
+                if (!InSwitchCooldown && !InGameManager.Instance.spell1Lock)
+                {
+                    switchCooldown = 0;
+                    if (InGameManager.Instance.parryActive)
+                    {
+                        GameUIManager.Instance.StartBlockedAnimation();
+                        Debug.Log("PLAYER UI POS ->" + gameUiPosition);
+                        GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 0);
+                        GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 1);
 
-	public IEnumerator TakeControllCooldown()
-	{
-		int i = 0;
-		while(i < cdTimer){
-			yield return new WaitForSecondsRealtime(1f);
-			i++;
-		}
-		inCooldown = false;
-	}
+                    }
+                    else
+                    {
+                        Debug.Log("player " + playerJoystick.name + "Trying to get control");
+                        InGameManager.Instance.ChangeCharacterControl(this);
+                        //inblockChangeSkillCooldown = false;
+                    }
+                }
+            }
+        }
+        else if (parryButton)
+        {
+            if (parryCoolDown >= ConfigurationTestBruxaManager.Instance.parryCooldown)
+            {
+                InGameManager.Instance.UseChangeBlockSkill(this);
+                parryCoolDown = 0;
+            }
+        }
+        if (spellButton && InGameManager.Instance.HasGameStarted())
+        {
+            if (spell != null)
+            {
+                InGameManager.Instance.PlayerUseSpell(this);
+            }
+        }
+    }
+
 }
