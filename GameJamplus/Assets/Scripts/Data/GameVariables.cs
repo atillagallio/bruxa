@@ -8,6 +8,8 @@ public class GameVariables : ScriptableObject
   public float InitialParryDelay;
   public int MatchDuration;
 
+  public float ParryDuration;
+
   [Header("Cooldowns")]
   public float ParryCooldown;
   public float SwitchCooldown;

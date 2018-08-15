@@ -76,7 +76,7 @@ public class InGameCharacterController : MonoBehaviour
   {
     if (InGameManager.Instance.spell5Drunk)
     {
-      switch (GameDataManager.Instance.Data.Skill5DrunkType)
+      switch (GameDataManager.Data.Skill5DrunkType)
       {
         case DrunknessType.Direction:
           {

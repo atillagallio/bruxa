@@ -152,7 +152,7 @@ public class InGameManager : Singleton<InGameManager>
 
   void Start()
   {
-    matchDuration = GameDataManager.Instance.Data.MatchDuration;
+    matchDuration = GameDataManager.Data.MatchDuration;
     colors.Add(Color.blue);
     colors.Add(Color.green);
     colors.Add(Color.cyan);
@@ -277,21 +277,22 @@ public class InGameManager : Singleton<InGameManager>
   private IEnumerator BlockDuration()
   {
     gameCharacter.transform.GetChild(10).gameObject.SetActive(true);
-    yield return new WaitForSeconds(0.3f);
+    yield return new WaitForSeconds(GameDataManager.Data.ParryDuration);
     parryActive = false;
     gameCharacter.transform.GetChild(10).gameObject.SetActive(false);
   }
+
+
   public void ChangeCharacterControl(PlayerBehaviour player)
   {
     InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
     //MOVE TO PLAYER
     if (charController.controllingPlayer != null)
     {
-      GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition, player.GetCDTimer(), 1);
       charController.controllingPlayer.switchCooldown = 0;
       charController.controllingPlayer.isInControl = false;
     }
-    //player.switchCooldown = 0;
+    player.switchCooldown = 0;
     charController.controllingPlayer = player;
     charController.joystick = player.GetJoystick();
     charController.isControlledByPlayer = true;
@@ -302,7 +303,7 @@ public class InGameManager : Singleton<InGameManager>
     trailSettings.startColor = player.GetColor();
 
     player.isInControl = true;
-    player.parryCoolDown = GameDataManager.Instance.Data.ParryCooldown - GameDataManager.Instance.Data.InitialParryDelay; ;
+    player.parryCoolDown = GameDataManager.Data.ParryCooldown - GameDataManager.Data.InitialParryDelay; ;
     AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
     foreach (GameObject playerObj in players)
     {
@@ -320,8 +321,6 @@ public class InGameManager : Singleton<InGameManager>
     }
     if (!hasChar)
       charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
-    GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition, player.GetCDTimer(), 0);
-
   }
 
   private IEnumerator changeWitchParticle(ParticleSystem particle)
@@ -343,8 +342,6 @@ public class InGameManager : Singleton<InGameManager>
     timerText.gameObject.SetActive(false);
     gameStarted = true;
     StartCoroutine(MatchTimer());
-
-
   }
   void FixedUpdate()
   {

@@ -39,6 +39,7 @@ public class GameOverUIManager : MonoBehaviour
       if (Input.GetButtonDown("Submit"))
       {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        EventManager.OnExitGameOverScreen?.Invoke();
       }
       yield return null;
     }

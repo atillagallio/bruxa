@@ -19,12 +19,11 @@ public class PlayerBehaviour : MonoBehaviour
   {
     get
     {
-      return switchCooldown <= GameDataManager.Instance.Data.SwitchCooldown;
+      return switchCooldown <= GameDataManager.Data.SwitchCooldown;
     }
   }
-  public float parryCoolDown = 0;
-  private int cdTimer = 3;
 
+  public float parryCoolDown = 0;
   private bool switchButton;
   private bool spellButton;
 
@@ -33,7 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
   // Use this for initialization
   void Start()
   {
-    switchCooldown = GameDataManager.Instance.Data.SwitchCooldown;
+    switchCooldown = GameDataManager.Data.SwitchCooldown;
   }
 
   void GetControls()
@@ -43,10 +42,6 @@ public class PlayerBehaviour : MonoBehaviour
     parryButton = Input.GetButtonDown(playerJoystick.input.Fire1);
   }
 
-  public int GetCDTimer()
-  {
-    return cdTimer;
-  }
   public Joystick GetJoystick()
   {
     return playerJoystick;
@@ -68,7 +63,10 @@ public class PlayerBehaviour : MonoBehaviour
     CheckButtonPress();
 
     parryCoolDown += Time.deltaTime;
-    switchCooldown += Time.deltaTime;
+    if (!isInControl)
+    {
+      switchCooldown += Time.deltaTime;
+    }
   }
 
   void CheckButtonPress()
@@ -85,8 +83,8 @@ public class PlayerBehaviour : MonoBehaviour
           {
             GameUIManager.Instance.StartBlockedAnimation();
             Debug.Log("PLAYER UI POS ->" + gameUiPosition);
-            GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 0);
-            GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 1);
+            //GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
+            // GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
 
           }
           else
@@ -100,7 +98,8 @@ public class PlayerBehaviour : MonoBehaviour
     }
     else if (parryButton)
     {
-      if (parryCoolDown >= GameDataManager.Instance.Data.ParryCooldown)
+      print("using parry");
+      if (parryCoolDown >= GameDataManager.Data.ParryCooldown)
       {
         InGameManager.Instance.UseChangeBlockSkill(this);
         parryCoolDown = 0;
@@ -108,11 +107,11 @@ public class PlayerBehaviour : MonoBehaviour
     }
     if (spellButton && InGameManager.Instance.HasGameStarted())
     {
+      print("using spell");
       if (spell != null)
       {
         InGameManager.Instance.PlayerUseSpell(this);
       }
     }
   }
-
 }

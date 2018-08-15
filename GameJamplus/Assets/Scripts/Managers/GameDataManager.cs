@@ -7,5 +7,5 @@ public class GameDataManager : Singleton<GameDataManager>
   [SerializeField]
   private GameVariables data;
 
-  public GameVariables Data => data;
+  public static GameVariables Data => Instance.data;
 }

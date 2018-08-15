@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Skill5DrunkType: 0
   InitialParryDelay: 0
-  MatchDuration: 80
+  MatchDuration: 3
+  ParryDuration: 0.3
   ParryCooldown: 1
   SwitchCooldown: 5
