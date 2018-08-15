@@ -284,11 +284,12 @@ public class InGameManager : Singleton<InGameManager>
     }
     public void ChangeCharacterControl(PlayerBehaviour player)
     {
+        print(player.name);
         InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
         //MOVE TO PLAYER
         if (charController.controllingPlayer != null)
         {
-            GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition, player.GetCDTimer(), 1);
+            GameUIManager.Instance.UpdateUISkillCD(charController.controllingPlayer.gameUiPosition);
             charController.controllingPlayer.switchCooldown = 0;
             charController.controllingPlayer.isInControl = false;
         }
@@ -297,6 +298,7 @@ public class InGameManager : Singleton<InGameManager>
         charController.joystick = player.GetJoystick();
         charController.isControlledByPlayer = true;
         charController.color = player.GetColor();
+
         int i = 0;
         bool hasChar = false;
         var trailSettings = trail.main;
@@ -321,7 +323,7 @@ public class InGameManager : Singleton<InGameManager>
         }
         if (!hasChar)
             charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
-        GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition, player.GetCDTimer(), 0);
+        GameUIManager.Instance.UpdateUISkillCD(player.gameUiPosition);
 
     }
 

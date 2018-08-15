@@ -23,8 +23,6 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
     public float parryCoolDown = 0;
-    private int cdTimer = 3;
-
     private bool switchButton;
     private bool spellButton;
 
@@ -43,10 +41,6 @@ public class PlayerBehaviour : MonoBehaviour
         parryButton = Input.GetButtonDown(playerJoystick.input.Fire1);
     }
 
-    public int GetCDTimer()
-    {
-        return cdTimer;
-    }
     public Joystick GetJoystick()
     {
         return playerJoystick;
@@ -68,7 +62,10 @@ public class PlayerBehaviour : MonoBehaviour
         CheckButtonPress();
 
         parryCoolDown += Time.deltaTime;
-        switchCooldown += Time.deltaTime;
+        if (!isInControl)
+        {
+            switchCooldown += Time.deltaTime;
+        }
     }
 
     void CheckButtonPress()
@@ -85,8 +82,8 @@ public class PlayerBehaviour : MonoBehaviour
                     {
                         GameUIManager.Instance.StartBlockedAnimation();
                         Debug.Log("PLAYER UI POS ->" + gameUiPosition);
-                        GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 0);
-                        GameUIManager.Instance.UpdateUISkillCD(gameUiPosition, GetCDTimer(), 1);
+                        //GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
+                        // GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
 
                     }
                     else
