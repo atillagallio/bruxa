@@ -21513,7 +21513,7 @@ GameObject:
   - component: {fileID: 1702755592}
   - component: {fileID: 1702755593}
   m_Layer: 0
-  m_Name: ConfigurationTestManager
+  m_Name: GameDataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21540,14 +21540,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1702755591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e007c934ad81143b8b13034febc55e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf31423892560f40be3e401721a9767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill5DrunkType: 0
-  initialParryDelay: 0
-  matchDuration: 80
-  parryCooldown: 1
-  switchCooldown: 5
+  data: {fileID: 11400000, guid: aedc7c22612fc07479799a8e9a067728, type: 2}
 --- !u!1 &1724348139
 GameObject:
   m_ObjectHideFlags: 0

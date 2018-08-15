@@ -396,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNameText: {fileID: 86295603}
   pointsText: {fileID: 100575280}
+  DelayToRestart: 4
   witches:
   - {fileID: 1618817434}
   - {fileID: 1489054308}
@@ -1223,6 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img: {fileID: 1539498290}
+  FadeTime: 2
 --- !u!1 &1618817433
 GameObject:
   m_ObjectHideFlags: 0
