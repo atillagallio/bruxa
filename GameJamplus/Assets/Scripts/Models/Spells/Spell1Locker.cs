@@ -11,7 +11,6 @@ public class Spell1Locker : Spell
     spellName = "Locker";
     type = 1;
     spellIcon = Resources.Load<Sprite>("Sprites/pena");
-    Debug.Log(spellIcon);
   }
 
   public override void UseSpell()

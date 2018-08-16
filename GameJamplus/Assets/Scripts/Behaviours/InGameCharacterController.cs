@@ -6,6 +6,10 @@ public class InGameCharacterController : MonoBehaviour
 {
 
   public PlayerBehaviour controllingPlayer;
+  public List<GameObject> bruxasGO;
+  public GameObject block;
+  public GameObject Spell2FX;
+  public GameObject Spell1FX;
   public CharacterData data;
   private float slidingVel;
   CharacterController charController;
@@ -13,7 +17,34 @@ public class InGameCharacterController : MonoBehaviour
 
   public bool isControlledByPlayer = false;
   public Joystick joystick;
-  public Color color;
+  [SerializeField]
+  private ParticleSystem trail;
+  [SerializeField]
+  private ParticleSystem pointsPS;
+  [SerializeField]
+  private ParticleSystem superPointsPS;
+  [SerializeField]
+  private ParticleSystem megaPointsPS;
+  [SerializeField]
+  private Projector blobShadow;
+  private Color color;
+  public Color Color
+  {
+    get
+    {
+      return color;
+    }
+    set
+    {
+      color = value;
+      blobShadow.material.color = color;
+      var m = trail.main;
+      m.startColor = color;
+    }
+  }
+
+  public GameObject ChangeParticle;
+
   private bool isStunned = false;
   public AudioClip pointSound;
   public AudioClip pointBigSound;
@@ -117,10 +148,7 @@ public class InGameCharacterController : MonoBehaviour
     r.x = 0;
     transform.rotation = r;
 
-    if (!charController.isGrounded)
-    {
-      ySpeed -= data.Gravity * Time.deltaTime;
-    }
+    ySpeed -= data.Gravity * Time.deltaTime;
     var velocity = moveDirection.normalized * speed + Vector3.up * ySpeed;
     if (charController.isGrounded)
     {
@@ -129,8 +157,10 @@ public class InGameCharacterController : MonoBehaviour
     charController.Move(velocity * Time.deltaTime);
     ySpeed = (transform.position.y - lastPos.y) / Time.deltaTime;
     lastPos = transform.position;
-    print(charController.isGrounded);
+    isGrounded = charController.isGrounded;
   }
+
+  public bool isGrounded;
 
   void OnTriggerEnter(Collider col)
   {
@@ -138,7 +168,7 @@ public class InGameCharacterController : MonoBehaviour
     if (col.gameObject.layer == LayerMask.NameToLayer("Point"))
     {
       AudioSource.PlayClipAtPoint(pointSound, transform.position);
-      gameObject.transform.GetChild(7).GetComponent<ParticleSystem>().Play();
+      pointsPS.Play();
       controllingPlayer.points++;
       Destroy(col.gameObject);
     }
@@ -146,14 +176,14 @@ public class InGameCharacterController : MonoBehaviour
     {
       controllingPlayer.points = controllingPlayer.points + 5;
       AudioSource.PlayClipAtPoint(pointBigSound, transform.position);
-      gameObject.transform.GetChild(8).GetComponent<ParticleSystem>().Play();
+      superPointsPS.Play();
       Destroy(col.gameObject);
     }
     else if (col.gameObject.layer == LayerMask.NameToLayer("MegaPoint"))
     {
       AudioSource.PlayClipAtPoint(pointMegaSound, transform.position);
       controllingPlayer.points = controllingPlayer.points + 20;
-      gameObject.transform.GetChild(9).GetComponent<ParticleSystem>().Play();
+      megaPointsPS.Play();
       Destroy(col.gameObject);
     }
     else if (col.gameObject.layer == LayerMask.NameToLayer("Spell"))
@@ -170,22 +200,18 @@ public class InGameCharacterController : MonoBehaviour
       print("collided with bomb");
       if (col.gameObject.GetComponent<Spell4BombBehaviour>().player != controllingPlayer)
       {
-        //controllingPlayer.points -= 10;
-        //col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
-        isStunned = true;
-        var stunImpulse = data.BombIsMathematical ?
-        data.BombStunTime * data.Gravity
-        : data.BombExplosionImpulse;
-        print(stunImpulse);
-        ySpeed = stunImpulse;
-        charController.Move(Vector3.up * ySpeed * Time.deltaTime);
-        AudioSource.PlayClipAtPoint(mineExplode, transform.position);
-        StartCoroutine(StunEffect(col.gameObject.GetComponent<Spell4BombBehaviour>().player));
-
+        DoBombThing(col.gameObject.GetComponent<Spell4BombBehaviour>().player);
         Destroy(col.gameObject);
       }
     }
   }
+
+  [ContextMenu("TestBomb")]
+  void DoBombThing(PlayerBehaviour controllingPlayer)
+  {
+    StartCoroutine(BombEffect(controllingPlayer));
+  }
+
   void OnControllerCiwoolliderHit(ControllerColliderHit col)
   {
     if (col.gameObject.tag == "Wall")
@@ -196,10 +222,17 @@ public class InGameCharacterController : MonoBehaviour
     }
   }
 
-  private IEnumerator StunEffect(PlayerBehaviour player)
+  private IEnumerator BombEffect(PlayerBehaviour player)
   {
+    yield return null;
+    AudioSource.PlayClipAtPoint(mineExplode, transform.position);
     isStunned = true;
-
+    var stunImpulse = data.BombIsMathematical ?
+        data.BombStunTime * data.Gravity
+        : data.BombExplosionImpulse;
+    print(stunImpulse);
+    //ySpeed = stunImpulse;
+    charController.Move(Vector3.up * Time.deltaTime * stunImpulse);
     foreach (var ps in stunPS.GetComponentsInChildren<ParticleSystem>())
     {
       ps.Play();

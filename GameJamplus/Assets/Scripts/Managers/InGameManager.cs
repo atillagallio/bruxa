@@ -15,7 +15,7 @@ public class InGameManager : Singleton<InGameManager>
 
   bool gameStarted = false;
   //Prefabs
-  public GameObject gameCharacter;
+  public InGameCharacterController gameCharacter;
   public GameObject playerPrefab;
 
   public GameObject endGameCanvas;
@@ -48,8 +48,6 @@ public class InGameManager : Singleton<InGameManager>
   public List<string> realJoysticks;
 
   public bool parryActive = false;
-
-  public ParticleSystem trail;
 
   public void SetSpellList()
   {
@@ -87,13 +85,13 @@ public class InGameManager : Singleton<InGameManager>
   public void UseSpell4Bomb()
   {
 
-    AudioClip mine = gameCharacter.GetComponent<InGameCharacterController>().mineSetSound;
+    AudioClip mine = gameCharacter.mineSetSound;
     AudioSource.PlayClipAtPoint(mine, gameCharacter.transform.position);
     Vector3 bombPos = new Vector3(gameCharacter.transform.position.x, gameCharacter.transform.position.y + 3, gameCharacter.transform.position.z);
     GameObject bomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
     Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
-    bombBehaviour.player = gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer;
-    Debug.Log(gameCharacter.GetComponent<InGameCharacterController>().controllingPlayer);
+    bombBehaviour.player = gameCharacter.controllingPlayer;
+    Debug.Log(gameCharacter.controllingPlayer);
   }
 
 
@@ -101,14 +99,14 @@ public class InGameManager : Singleton<InGameManager>
   private IEnumerator Spell1Duration(int seconds)
   {
     int i = 0;
-    gameCharacter.transform.GetChild(6).gameObject.SetActive(true);
+    gameCharacter.Spell1FX.SetActive(true);
     while (i < seconds)
     {
       yield return new WaitForSecondsRealtime(1f);
       i++;
     }
     spell1Lock = false;
-    gameCharacter.transform.GetChild(6).gameObject.SetActive(false);
+    gameCharacter.Spell1FX.SetActive(false);
     spellText.text = "";
   }
 
@@ -116,7 +114,7 @@ public class InGameManager : Singleton<InGameManager>
   private IEnumerator Spell2Duration(int seconds)
   {
     int i = 0;
-    gameCharacter.transform.GetChild(5).gameObject.SetActive(true);
+    gameCharacter.Spell2FX.gameObject.SetActive(true);
 
     while (i < seconds)
     {
@@ -124,8 +122,8 @@ public class InGameManager : Singleton<InGameManager>
       i++;
     }
     spell2Forward = false;
-    gameCharacter.transform.GetChild(5).GetComponent<ParticleSystem>().Stop();
-    gameCharacter.transform.GetChild(5).gameObject.SetActive(false);
+    gameCharacter.Spell2FX.GetComponent<ParticleSystem>().Stop();
+    gameCharacter.Spell2FX.gameObject.SetActive(false);
     spellText.text = "";
   }
   private IEnumerator Spell3Duration(int seconds)
@@ -242,20 +240,19 @@ public class InGameManager : Singleton<InGameManager>
 
   public void PlayerUseSpell(PlayerBehaviour player)
   {
-    InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
     if (player.spell.type == 0)
     {
-      if (player != charController.controllingPlayer)
+      if (player != gameCharacter.controllingPlayer)
       {
         player.spell.UseSpell();
         player.spell = null;
-        AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
+        AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.gameUiPosition], gameCharacter.gameObject.transform.position);
         GameUIManager.Instance.SetSkill(player.gameUiPosition, "");
       }
     }
     else if (player.spell.type == 1)
     {
-      if (player == charController.controllingPlayer)
+      if (player == gameCharacter.controllingPlayer)
       {
         player.spell.UseSpell();
         player.spell = null;
@@ -266,10 +263,9 @@ public class InGameManager : Singleton<InGameManager>
 
   public void UseChangeBlockSkill(PlayerBehaviour player)
   {
-    InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
-    if (player == charController.controllingPlayer)
+    if (player == gameCharacter.controllingPlayer)
     {
-      AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
+      AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.gameUiPosition], gameCharacter.gameObject.transform.position);
       parryActive = true;
       Debug.Log("BlockSkill");
       StartCoroutine(BlockDuration());
@@ -278,57 +274,59 @@ public class InGameManager : Singleton<InGameManager>
 
   private IEnumerator BlockDuration()
   {
-    gameCharacter.transform.GetChild(10).gameObject.SetActive(true);
+    gameCharacter.block.SetActive(true);
     yield return new WaitForSeconds(GameDataManager.Data.ParryDuration);
     parryActive = false;
-    gameCharacter.transform.GetChild(10).gameObject.SetActive(false);
+    gameCharacter.block.SetActive(false);
   }
 
 
   public void ChangeCharacterControl(PlayerBehaviour player)
   {
-    InGameCharacterController charController = gameCharacter.GetComponent<InGameCharacterController>();
     //MOVE TO PLAYER
-    if (charController.controllingPlayer != null)
+    if (gameCharacter.controllingPlayer != null)
     {
-      charController.controllingPlayer.switchCooldown = 0;
-      charController.controllingPlayer.isInControl = false;
+      gameCharacter.controllingPlayer.switchCooldown = 0;
+      gameCharacter.controllingPlayer.isInControl = false;
     }
     player.switchCooldown = 0;
-    charController.controllingPlayer = player;
-    charController.joystick = player.GetJoystick();
-    charController.isControlledByPlayer = true;
-    charController.color = player.GetColor();
+    gameCharacter.controllingPlayer = player;
+    gameCharacter.joystick = player.GetJoystick();
+    gameCharacter.isControlledByPlayer = true;
+    gameCharacter.Color = player.GetColor();
     int i = 0;
     bool hasChar = false;
-    var trailSettings = trail.main;
-    trailSettings.startColor = player.GetColor();
 
     player.isInControl = true;
     player.parryCoolDown = GameDataManager.Data.ParryCooldown - GameDataManager.Data.InitialParryDelay; ;
-    AudioSource.PlayClipAtPoint(charController.witchesLaughter[player.gameUiPosition], charController.gameObject.transform.position);
+    AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.gameUiPosition], gameCharacter.gameObject.transform.position);
     foreach (GameObject playerObj in players)
     {
 
       if (playerObj == player.gameObject)
       {
         hasChar = true;
-        StartCoroutine(changeWitchParticle(charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>()));
-        charController.transform.GetChild(i).gameObject.SetActive(true);
+        StartCoroutine(changeWitchParticle(gameCharacter.ChangeParticle.gameObject.GetComponentInChildren<ParticleSystem>()));
+        // TODO: REMOVER GET CHILD
+        gameCharacter.bruxasGO[i].SetActive(true);
       }
       else
-        charController.transform.GetChild(i).gameObject.SetActive(false);
+        gameCharacter.bruxasGO[i].SetActive(false);
       i++;
 
     }
+    // TODO: O QUE ISSO FAZ?
     if (!hasChar)
-      charController.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
+    {
+      //gameCharacter.transform.GetChild(4).gameObject.GetComponentInChildren<ParticleSystem>().Stop();
+    }
   }
 
+  private float ChangefxTime = 0.5f;
   private IEnumerator changeWitchParticle(ParticleSystem particle)
   {
     particle.Play();
-    yield return new WaitForSecondsRealtime(0.5f);
+    yield return new WaitForSecondsRealtime(ChangefxTime);
     particle.Stop();
 
   }

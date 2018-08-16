@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: Character
   m_EditorClassIdentifier: 
   HitForce: 0.1
-  ForwardSpeed: 18
+  ForwardSpeed: 16
   RotationRadius: 4
   Gravity: 25
   SlowSpellVel: 2
   BombExplosionImpulse: 40
-  BombStunTime: 0.4
-  BombRotationSpeed: 10000
+  BombStunTime: 0.5
+  BombRotationSpeed: 20
   BombIsMathematical: 1

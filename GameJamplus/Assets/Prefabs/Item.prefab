@@ -3217,6 +3217,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93418688f3a03a640b424de25d257ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locker: {fileID: 1753041472879714}
+  forward: {fileID: 1465217587463690}
+  slow: {fileID: 1002717518646858}
+  bomb: {fileID: 1911464755621694}
+  drunk: {fileID: 1329179184927224}
 --- !u!114 &114570584891408672
 MonoBehaviour:
   m_ObjectHideFlags: 1
