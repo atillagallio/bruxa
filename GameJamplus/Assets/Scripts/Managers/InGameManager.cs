@@ -25,6 +25,8 @@ public class InGameManager : Singleton<InGameManager>
   public int matchDuration = 0;
   public List<Color> colors;
   public TextMeshProUGUI timerText;
+
+  [SerializeField]
   private List<GameObject> players;
   public GameObject plane;
   public GameObject pointPrefab;

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public class WinnerInfo
+{
+  public int number;
+  public int points;
+}
 public class GameOverUIManager : MonoBehaviour
 {
   public TextMeshProUGUI playerNameText;
@@ -13,21 +18,23 @@ public class GameOverUIManager : MonoBehaviour
 
   public Fade fade;
 
+  public WinnerInfo WinnerInfo;
+
   public List<Sprite> witchesWinners;
   void Start()
   {
     fade.StartImageFade();
-    PlayerBehaviour ed = EndGame.Instance?.winner;
+    var ed = EndGame.Instance?.WinnerInfo;
     if (ed == null)
     {
       Debug.Log("ERROR: No endgame instance available, using mock values");
-      ed = new PlayerBehaviour();
-      ed.gameUiPosition = 0;
+      ed = new WinnerInfo();
+      ed.number = 0;
       ed.points = 666;
     }
-    playerNameText.text = "Player " + (ed.gameUiPosition + 1);
+    playerNameText.text = "Player " + (ed.number + 1);
     pointsText.text = ed.points.ToString();
-    witches[ed.gameUiPosition].sprite = witchesWinners[ed.gameUiPosition];
+    witches[ed.number].sprite = witchesWinners[ed.number];
     StartCoroutine(DoUpdate());
   }
 

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932496dd8256d3b4183968e676ba5698, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  HitForce: 0.1
+  ForwardSpeed: 18
+  RotationRadius: 4
+  Gravity: 25
+  SlowSpellVel: 2
+  BombExplosionImpulse: 40
+  BombStunTime: 0.4
+  BombRotationSpeed: 10000
+  BombIsMathematical: 1

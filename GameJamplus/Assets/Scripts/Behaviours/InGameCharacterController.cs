@@ -6,74 +6,47 @@ public class InGameCharacterController : MonoBehaviour
 {
 
   public PlayerBehaviour controllingPlayer;
-  public float inputDelay = 0.1f;
-  public float forwardVel = 12;
-  public float upVel = 5f;
-  public float slideRotateVel = 2;
-  public float normalRotateVel = 5;
-  public float slowSpellVel = 2;
+  public CharacterData data;
   private float slidingVel;
-
-  Quaternion targetRotation;
-  Rigidbody rBody;
-  float horizontalInput, verticalInput;
-
-  private bool isGrounded = false;
+  CharacterController charController;
   private bool isSliding = false;
 
   public bool isControlledByPlayer = false;
   public Joystick joystick;
   public Color color;
-
-  public GameObject plane;
-
-  private bool stun = false;
-
-  Ray raycast;
-  RaycastHit hit = new RaycastHit();
-
+  private bool isStunned = false;
   public AudioClip pointSound;
   public AudioClip pointBigSound;
   public AudioClip pointMegaSound;
   public AudioClip spellGetSound;
-
   public AudioClip mineSetSound;
   public AudioClip mineExplode;
-
+  public GameObject stunPS;
   public List<AudioClip> witchesLaughter;
-  public Quaternion TargetRotation
-  {
-    get { return targetRotation; }
-  }
+  public float WeirdAngle;
+  public float ySpeed;
+
+
+  [SerializeField]
+  private Vector3 moveDirection = Vector3.right;
+
+  Vector3 lastPos;
   // Use this for initialization
   void Start()
   {
     joystick = new Joystick();
-    targetRotation = transform.rotation;
-    if (GetComponent<Rigidbody>())
-      rBody = GetComponent<Rigidbody>();
-    else
-      Debug.LogError("Character needs a rb");
-
-    horizontalInput = verticalInput = 0;
+    //targetRotation = transform.rotation;
+    //horizontalInput = verticalInput = 0;
+    charController = GetComponent<CharacterController>();
+    lastPos = transform.position;
   }
 
 
   // Update is called once per frame
-  void Update()
-  {
-    GetInput();
-    if (!InGameManager.Instance.spell2Forward)
-      Turn();
-    if (isSliding)
-      Slide();
-    if (isGrounded)
-      Run();
 
-  }
-
-  void GetInput()
+  Vector3 GetInput()
   {
+    float horizontalInput = 0, verticalInput = 0;
     if (InGameManager.Instance.spell5Drunk)
     {
       switch (GameDataManager.Data.Skill5DrunkType)
@@ -103,168 +76,87 @@ public class InGameCharacterController : MonoBehaviour
       horizontalInput = Input.GetAxis(joystick.input.Horizontal);
       verticalInput = Input.GetAxis(joystick.input.Vertical);
     }
+    return new Vector3(horizontalInput, 0, verticalInput).normalized;
   }
 
-  /// <summary>
-  /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
-  /// </summary>
   void FixedUpdate()
   {
-    if (rBody.transform.position.y > -7.3f)
-    {
-      slidingVel = upVel;
-    }
-    else
-    {
-      slidingVel = forwardVel;
-    }
+    var input = GetInput();
+    bool canMove = (isControlledByPlayer && !isStunned);
+    var speed = canMove ? data.ForwardSpeed : 0;
+
     if (InGameManager.Instance.spell3Slow)
     {
-      slidingVel = slowSpellVel;
+      speed = data.SlowSpellVel;
     }
-    if (rBody.velocity == Vector3.zero && InGameManager.Instance.HasGameStarted())
+    if (!InGameManager.Instance.spell2Forward)
     {
-      rBody.transform.position = new Vector3(rBody.transform.position.x, rBody.transform.position.y + 0.3f, rBody.transform.position.z);
-    }
-  }
-
-  void Run()
-  {
-    if (Mathf.Abs(horizontalInput) > inputDelay || Mathf.Abs(verticalInput) > inputDelay)
-    {
-      //move
-
-      if (IsFacingRightDirection())
-
-        rBody.velocity = new Vector3(verticalInput, 0f, horizontalInput) * forwardVel;
-      else
-        rBody.velocity = new Vector3(verticalInput, 0f, horizontalInput) * forwardVel / 10;
-    }
-    else
-    {
-      rBody.velocity = Vector3.zero;
-    }
-  }
-
-  bool IsFacingRightDirection()
-  {
-    float heading = Mathf.Atan2(verticalInput, horizontalInput);
-    float charFrontHeading = Mathf.Atan2(transform.forward.z, -transform.forward.x);
-    if (Mathf.Abs(charFrontHeading) - Mathf.Abs(heading) <= 0.5f)
-      return true;
-    else
-      return false;
-  }
-
-  void Slide()
-  {
-
-    RotateCharacterToGround();
-    if (InGameManager.Instance.HasGameStarted() && isControlledByPlayer && !stun)
-      rBody.velocity = transform.right * slidingVel;
-
-  }
-
-  void RotateCharacterToGround()
-  {
-    Vector3 fwd = transform.TransformDirection(Vector3.right);
-    Debug.DrawRay(transform.position, fwd * 3f, Color.green);
-    if (Physics.Raycast(transform.position, fwd, out hit, 2.5f))
-    {
-      Debug.DrawLine(hit.transform.localPosition, hit.normal * 3f, Color.red, 3f);
-      if (Vector3.Angle(transform.up, hit.normal) <= 80f)
+      if (input.magnitude != 0)
       {
-        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-      }
-      else if (Vector3.Angle(transform.up, hit.normal) >= 90f && hit.transform.gameObject.tag == "Wall")
-      {
-        transform.rotation = Quaternion.FromToRotation(transform.right, hit.normal) * transform.rotation;
-      }
-      else if (hit.transform.gameObject.tag != "item")
-      {
-        transform.rotation = Quaternion.FromToRotation(transform.right, -transform.right) * transform.rotation;
-        rBody.velocity = Vector3.zero;
+        var targetDirection = input;
+        var rotationDirection = Mathf.Sign(
+          Vector3.Cross(
+          moveDirection,
+          targetDirection
+        ).y);
+        if ((targetDirection - moveDirection).magnitude == 0)
+        {
+          rotationDirection = 1;
+        }
+        var rotSpeed = speed / data.RotationRadius;
+        moveDirection = Quaternion.AngleAxis(
+            rotSpeed * Mathf.Rad2Deg * Time.deltaTime * rotationDirection, Vector3.up
+        ) * moveDirection;
+        //print(targetDirection + "" + moveDirection + "" + rotationDirection);
       }
     }
-    else
-    {
-      Vector3 dwn = transform.TransformDirection(Vector3.down);
-      if (Physics.Raycast(transform.position, dwn, out hit, 5f))
-      {
-        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-      }
-      else
-      {
-        transform.rotation = Quaternion.FromToRotation(transform.up, plane.transform.up) * transform.rotation;
-      }
 
+    transform.rotation = Quaternion.Euler(0, WeirdAngle, 0) * Quaternion.LookRotation(moveDirection);
+    var r = transform.rotation;
+    r.z = 0;
+    r.x = 0;
+    transform.rotation = r;
+
+    if (!charController.isGrounded)
+    {
+      ySpeed -= data.Gravity * Time.deltaTime;
     }
+    var velocity = moveDirection.normalized * speed + Vector3.up * ySpeed;
+    if (charController.isGrounded)
+    {
+      velocity = velocity.normalized * speed;
+    }
+    charController.Move(velocity * Time.deltaTime);
+    ySpeed = (transform.position.y - lastPos.y) / Time.deltaTime;
+    lastPos = transform.position;
+    print(charController.isGrounded);
   }
 
-  void Turn()
+  void OnTriggerEnter(Collider col)
   {
-    if (Mathf.Abs(horizontalInput) > inputDelay || Mathf.Abs(verticalInput) > inputDelay)
-    {
-      //move
-      float rotateVel = 0;
-
-      rotateVel = slideRotateVel;
-
-      float heading = Mathf.Atan2(verticalInput, horizontalInput);
-      targetRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, -heading * Mathf.Rad2Deg, 0)), Time.deltaTime * rotateVel);
-
-
-    }
-    transform.rotation = targetRotation;
-  }
-
-
-  /// <summary>
-  /// OnCollisionEnter is called when this collider/rigidbody has begun
-  /// touching another rigidbody/collider.
-  /// </summary>
-  /// <param name="col">The Collision data associated with this collision.</param>
-  void OnCollisionEnter(Collision col)
-  {
-    if (col.gameObject.layer == 9)
-    {
-      isGrounded = true;
-      isSliding = false;
-    }
-    if (col.gameObject.layer == 10)
-    {
-      isSliding = true;
-      isGrounded = false;
-    }
-
     //Point cube
-    if (col.gameObject.layer == 11)
+    if (col.gameObject.layer == LayerMask.NameToLayer("Point"))
     {
       AudioSource.PlayClipAtPoint(pointSound, transform.position);
       gameObject.transform.GetChild(7).GetComponent<ParticleSystem>().Play();
       controllingPlayer.points++;
       Destroy(col.gameObject);
     }
-
-    if (col.gameObject.layer == 12)
+    else if (col.gameObject.layer == LayerMask.NameToLayer("SuperPoint"))
     {
       controllingPlayer.points = controllingPlayer.points + 5;
       AudioSource.PlayClipAtPoint(pointBigSound, transform.position);
       gameObject.transform.GetChild(8).GetComponent<ParticleSystem>().Play();
       Destroy(col.gameObject);
     }
-
-    if (col.gameObject.layer == 13)
+    else if (col.gameObject.layer == LayerMask.NameToLayer("MegaPoint"))
     {
       AudioSource.PlayClipAtPoint(pointMegaSound, transform.position);
       controllingPlayer.points = controllingPlayer.points + 20;
       gameObject.transform.GetChild(9).GetComponent<ParticleSystem>().Play();
       Destroy(col.gameObject);
     }
-
-
-    //Spell
-    if (col.gameObject.layer == 14)
+    else if (col.gameObject.layer == LayerMask.NameToLayer("Spell"))
     {
       AudioSource.PlayClipAtPoint(spellGetSound, transform.position);
       controllingPlayer.spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
@@ -273,67 +165,57 @@ public class InGameCharacterController : MonoBehaviour
       Destroy(col.gameObject);
     }
 
-  }
-
-  /// <summary>
-  /// OnTriggerEnter is called when the Collider other enters the trigger.
-  /// </summary>
-  /// <param name="other">The other Collider involved in this collision.</param>
-  void OnTriggerEnter(Collider col)
-  {     //Bomb
-    if (col.gameObject.layer == 16)
+    else if (col.gameObject.layer == LayerMask.NameToLayer("Bomb"))
     {
+      print("collided with bomb");
       if (col.gameObject.GetComponent<Spell4BombBehaviour>().player != controllingPlayer)
       {
         //controllingPlayer.points -= 10;
         //col.gameObject.GetComponent<Spell4BombBehaviour>().player.points += 10;
-        stun = true;
-        rBody.velocity = new Vector3(0f, 10f, 0f);
+        isStunned = true;
+        var stunImpulse = data.BombIsMathematical ?
+        data.BombStunTime * data.Gravity
+        : data.BombExplosionImpulse;
+        print(stunImpulse);
+        ySpeed = stunImpulse;
+        charController.Move(Vector3.up * ySpeed * Time.deltaTime);
         AudioSource.PlayClipAtPoint(mineExplode, transform.position);
         StartCoroutine(StunEffect(col.gameObject.GetComponent<Spell4BombBehaviour>().player));
 
         Destroy(col.gameObject);
       }
-      else
-      {
-
-      }
-
     }
-
   }
+  void OnControllerCiwoolliderHit(ControllerColliderHit col)
+  {
+    if (col.gameObject.tag == "Wall")
+    {
+      var normalxz = col.normal;
+      normalxz.y = 0;
+      moveDirection = Vector3.Reflect(moveDirection, normalxz);
+    }
+  }
+
   private IEnumerator StunEffect(PlayerBehaviour player)
   {
-    gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Play();
-    int i = 0;
-    while (i < 80)
+    isStunned = true;
+
+    foreach (var ps in stunPS.GetComponentsInChildren<ParticleSystem>())
     {
-      transform.Rotate(Vector3.up * 80f * Time.deltaTime);
-      yield return new WaitForFixedUpdate();
-      i++;
+      ps.Play();
     }
-    Debug.Log(stun);
-    stun = false;
-    gameObject.transform.GetChild(5).GetComponentInChildren<ParticleSystem>().Stop();
+    float stunTime = Time.deltaTime;
+    while (stunTime < data.BombStunTime)
+    {
+      transform.Rotate(Vector3.up * data.BombRotationSpeed * Time.deltaTime);
+      yield return null;
+      stunTime += Time.deltaTime;
+    }
+    isStunned = false;
+    foreach (var ps in stunPS.GetComponentsInChildren<ParticleSystem>())
+    {
+      ps.Stop();
+    }
     InGameManager.Instance.ChangeCharacterControl(player);
-
-  }
-
-  /// <summary>
-  /// OnCollisionExit is called when this collider/rigidbody has
-  /// stopped touching another rigidbody/collider.
-  /// </summary>
-  /// <param name="col">The Collision data associated with this collision.</param>
-  void OnCollisionExit(Collision col)
-  {
-    if (col.gameObject.layer == 9)
-    {
-      isGrounded = false;
-    }
-    if (col.gameObject.layer == 10)
-    {
-      //rBody.velocity = Vector3.zero;
-      isSliding = false;
-    }
   }
 }

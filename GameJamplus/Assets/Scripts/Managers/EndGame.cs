@@ -5,7 +5,8 @@ using UnityEngine;
 public class EndGame : Singleton<EndGame>
 {
   public List<PlayerBehaviour> playerList;
-  public PlayerBehaviour winner;
+
+  public WinnerInfo WinnerInfo;
   // Use this for initialization
   void Start()
   {
@@ -14,17 +15,21 @@ public class EndGame : Singleton<EndGame>
     EventManager.OnExitGameOverScreen += () =>
     {
       Destroy(this.gameObject);
-      print("DESTRUCTYION");
     };
   }
 
   public void FindWinner()
   {
-    winner = new PlayerBehaviour();
+    var winner = playerList[0];
     foreach (PlayerBehaviour player in playerList)
     {
       if (player.points > winner.points)
         winner = player;
     }
+    WinnerInfo = new WinnerInfo()
+    {
+      points = winner.points,
+      number = winner.gameUiPosition
+    };
   }
 }

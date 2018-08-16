@@ -51,8 +51,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4136989409213118}
-  - component: {fileID: 136189912714511432}
   - component: {fileID: 54192819503333878}
+  - component: {fileID: 135811525357657316}
+  - component: {fileID: 65899158635765008}
   m_Layer: 11
   m_Name: Points
   m_TagString: item
@@ -131,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1697074021215708}
   m_LocalRotation: {x: 0.115461186, y: 0.96452844, z: 0.19371772, w: -0.13721223}
-  m_LocalPosition: {x: 21.7, y: -6.351588, z: 22.3}
+  m_LocalPosition: {x: 29.313473, y: -11.32, z: -4.136657}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4476139523061334}
@@ -335,8 +336,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &136189912714511432
-CapsuleCollider:
+--- !u!65 &65899158635765008
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -344,9 +345,20 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135811525357657316
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697074021215708}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198114006749849202
 ParticleSystem:

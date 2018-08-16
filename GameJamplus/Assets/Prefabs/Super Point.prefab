@@ -53,8 +53,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4478483891425724}
-  - component: {fileID: 136542458165252132}
   - component: {fileID: 54675610841229212}
+  - component: {fileID: 135585935126807812}
+  - component: {fileID: 135973849884349792}
+  - component: {fileID: 65138494330356610}
   m_Layer: 12
   m_Name: Super Point
   m_TagString: item
@@ -247,7 +249,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426233907252758}
   m_LocalRotation: {x: 0.1154612, y: 0.9645284, z: 0.19371775, w: -0.13721223}
-  m_LocalPosition: {x: 21.7, y: -6.351588, z: 22.3}
+  m_LocalPosition: {x: 27.580708, y: -12.700001, z: -6.252666}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4636055298617758}
@@ -426,8 +428,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &136542458165252132
-CapsuleCollider:
+--- !u!65 &65138494330356610
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -435,9 +437,32 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135585935126807812
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426233907252758}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135973849884349792
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426233907252758}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198054753142354026
 ParticleSystem:
