@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4886384458513738}
   - component: {fileID: 198747822121644612}
   - component: {fileID: 199040397713660104}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4071151927755072}
   - component: {fileID: 198297820185023414}
   - component: {fileID: 199521574200930930}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4103530334851050}
   - component: {fileID: 33948401568059918}
   - component: {fileID: 23246074197515900}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: mesh_1876410600
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4187521095581746}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TinyFire5_Strong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4024674669568140}
   - component: {fileID: 33311068351665534}
   - component: {fileID: 23028740805727664}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: mesh_964512751
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 4320262570750040}
   - component: {fileID: 33705184179689082}
   - component: {fileID: 23257698626510248}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: mesh_1456912393
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4017507095184924}
   - component: {fileID: 198054753142354026}
   - component: {fileID: 199386191725807670}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4636055298617758}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: potion_verde
   m_TagString: Untagged
   m_Icon: {fileID: 0}
