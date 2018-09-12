@@ -8,10 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932496dd8256d3b4183968e676ba5698, type: 3}
-  m_Name: Character
+  m_Script: {fileID: 11500000, guid: 0e1f9860fe4377b4da3f9e7582e31555, type: 3}
+  m_Name: InGameCharacterData
   m_EditorClassIdentifier: 
-  HitForce: 0.1
+  HitForce: 0.5
   ForwardSpeed: 16
   RotationRadius: 4
   Gravity: 25

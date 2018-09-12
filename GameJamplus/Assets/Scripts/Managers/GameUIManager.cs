@@ -35,7 +35,6 @@ public class GameUIManager : Singleton<GameUIManager>
 
     foreach (GameObject player in players)
     {
-      print(player.name);
       GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
       playersUIs.Add(curPlayerUI);
       //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();

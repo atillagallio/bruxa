@@ -409,7 +409,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
   - {fileID: 21300000, guid: 6df7332cb380c114a8457ce41e9410b6, type: 3}
-  POINTS: {fileID: 867628730}
 --- !u!1 &71587936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraLerp: 3
-  cameraDistance: 16
+  cameraDistance: 8
   playerPos: {fileID: 1261679822}
 --- !u!20 &282840813
 Camera:
@@ -1243,7 +1242,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0.3796179, y: -0, z: -0, w: 0.9251434}
-  m_LocalPosition: {x: -0.20041382, y: 4.634442, z: 5.24817}
+  m_LocalPosition: {x: -0.60520697, y: -1.0927796, z: 10.819084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8703,7 +8702,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d781c3ae1600fb6499e38fd9778a7363, type: 2}
+  - {fileID: 2100000, guid: 9590e58d66b8f054abd97666fdcdc4af, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14090,7 +14089,7 @@ MonoBehaviour:
   block: {fileID: 833682048}
   Spell2FX: {fileID: 785349076}
   Spell1FX: {fileID: 1468267616}
-  data: {fileID: 11400000, guid: 9638b1da6032c6940b31749ef06e6212, type: 2}
+  data: {fileID: 11400000, guid: f34a96aea6e9dc74c9420ac8ad7e2be2, type: 2}
   isControlledByPlayer: 0
   trail: {fileID: 977949006}
   pointsPS: {fileID: 1659103774}
