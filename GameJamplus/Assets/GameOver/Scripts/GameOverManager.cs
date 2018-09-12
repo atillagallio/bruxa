@@ -27,8 +27,8 @@ public class GameOverManager : MonoBehaviour
   private HorizontalLayoutGroup scoresGroup;
 
   [SerializeField]
-  private float uiCardWinnerElevation;
 
+  private Text WinnerName;
 
   [SerializeField]
   private PlayerGameOverCard playerCardPrefab;
@@ -69,12 +69,9 @@ public class GameOverManager : MonoBehaviour
       }
       else
       {
-        var cardPos = uiCard.transform.position;
-        cardPos.y += uiCardWinnerElevation;
-        uiCard.transform.position = cardPos;
+        playerChar.SetWinner();
+        WinnerName.text = player.PlayerInfo.Character.Nome;
       }
-
-
     }
 
     WinnerPlayerReference.gameObject.SetActive(false);
