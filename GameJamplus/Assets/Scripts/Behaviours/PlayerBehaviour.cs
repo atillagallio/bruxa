@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-
   private Joystick playerJoystick;
   private Color playerColor;
-
   public int gameUiPosition;
 
   public Spell spell;

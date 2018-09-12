@@ -10,7 +10,7 @@ public class InGameCharacterController : MonoBehaviour
   public GameObject block;
   public GameObject Spell2FX;
   public GameObject Spell1FX;
-  public CharacterData data;
+  public InGameCharacterData data;
   private float slidingVel;
   CharacterController charController;
   private bool isSliding = false;

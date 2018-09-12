@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(fileName = "Character", menuName = "Data/Character", order = 1)]
-public class CharacterData : ScriptableObject
+[CreateAssetMenu(fileName = "InGameCharacterData", menuName = "Data/InGameCharacter", order = 1)]
+public class InGameCharacterData : ScriptableObject
 {
   public float HitForce;
   public float ForwardSpeed;
