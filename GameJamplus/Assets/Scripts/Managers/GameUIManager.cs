@@ -10,7 +10,10 @@ public class GameUIManager : Singleton<GameUIManager>
 {
 
   public TextMeshProUGUI timerText;
-  public List<GameObject> playersUIs;
+  private List<GameObject> playersUIs;
+
+  public GameObject UiPositionObj;
+  public GameObject Uiprefab;
   public Sprite noSkillUISprite;
 
   public GameObject blockedTextObj;
@@ -20,41 +23,41 @@ public class GameUIManager : Singleton<GameUIManager>
 
   private List<GameObject> playerList;
 
-  public TextMeshProUGUI POINTS;
-
 
   // Use this for initialization
   void Start()
   {
-
+    playersUIs = new List<GameObject>();
   }
 
   public void instantiateUI(List<GameObject> players)
   {
-    int i = 0;
+
     foreach (GameObject player in players)
     {
-      GameObject curPlayerUI = playersUIs[i];
-      curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
-      playersUIs[i].SetActive(true);
-      i++;
+      print(player.name);
+      GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
+      playersUIs.Add(curPlayerUI);
+      //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
+      curPlayerUI.transform.SetParent(UiPositionObj.transform);
     }
     playerList = players;
   }
 
   public void SetSkill(int pos, string skillName, int id = 0)
   {
-    playersUIs[pos].GetComponentInChildren<TextMeshProUGUI>().text = skillName;
-    playersUIs[pos].transform.GetChild(2).GetComponent<Image>().sprite = spriteList[id];
+    playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = spriteList[id];
+
     if (skillName == "")
     {
-      playersUIs[pos].transform.GetChild(2).GetComponent<Image>().sprite = noSkillUISprite;
+      playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = noSkillUISprite;
     }
   }
 
   public void UpdateUISkillCD(int position)
   {
-    Image playerImg = playersUIs[position].GetComponent<Image>();
+    Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
+    //Image playerImg = playersUIs[position].GetComponent<Image>();
     float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
     if (_cd > GameDataManager.Data.SwitchCooldown)
       playerImg.fillAmount = 1;
@@ -71,15 +74,9 @@ public class GameUIManager : Singleton<GameUIManager>
   {
     for (int i = 0; i < playerList.Count; i++)
     {
+
       UpdateUISkillCD(i);
     }
-    var points = playerList.Select((p) => p.GetComponent<PlayerBehaviour>().points).ToList();
-    var strPoints = "POINTS: ";
-    foreach (var p in points)
-    {
-      strPoints += p + " ";
-    }
-    POINTS.text = strPoints;
   }
 
   public void StartBlockedAnimation()
