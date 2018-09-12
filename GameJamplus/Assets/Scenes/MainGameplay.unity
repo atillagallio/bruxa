@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraLerp: 3
-  cameraDistance: 8
+  cameraDistance: 16
   playerPos: {fileID: 1261679822}
 --- !u!20 &282840813
 Camera:
@@ -1242,7 +1242,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0.3796179, y: -0, z: -0, w: 0.9251434}
-  m_LocalPosition: {x: -0.60520697, y: -1.0927796, z: 10.819084}
+  m_LocalPosition: {x: -0.20041394, y: 4.634441, z: 5.248169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

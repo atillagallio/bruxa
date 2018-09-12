@@ -23,7 +23,22 @@ ModelImporter:
     4300000: mesh_316592604
     4300002: mesh_1361642280
     4300004: mesh_288731951
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_19___20474
+    second: {fileID: 2100000, guid: 4f066aa583d61a44d89b9d1ace493c43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_24___20474
+    second: {fileID: 2100000, guid: 59ffc384f1f1bdb4baef2d64f877c4cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_8___20474
+    second: {fileID: 2100000, guid: 092a20989a8bcdb489c8dcda184780c6, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
