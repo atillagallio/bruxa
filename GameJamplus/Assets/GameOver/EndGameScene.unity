@@ -534,7 +534,7 @@ MonoBehaviour:
       PlayerNumber: 1
       Character: {fileID: 11400000, guid: 88d7ad2fa8643c146815462aad2f474c, type: 2}
     GameStats:
-      points: 200
+      points: 2000
   - PlayerInfo:
       PlayerNumber: 2
       Character: {fileID: 11400000, guid: 7a069357390ffae4f8952c4df9d1a3fb, type: 2}

@@ -409,6 +409,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
   - {fileID: 21300000, guid: 6df7332cb380c114a8457ce41e9410b6, type: 3}
+  POINTS: {fileID: 867628730}
 --- !u!1 &71587936
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
 public class InGameManager : Singleton<InGameManager>
 {
@@ -152,7 +154,6 @@ public class InGameManager : Singleton<InGameManager>
 
   void Start()
   {
-    matchDuration = GameDataManager.Data.MatchDuration;
     colors.Add(Color.blue);
     colors.Add(Color.green);
     colors.Add(Color.cyan);
@@ -163,9 +164,8 @@ public class InGameManager : Singleton<InGameManager>
     InstantiatePoints(30, pointPrefab);
     InstantiatePoints(10, superPointPrefab);
     InstantiateSpells(5);
-    StartCoroutine(runStartCounter(3));
+    StartCoroutine(MatchCountDown(3));
     StartCoroutine(respawn());
-
   }
 
   public IEnumerator respawn()
@@ -331,7 +331,7 @@ public class InGameManager : Singleton<InGameManager>
 
   }
 
-  private IEnumerator runStartCounter(int timer)
+  private IEnumerator MatchCountDown(int timer)
   {
     while (timer > 0)
     {
@@ -362,16 +362,39 @@ public class InGameManager : Singleton<InGameManager>
                                  Random.Range(minZ * 3, -minZ));
     return newVec;
   }
+
   private IEnumerator MatchTimer()
   {
+    GameEndCondition endCondition = GameDataManager.Data.EndCondition;
     Debug.Log("Match Start");
-    int i = 0;
-    while (i < matchDuration)
+    float matchDuration = 0;
+
+    Func<bool> TestForDuration = () => matchDuration > endCondition.MatchDuration;
+    Func<bool> TestForScore = () => players.Aggregate(false, (test, p) => test || p.GetComponent<PlayerBehaviour>().points >= endCondition.ScoreToWin);
+    Func<bool> GameOver = () => true;
+    switch (endCondition.Mode)
     {
-      yield return new WaitForSecondsRealtime(1f);
-      i++;
-      GameUIManager.Instance.UpdateTimer(i);
+      case GameEndConditionMode.score:
+        GameOver = TestForScore;
+        break;
+      case GameEndConditionMode.time:
+        GameOver = TestForDuration;
+        break;
+      case GameEndConditionMode.both:
+        GameOver = () => TestForDuration() || TestForScore();
+        break;
+      default:
+        print("WEIRD CASE!!!");
+        break;
     }
+
+    while (!GameOver())
+    {
+      yield return null;
+      matchDuration += Time.deltaTime;
+      GameUIManager.Instance.UpdateTimer(matchDuration);
+    }
+
     gameFinished = true;
     string txt = "";
     foreach (GameObject player in players)
@@ -385,6 +408,7 @@ public class InGameManager : Singleton<InGameManager>
     {
       EndGame.Instance.playerList.Add(player.GetComponent<PlayerBehaviour>());
     }
+
     EndGame.Instance.FindWinner();
     UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     //endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;

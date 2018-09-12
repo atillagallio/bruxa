@@ -22,6 +22,7 @@ public class GameUIManager : Singleton<GameUIManager>
   private IEnumerator timerCr;
 
   private List<GameObject> playerList;
+  public TextMeshProUGUI POINTS;
 
 
   // Use this for initialization
@@ -76,6 +77,14 @@ public class GameUIManager : Singleton<GameUIManager>
 
       UpdateUISkillCD(i);
     }
+
+    var points = playerList.Select((p) => p.GetComponent<PlayerBehaviour>().points).ToList();
+    var strPoints = "POINTS: ";
+    foreach (var p in points)
+    {
+      strPoints += p + " ";
+    }
+    POINTS.text = strPoints;
   }
 
   public void StartBlockedAnimation()
@@ -90,11 +99,12 @@ public class GameUIManager : Singleton<GameUIManager>
     blockedTextObj.SetActive(false);
   }
 
-  public void UpdateTimer(int time)
+  public void UpdateTimer(float time)
   {
     string timeFormat;
-    int minutes = time / 60;
-    int seconds = time % 60;
+
+    float minutes = Mathf.Floor(time / 60);
+    float seconds = time % 60;
     string secondsAux = "";
     string minutesAux = "";
     if (seconds < 10)
