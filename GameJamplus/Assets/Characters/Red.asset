@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6f34b4c8a92e84b9b25e5477946dde, type: 3}
-  m_Name: Sabrina
+  m_Name: Red
   m_EditorClassIdentifier: 
   Name: Sabrina
   Color: {r: 1, g: 0.28235295, b: 0.29411766, a: 1}
   InGameRepresentation: {fileID: 0}
   GameOverRepresentation: {fileID: 114985744623375166, guid: 41d8c8dc1d186364eae64cc2f656d69e,
     type: 2}
-  UIFace: {fileID: 21300000, guid: 78334679fdafd524794fdeb4ffe5464c, type: 3}
+  UIFace: {fileID: 21300000, guid: 8e177c8c611f4fe41951a3ed6b487924, type: 3}
   UIBg: {fileID: 0}

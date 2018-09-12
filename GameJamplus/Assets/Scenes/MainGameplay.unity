@@ -27016,6 +27016,11 @@ MonoBehaviour:
   spellText: {fileID: 1737847253}
   realJoysticks: []
   parryActive: 0
+  AvailableWitches:
+  - {fileID: 11400000, guid: 7a069357390ffae4f8952c4df9d1a3fb, type: 2}
+  - {fileID: 11400000, guid: ecf3817b3f2ec1147bfd43926c11f4f8, type: 2}
+  - {fileID: 11400000, guid: 88d7ad2fa8643c146815462aad2f474c, type: 2}
+  - {fileID: 11400000, guid: 969833d8cf18ded41818c025c4d4d2c0, type: 2}
 --- !u!1 &1990820045
 GameObject:
   m_ObjectHideFlags: 0
