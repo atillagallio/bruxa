@@ -7,6 +7,9 @@ public class Character : ScriptableObject
     public Color Color;
     public GameObject InGameRepresentation;
     public GameOverCharacterRepresentation GameOverRepresentation;
+
+    [Header("UI Imgs")]
     public Sprite UIFace;
-    public Sprite UIBg;
+    public Sprite UICDfill;
+    public Sprite UIBG;
 }

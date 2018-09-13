@@ -17,4 +17,5 @@ MonoBehaviour:
   GameOverRepresentation: {fileID: 114957884884382540, guid: 7dd0da5baf735004daaf1ef5b0e9866c,
     type: 2}
   UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
-  UIBg: {fileID: 0}
+  UICDfill: {fileID: 21300000, guid: fdd8d6e5524d3b747b6367960532cb75, type: 3}
+  UIBG: {fileID: 0}

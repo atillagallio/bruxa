@@ -35,8 +35,14 @@ public class GameUIManager : Singleton<GameUIManager>
 
         foreach (GameObject player in players)
         {
+            Character charInfo = player.GetComponent<PlayerBehaviour>().GetCharacterInfo();
             GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
-            curPlayerUI.GetComponent<PlayerUIInfo>().HeroImg.sprite = player.GetComponent<PlayerBehaviour>().GetCharacterInfo().UIFace;
+            PlayerUIInfo thisPlayerInfo = curPlayerUI.GetComponent<PlayerUIInfo>();
+            thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
+            thisPlayerInfo.CooldownFillImg.sprite = charInfo.UICDfill;
+            thisPlayerInfo.CooldownFillImg.color = charInfo.Color;
+            thisPlayerInfo.HeroBG.color = charInfo.Color;
+
             playersUIs.Add(curPlayerUI);
             //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
             curPlayerUI.transform.SetParent(UiPositionObj.transform);
