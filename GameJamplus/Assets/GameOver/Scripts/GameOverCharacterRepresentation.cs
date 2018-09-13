@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverCharacterRepresentation : MonoBehaviour {
+public class GameOverCharacterRepresentation : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+  [SerializeField]
+  Animator anim;
+
+  public void SetWinner(bool v = true)
+  {
+    anim.SetBool("win", v);
+  }
+  // Use this for initialization
+  void Start()
+  {
+    anim.SetFloat("seed", Random.value);
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+  }
 }

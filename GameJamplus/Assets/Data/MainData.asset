@@ -11,9 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2663c9c4f080ee047a11f111c436ad5d, type: 3}
   m_Name: MainData
   m_EditorClassIdentifier: 
-  Skill5DrunkType: 0
+  EndCondition:
+    Mode: 0
+    MatchDuration: 150
+    ScoreToWin: 0
   InitialParryDelay: 0
-  MatchDuration: 80
   ParryDuration: 0.3
   ParryCooldown: 0.8
   SwitchCooldown: 5
+  Skill5DrunkType: 0

@@ -9,7 +9,7 @@ public class PlayerGameOverCard : MonoBehaviour
 
   public void SetPlayer(GameOverPlayerData player)
   {
-    Name.text = player.PlayerInfo.Character.Name;
+    Name.text = player.PlayerInfo.Character.Nome;
     Score.text = player.GameStats.points + " pts";
   }
 

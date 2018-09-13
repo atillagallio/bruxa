@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6f34b4c8a92e84b9b25e5477946dde, type: 3}
-  m_Name: Red
+  m_Name: Azul
   m_EditorClassIdentifier: 
-  Name: Sabrina
-  Color: {r: 1, g: 0.28235295, b: 0.29411766, a: 1}
+  Nome: Morgana
+  Color: {r: 0.03208439, g: 0.7122961, b: 0.9716981, a: 1}
   InGameRepresentation: {fileID: 0}
-  GameOverRepresentation: {fileID: 114985744623375166, guid: 41d8c8dc1d186364eae64cc2f656d69e,
+  GameOverRepresentation: {fileID: 114435294848114494, guid: 2fba2b77e124799448d337c5a118823d,
     type: 2}
-  UIFace: {fileID: 21300000, guid: 8e177c8c611f4fe41951a3ed6b487924, type: 3}
-  UICDfill: {fileID: 21300000, guid: da4c271238cf68f47b7560653a600c43, type: 3}
+  UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
+  UICDfill: {fileID: 21300000, guid: fdd8d6e5524d3b747b6367960532cb75, type: 3}
   UIBG: {fileID: 0}

@@ -21,7 +21,10 @@ public class GameUIManager : Singleton<GameUIManager>
 
     private IEnumerator timerCr;
 
-    private List<GameObject> playerList;
+    private List<PlayerBehaviour> playerList;
+
+    [SerializeField]
+    private TextMeshProUGUI POINTS;
 
 
     // Use this for initialization
@@ -30,10 +33,10 @@ public class GameUIManager : Singleton<GameUIManager>
         playersUIs = new List<GameObject>();
     }
 
-    public void instantiateUI(List<GameObject> players)
+    public void instantiateUI(List<PlayerBehaviour> players)
     {
 
-        foreach (GameObject player in players)
+        foreach (var player in players)
         {
             Character charInfo = player.GetComponent<PlayerBehaviour>().GetCharacterInfo();
             GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
@@ -83,6 +86,14 @@ public class GameUIManager : Singleton<GameUIManager>
 
             UpdateUISkillCD(i);
         }
+
+        var points = playerList.Select((p) => p.points).ToList();
+        var strPoints = "POINTS: ";
+        foreach (var p in points)
+        {
+            strPoints += p + " ";
+        }
+        POINTS.text = strPoints;
     }
 
     public void StartBlockedAnimation()

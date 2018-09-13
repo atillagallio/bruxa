@@ -220,27 +220,27 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: material_12___9287
-    second: {fileID: 2100000, guid: 6124a2afe5f658344a9a3e0d32c35272, type: 2}
+    second: {fileID: 2100000, guid: 0a33044255cd60d4ca58d3848c3f1800, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: material_13___9287
-    second: {fileID: 2100000, guid: 5cb16b41a8d048843861af5a5f7aee87, type: 2}
+    second: {fileID: 2100000, guid: 461863371e5300440b4a927f4e190eeb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: material_21___9287
-    second: {fileID: 2100000, guid: 94ad7f2339fafb44e9632242c09951e4, type: 2}
+    second: {fileID: 2100000, guid: 6383c79ddfce43a4f951c652b9dbc7bb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: material_23___9287
-    second: {fileID: 2100000, guid: 2d3d51a7cc96f224ba9e79b1bd3d3023, type: 2}
+    second: {fileID: 2100000, guid: 38fdca09d992e26498b2eeda3df3c67c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: material_6___9287
-    second: {fileID: 2100000, guid: 24b8f10ef10fecc448c4cb4cd4d2890b, type: 2}
+    second: {fileID: 2100000, guid: 3b083140540c62349b49442aea1d1fab, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -279,7 +279,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

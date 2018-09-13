@@ -406,9 +406,10 @@ MonoBehaviour:
   spriteList:
   - {fileID: 21300000, guid: a10e2ab95fa458240a888447ebb2ccc1, type: 3}
   - {fileID: 21300000, guid: c7cf6bea39e80b542ad2b6c98838f07a, type: 3}
-  - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
+  - {fileID: 21300000, guid: 0c3a1fcba15a0af43bea011ff61c46c2, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
-  - {fileID: 21300000, guid: 6df7332cb380c114a8457ce41e9410b6, type: 3}
+  - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
+  POINTS: {fileID: 867628730}
 --- !u!1 &71587936
 GameObject:
   m_ObjectHideFlags: 0
@@ -26960,6 +26961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986350222}
   - component: {fileID: 1986350223}
+  - component: {fileID: 1986350224}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Untagged
@@ -26992,13 +26994,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameCharacter: {fileID: 1261679824}
-  playerPrefab: {fileID: 1753517335247144, guid: c7fb6c4ddaec96c488364835a4784e17,
+  playerPrefab: {fileID: 114308869174446520, guid: c7fb6c4ddaec96c488364835a4784e17,
     type: 2}
   endGameCanvas: {fileID: 1831956239}
   matchDuration: 180
   colors: []
   timerText: {fileID: 1724348141}
-  players: []
   plane: {fileID: 1991582298}
   pointPrefab: {fileID: 1697074021215708, guid: 0e8ba4bfabee3a44f991440bd80e950b,
     type: 2}
@@ -27017,10 +27018,21 @@ MonoBehaviour:
   realJoysticks: []
   parryActive: 0
   AvailableWitches:
-  - {fileID: 11400000, guid: 7a069357390ffae4f8952c4df9d1a3fb, type: 2}
-  - {fileID: 11400000, guid: ecf3817b3f2ec1147bfd43926c11f4f8, type: 2}
   - {fileID: 11400000, guid: 88d7ad2fa8643c146815462aad2f474c, type: 2}
   - {fileID: 11400000, guid: 969833d8cf18ded41818c025c4d4d2c0, type: 2}
+  - {fileID: 11400000, guid: ecf3817b3f2ec1147bfd43926c11f4f8, type: 2}
+  - {fileID: 11400000, guid: 7a069357390ffae4f8952c4df9d1a3fb, type: 2}
+--- !u!114 &1986350224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1986350221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c93fddf0983b594d8bbbcb13e204129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990820045
 GameObject:
   m_ObjectHideFlags: 0
