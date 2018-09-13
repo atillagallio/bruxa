@@ -69,7 +69,7 @@ public class PlayerBehaviour : MonoBehaviour
 
   void CheckButtonPress()
   {
-    if (!InGameManager.Instance.HasGameStarted()) return;
+    if (!InGameManager.Instance.GameStarted) return;
     if (!isInControl)
     {
       if (switchButton)
@@ -103,7 +103,7 @@ public class PlayerBehaviour : MonoBehaviour
         parryCoolDown = 0;
       }
     }
-    if (spellButton && InGameManager.Instance.HasGameStarted())
+    if (spellButton && InGameManager.Instance.GameStarted)
     {
       print("using spell");
       if (spell != null)

@@ -21,7 +21,7 @@ public class GameUIManager : Singleton<GameUIManager>
 
   private IEnumerator timerCr;
 
-  private List<GameObject> playerList;
+  private List<PlayerBehaviour> playerList;
   public TextMeshProUGUI POINTS;
 
 
@@ -31,10 +31,10 @@ public class GameUIManager : Singleton<GameUIManager>
     playersUIs = new List<GameObject>();
   }
 
-  public void instantiateUI(List<GameObject> players)
+  public void instantiateUI(List<PlayerBehaviour> players)
   {
 
-    foreach (GameObject player in players)
+    foreach (var player in players)
     {
       GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
       playersUIs.Add(curPlayerUI);
@@ -58,7 +58,7 @@ public class GameUIManager : Singleton<GameUIManager>
   {
     Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
     //Image playerImg = playersUIs[position].GetComponent<Image>();
-    float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
+    float _cd = playerList[position].switchCooldown;
     if (_cd > GameDataManager.Data.SwitchCooldown)
       playerImg.fillAmount = 1;
     else
@@ -78,7 +78,7 @@ public class GameUIManager : Singleton<GameUIManager>
       UpdateUISkillCD(i);
     }
 
-    var points = playerList.Select((p) => p.GetComponent<PlayerBehaviour>().points).ToList();
+    var points = playerList.Select((p) => p.points).ToList();
     var strPoints = "POINTS: ";
     foreach (var p in points)
     {

@@ -26961,6 +26961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986350222}
   - component: {fileID: 1986350223}
+  - component: {fileID: 1986350224}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Untagged
@@ -26993,13 +26994,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameCharacter: {fileID: 1261679824}
-  playerPrefab: {fileID: 1753517335247144, guid: c7fb6c4ddaec96c488364835a4784e17,
+  playerPrefab: {fileID: 114308869174446520, guid: c7fb6c4ddaec96c488364835a4784e17,
     type: 2}
   endGameCanvas: {fileID: 1831956239}
   matchDuration: 180
   colors: []
   timerText: {fileID: 1724348141}
-  players: []
   plane: {fileID: 1991582298}
   pointPrefab: {fileID: 1697074021215708, guid: 0e8ba4bfabee3a44f991440bd80e950b,
     type: 2}
@@ -27017,6 +27017,17 @@ MonoBehaviour:
   spellText: {fileID: 1737847253}
   realJoysticks: []
   parryActive: 0
+--- !u!114 &1986350224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1986350221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c93fddf0983b594d8bbbcb13e204129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990820045
 GameObject:
   m_ObjectHideFlags: 0

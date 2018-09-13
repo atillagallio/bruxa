@@ -6,6 +6,7 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(MatchManager))]
 public class InGameManager : Singleton<InGameManager>
 {
 
@@ -15,21 +16,25 @@ public class InGameManager : Singleton<InGameManager>
   /// </summary>
 
 
-  bool gameStarted = false;
   //Prefabs
   public InGameCharacterController gameCharacter;
-  public GameObject playerPrefab;
+  [SerializeField]
+  private PlayerBehaviour playerPrefab;
 
   public GameObject endGameCanvas;
 
-  private bool gameFinished = false;
+  public bool GameStarted => MatchManager.GameStarted;
+  public bool GameFinished => MatchManager.GameFinished;
 
   public int matchDuration = 0;
   public List<Color> colors;
   public TextMeshProUGUI timerText;
 
   [SerializeField]
-  private List<GameObject> players;
+  public List<PlayerBehaviour> players
+  {
+    get; private set;
+  }
   public GameObject plane;
   public GameObject pointPrefab;
   public GameObject bombPrefab;
@@ -50,6 +55,28 @@ public class InGameManager : Singleton<InGameManager>
   public List<string> realJoysticks;
 
   public bool parryActive = false;
+
+  private MatchManager _matchManager;
+  private MatchManager MatchManager
+  {
+    get
+    {
+      _matchManager = _matchManager ?? (GetComponent<MatchManager>());
+      return _matchManager;
+    }
+  }
+
+  void Update()
+  {
+    if (MatchManager.GameStarted)
+    {
+      timerText.gameObject.SetActive(false);
+    }
+    else
+    {
+      timerText.text = Mathf.Ceil(MatchManager.Countdown).ToString();
+    }
+  }
 
   public void SetSpellList()
   {
@@ -164,14 +191,15 @@ public class InGameManager : Singleton<InGameManager>
     InstantiatePoints(30, pointPrefab);
     InstantiatePoints(10, superPointPrefab);
     InstantiateSpells(5);
-    StartCoroutine(MatchCountDown(3));
     StartCoroutine(respawn());
+
+    MatchManager.StartMatch();
   }
 
   public IEnumerator respawn()
   {
     int i = 1;
-    while (!gameFinished)
+    while (!GameFinished)
     {
       yield return new WaitForSecondsRealtime(2f);
       InstantiatePoints(1, pointPrefab);
@@ -187,7 +215,7 @@ public class InGameManager : Singleton<InGameManager>
 
   public bool HasGameStarted()
   {
-    return gameStarted;
+    return GameStarted;
   }
 
   void PopulateRealJoysticks()
@@ -201,17 +229,18 @@ public class InGameManager : Singleton<InGameManager>
   }
   void InstantiatePlayers()
   {
-    players = new List<GameObject>();
+    players = new List<PlayerBehaviour>();
     int inputPos = 0;
     PopulateRealJoysticks();
     foreach (string input in realJoysticks)
     {
       Debug.Log(input + " ->" + colors[inputPos].ToString());
-      GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+      var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
       PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
       playerController.gameUiPosition = inputPos;
       playerController.SetPlayerInfo(new Joystick(input, inputPos), colors[inputPos]);
       inputPos++;
+      // TODO: CHANGE TO PLAYERBEHAVIOUR
       players.Add(player);
     }
   }
@@ -300,7 +329,7 @@ public class InGameManager : Singleton<InGameManager>
     player.isInControl = true;
     player.parryCoolDown = GameDataManager.Data.ParryCooldown - GameDataManager.Data.InitialParryDelay; ;
     AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.gameUiPosition], gameCharacter.gameObject.transform.position);
-    foreach (GameObject playerObj in players)
+    foreach (var playerObj in players)
     {
 
       if (playerObj == player.gameObject)
@@ -331,22 +360,6 @@ public class InGameManager : Singleton<InGameManager>
 
   }
 
-  private IEnumerator MatchCountDown(int timer)
-  {
-    while (timer > 0)
-    {
-      timerText.text = timer.ToString();
-      yield return new WaitForSecondsRealtime(1);
-      timer--;
-    }
-    timerText.gameObject.SetActive(false);
-    gameStarted = true;
-    StartCoroutine(MatchTimer());
-  }
-  void FixedUpdate()
-  {
-
-  }
 
   public Vector3 GetARandomTreePos(int pos)
   {
@@ -363,55 +376,5 @@ public class InGameManager : Singleton<InGameManager>
     return newVec;
   }
 
-  private IEnumerator MatchTimer()
-  {
-    GameEndCondition endCondition = GameDataManager.Data.EndCondition;
-    Debug.Log("Match Start");
-    float matchDuration = 0;
-
-    Func<bool> TestForDuration = () => matchDuration > endCondition.MatchDuration;
-    Func<bool> TestForScore = () => players.Aggregate(false, (test, p) => test || p.GetComponent<PlayerBehaviour>().points >= endCondition.ScoreToWin);
-    Func<bool> GameOver = () => true;
-    switch (endCondition.Mode)
-    {
-      case GameEndConditionMode.score:
-        GameOver = TestForScore;
-        break;
-      case GameEndConditionMode.time:
-        GameOver = TestForDuration;
-        break;
-      case GameEndConditionMode.both:
-        GameOver = () => TestForDuration() || TestForScore();
-        break;
-      default:
-        print("WEIRD CASE!!!");
-        break;
-    }
-
-    while (!GameOver())
-    {
-      yield return null;
-      matchDuration += Time.deltaTime;
-      GameUIManager.Instance.UpdateTimer(matchDuration);
-    }
-
-    gameFinished = true;
-    string txt = "";
-    foreach (GameObject player in players)
-    {
-      txt += player.GetComponent<PlayerBehaviour>().name + " -> " + player.GetComponent<PlayerBehaviour>().gameUiPosition + " -> " + player.GetComponent<PlayerBehaviour>().points;
-      Debug.Log(txt);
-    }
-    endGameCanvas.SetActive(true);
-
-    foreach (GameObject player in players)
-    {
-      EndGame.Instance.playerList.Add(player.GetComponent<PlayerBehaviour>());
-    }
-
-    EndGame.Instance.FindWinner();
-    UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
-    //endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;
-  }
 
 }
