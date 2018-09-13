@@ -3051,7 +3051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 637037836}
   m_Layer: 10
-  m_Name: Circular Collider
+  m_Name: Paredes!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13547,8 +13547,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1000602460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.74, y: 0, z: 0.85}
-  m_LocalScale: {x: 1.1713235, y: 1, z: 4.087515}
+  m_LocalPosition: {x: -1.74, y: 4.44, z: 0.85}
+  m_LocalScale: {x: 1.1713235, y: 6.562542, z: 4.087515}
   m_Children: []
   m_Father: {fileID: 637037836}
   m_RootOrder: 2
@@ -26354,8 +26354,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1813386735}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: 0, z: 3.2}
-  m_LocalScale: {x: 5.512501, y: 1, z: 1}
+  m_LocalPosition: {x: 1.15, y: 4.44, z: 3.2}
+  m_LocalScale: {x: 5.512501, y: 6.562542, z: 1}
   m_Children: []
   m_Father: {fileID: 637037836}
   m_RootOrder: 1
