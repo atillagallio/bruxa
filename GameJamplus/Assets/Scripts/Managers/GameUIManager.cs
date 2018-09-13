@@ -9,120 +9,112 @@ using System.Linq;
 public class GameUIManager : Singleton<GameUIManager>
 {
 
-    public TextMeshProUGUI timerText;
-    private List<GameObject> playersUIs;
+  public TextMeshProUGUI timerText;
+  private List<PlayerUIInfo> playersUIs;
 
-    public GameObject UiPositionObj;
-    public GameObject Uiprefab;
-    public Sprite noSkillUISprite;
+  public GameObject UiPositionObj;
+  public PlayerUIInfo Uiprefab;
+  public Sprite noSkillUISprite;
 
-    public GameObject blockedTextObj;
-    public List<Sprite> spriteList;
+  public GameObject blockedTextObj;
+  public List<Sprite> spriteList;
 
-    private IEnumerator timerCr;
+  private IEnumerator timerCr;
 
-    private List<PlayerBehaviour> playerList;
+  private List<PlayerBehaviour> playerList;
 
-    [SerializeField]
-    private TextMeshProUGUI POINTS;
+  [SerializeField]
+  private TextMeshProUGUI POINTS;
 
 
-    // Use this for initialization
-    void Start()
+  // Use this for initialization
+  void Start()
+  {
+    playersUIs = new List<PlayerUIInfo>();
+  }
+
+  public void instantiateUI(List<PlayerBehaviour> players)
+  {
+
+    foreach (var player in players)
     {
-        playersUIs = new List<GameObject>();
+      Character charInfo = player.GetComponent<PlayerBehaviour>().GetCharacterInfo();
+      var thisPlayerInfo = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
+      //thisPlayerInfo = curPlayerUI.GetComponent<PlayerUIInfo>();
+      thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
+      thisPlayerInfo.CooldownFillImg.sprite = charInfo.UICDfill;
+      thisPlayerInfo.CooldownFillImg.color = charInfo.Color;
+      thisPlayerInfo.HeroBG.color = charInfo.Color;
+      thisPlayerInfo.Player = player;
+      playersUIs.Add(thisPlayerInfo);
+      //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
+      thisPlayerInfo.transform.SetParent(UiPositionObj.transform);
     }
+    playerList = players;
+  }
 
-    public void instantiateUI(List<PlayerBehaviour> players)
+  public void SetSkill(int pos, string skillName, int id = 0)
+  {
+    playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = spriteList[id];
+
+    if (skillName == "")
+    {
+      playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = noSkillUISprite;
+    }
+  }
+
+  public void UpdateUISkillCD(int position)
+  {
+    Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
+    //Image playerImg = playersUIs[position].GetComponent<Image>();
+    float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
+    if (_cd > GameDataManager.Data.SwitchCooldown)
+      playerImg.fillAmount = 1;
+    else
+      playerImg.fillAmount = _cd / GameDataManager.Data.SwitchCooldown;
+
+  }
+
+
+
+
+  // Update is called once per frame
+  void Update()
+  {
+    for (int i = 0; i < playerList.Count; i++)
     {
 
-        foreach (var player in players)
-        {
-            Character charInfo = player.GetComponent<PlayerBehaviour>().GetCharacterInfo();
-            GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
-            PlayerUIInfo thisPlayerInfo = curPlayerUI.GetComponent<PlayerUIInfo>();
-            thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
-            thisPlayerInfo.CooldownFillImg.sprite = charInfo.UICDfill;
-            thisPlayerInfo.CooldownFillImg.color = charInfo.Color;
-            thisPlayerInfo.HeroBG.color = charInfo.Color;
-
-            playersUIs.Add(curPlayerUI);
-            //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
-            curPlayerUI.transform.SetParent(UiPositionObj.transform);
-        }
-        playerList = players;
+      UpdateUISkillCD(i);
     }
+  }
 
-    public void SetSkill(int pos, string skillName, int id = 0)
-    {
-        playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = spriteList[id];
+  public void StartBlockedAnimation()
+  {
+    StartCoroutine(BlockedAnimationCorroutine());
+  }
 
-        if (skillName == "")
-        {
-            playersUIs[pos].GetComponent<PlayerUIInfo>().ItemImg.sprite = noSkillUISprite;
-        }
-    }
+  private IEnumerator BlockedAnimationCorroutine()
+  {
+    blockedTextObj.SetActive(true);
+    yield return new WaitForSeconds(1f);
+    blockedTextObj.SetActive(false);
+  }
 
-    public void UpdateUISkillCD(int position)
-    {
-        Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
-        //Image playerImg = playersUIs[position].GetComponent<Image>();
-        float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
-        if (_cd > GameDataManager.Data.SwitchCooldown)
-            playerImg.fillAmount = 1;
-        else
-            playerImg.fillAmount = _cd / GameDataManager.Data.SwitchCooldown;
+  public void UpdateTimer(int time)
+  {
+    string timeFormat;
+    int minutes = time / 60;
+    int seconds = time % 60;
+    string secondsAux = "";
+    string minutesAux = "";
+    if (seconds < 10)
+      secondsAux = "0";
+    if (minutes < 10)
+      minutesAux = "0";
 
-    }
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        for (int i = 0; i < playerList.Count; i++)
-        {
-
-            UpdateUISkillCD(i);
-        }
-
-        var points = playerList.Select((p) => p.points).ToList();
-        var strPoints = "POINTS: ";
-        foreach (var p in points)
-        {
-            strPoints += p + " ";
-        }
-        POINTS.text = strPoints;
-    }
-
-    public void StartBlockedAnimation()
-    {
-        StartCoroutine(BlockedAnimationCorroutine());
-    }
-
-    private IEnumerator BlockedAnimationCorroutine()
-    {
-        blockedTextObj.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        blockedTextObj.SetActive(false);
-    }
-
-    public void UpdateTimer(int time)
-    {
-        string timeFormat;
-        int minutes = time / 60;
-        int seconds = time % 60;
-        string secondsAux = "";
-        string minutesAux = "";
-        if (seconds < 10)
-            secondsAux = "0";
-        if (minutes < 10)
-            minutesAux = "0";
-
-        timeFormat = minutesAux + minutes + ":" + secondsAux + seconds;
-        timerText.text = timeFormat;
+    timeFormat = minutesAux + minutes + ":" + secondsAux + seconds;
+    timerText.text = timeFormat;
 
 
-    }
+  }
 }
