@@ -43,18 +43,27 @@ public class InGameManager : Singleton<InGameManager>
   public GameObject megaPointPrefab;
   public GameObject getSpellPrefab;
 
+  [HideInInspector]
   public bool spell1Lock = false;
+  [HideInInspector]
   public bool spell2Forward = false;
+  [HideInInspector]
   public bool spell3Slow = false;
+  [HideInInspector]
   public bool spell5Drunk = false;
 
   public TextMeshProUGUI spellText;
 
   public List<Spell> spellList;
 
+  [HideInInspector]
   public List<string> realJoysticks;
 
+  [HideInInspector]
   public bool parryActive = false;
+
+  [SerializeField]
+  private List<Character> AvailableWitches;
 
   private MatchManager _matchManager;
   private MatchManager MatchManager
@@ -237,6 +246,7 @@ public class InGameManager : Singleton<InGameManager>
       Debug.Log(input + " ->" + colors[inputPos].ToString());
       var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
       PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
+      playerController.SetCharacterInfo(AvailableWitches[inputPos]);
       playerController.gameUiPosition = inputPos;
       playerController.SetPlayerInfo(new Joystick(input, inputPos), colors[inputPos]);
       inputPos++;

@@ -72,7 +72,7 @@ public class MatchManager : MonoBehaviour
     {
       yield return null;
       MatchDuration += Time.deltaTime;
-      GameUIManager.Instance.UpdateTimer(MatchDuration);
+      GameUIManager.Instance.UpdateTimer((int)MatchDuration);
     }
 
     GameFinished = true;

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Azul
   m_EditorClassIdentifier: 
   Nome: Morgana
-  Color: {r: 1, g: 0.28235295, b: 0.29411766, a: 1}
+  Color: {r: 0.03208439, g: 0.7122961, b: 0.9716981, a: 1}
   InGameRepresentation: {fileID: 0}
   GameOverRepresentation: {fileID: 114435294848114494, guid: 2fba2b77e124799448d337c5a118823d,
     type: 2}
-  UIFace: {fileID: 21300000, guid: 78334679fdafd524794fdeb4ffe5464c, type: 3}
+  UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
   UIBg: {fileID: 0}

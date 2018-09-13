@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
   private Joystick playerJoystick;
   private Color playerColor;
   public int gameUiPosition;
-
+  private Character characterInfo;
   public Spell spell;
 
   public bool isInControl = false;
@@ -33,6 +33,15 @@ public class PlayerBehaviour : MonoBehaviour
     switchCooldown = GameDataManager.Data.SwitchCooldown;
   }
 
+  public void SetCharacterInfo(Character witch)
+  {
+    characterInfo = witch;
+  }
+
+  public Character GetCharacterInfo()
+  {
+    return characterInfo;
+  }
   void GetControls()
   {
     switchButton = Input.GetButtonDown(playerJoystick.input.Fire1);
@@ -69,7 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
 
   void CheckButtonPress()
   {
-    if (!InGameManager.Instance.GameStarted) return;
+    if (!InGameManager.Instance.HasGameStarted()) return;
     if (!isInControl)
     {
       if (switchButton)
@@ -103,7 +112,7 @@ public class PlayerBehaviour : MonoBehaviour
         parryCoolDown = 0;
       }
     }
-    if (spellButton && InGameManager.Instance.GameStarted)
+    if (spellButton && InGameManager.Instance.HasGameStarted())
     {
       print("using spell");
       if (spell != null)

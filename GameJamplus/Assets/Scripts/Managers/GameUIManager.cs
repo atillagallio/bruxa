@@ -22,7 +22,9 @@ public class GameUIManager : Singleton<GameUIManager>
   private IEnumerator timerCr;
 
   private List<PlayerBehaviour> playerList;
-  public TextMeshProUGUI POINTS;
+
+  [SerializeField]
+  private TextMeshProUGUI POINTS;
 
 
   // Use this for initialization
@@ -37,6 +39,7 @@ public class GameUIManager : Singleton<GameUIManager>
     foreach (var player in players)
     {
       GameObject curPlayerUI = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
+      curPlayerUI.GetComponent<PlayerUIInfo>().HeroImg.sprite = player.GetCharacterInfo().UIFace;
       playersUIs.Add(curPlayerUI);
       //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
       curPlayerUI.transform.SetParent(UiPositionObj.transform);
@@ -58,7 +61,7 @@ public class GameUIManager : Singleton<GameUIManager>
   {
     Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
     //Image playerImg = playersUIs[position].GetComponent<Image>();
-    float _cd = playerList[position].switchCooldown;
+    float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
     if (_cd > GameDataManager.Data.SwitchCooldown)
       playerImg.fillAmount = 1;
     else
@@ -99,12 +102,11 @@ public class GameUIManager : Singleton<GameUIManager>
     blockedTextObj.SetActive(false);
   }
 
-  public void UpdateTimer(float time)
+  public void UpdateTimer(int time)
   {
     string timeFormat;
-
-    float minutes = Mathf.Floor(time / 60);
-    float seconds = time % 60;
+    int minutes = time / 60;
+    int seconds = time % 60;
     string secondsAux = "";
     string minutesAux = "";
     if (seconds < 10)

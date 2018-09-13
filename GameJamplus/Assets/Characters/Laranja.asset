@@ -16,5 +16,5 @@ MonoBehaviour:
   InGameRepresentation: {fileID: 0}
   GameOverRepresentation: {fileID: 114328488142940720, guid: 2667e1069b65d754a8f53a0e40442106,
     type: 2}
-  UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
+  UIFace: {fileID: 21300000, guid: 78334679fdafd524794fdeb4ffe5464c, type: 3}
   UIBg: {fileID: 0}
