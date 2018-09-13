@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: MainData
   m_EditorClassIdentifier: 
   EndCondition:
-    Mode: 2
-    MatchDuration: 20
-    ScoreToWin: 100
+    Mode: 0
+    MatchDuration: 150
+    ScoreToWin: 0
   InitialParryDelay: 0
   ParryDuration: 0.3
   ParryCooldown: 0.8

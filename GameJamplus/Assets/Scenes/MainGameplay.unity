@@ -406,9 +406,9 @@ MonoBehaviour:
   spriteList:
   - {fileID: 21300000, guid: a10e2ab95fa458240a888447ebb2ccc1, type: 3}
   - {fileID: 21300000, guid: c7cf6bea39e80b542ad2b6c98838f07a, type: 3}
-  - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
+  - {fileID: 21300000, guid: 0c3a1fcba15a0af43bea011ff61c46c2, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
-  - {fileID: 21300000, guid: 6df7332cb380c114a8457ce41e9410b6, type: 3}
+  - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
   POINTS: {fileID: 867628730}
 --- !u!1 &71587936
 GameObject:
@@ -26804,13 +26804,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 20
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 3
   m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 25, y: 25}
+  m_StartAxis: 1
+  m_CellSize: {x: 400, y: 100}
   m_Spacing: {x: 150, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 1
 --- !u!1 &1919175899
 GameObject:
   m_ObjectHideFlags: 0
