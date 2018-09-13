@@ -20,3 +20,6 @@ MonoBehaviour:
   ParryCooldown: 0.8
   SwitchCooldown: 5
   Skill5DrunkType: 0
+  SmallPoint: 5
+  MediumPoint: 10
+  LargePoint: 20

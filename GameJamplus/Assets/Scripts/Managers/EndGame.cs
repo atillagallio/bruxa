@@ -4,32 +4,38 @@ using UnityEngine;
 
 public class EndGame : Singleton<EndGame>
 {
-  public List<PlayerBehaviour> playerList;
+    public List<PlayerBehaviour> playerList;
 
-  public WinnerInfo WinnerInfo;
-  // Use this for initialization
-  void Start()
-  {
-    playerList = new List<PlayerBehaviour>();
-    DontDestroyOnLoad(gameObject);
-    EventManager.OnExitGameOverScreen += () =>
+    public WinnerInfo WinnerInfo;
+    // Use this for initialization
+    void Start()
     {
-      Destroy(this.gameObject);
-    };
-  }
-
-  public void FindWinner()
-  {
-    var winner = playerList[0];
-    foreach (PlayerBehaviour player in playerList)
-    {
-      if (player.points > winner.points)
-        winner = player;
+        if (FindObjectsOfType<EndGame>().Length > 1)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        playerList = new List<PlayerBehaviour>();
+        DontDestroyOnLoad(gameObject);
+        EventManager.OnExitGameOverScreen += () =>
+        {
+            if (this != null)
+                Destroy(this.gameObject);
+        };
     }
-    WinnerInfo = new WinnerInfo()
+
+    public void FindWinner()
     {
-      points = winner.points,
-      number = winner.gameUiPosition
-    };
-  }
+        var winner = playerList[0];
+        foreach (PlayerBehaviour player in playerList)
+        {
+            if (player.points > winner.points)
+                winner = player;
+        }
+        WinnerInfo = new WinnerInfo()
+        {
+            points = winner.points,
+            number = winner.gameUiPosition
+        };
+    }
 }

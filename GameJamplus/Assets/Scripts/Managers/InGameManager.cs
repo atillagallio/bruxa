@@ -145,7 +145,7 @@ public class InGameManager : Singleton<InGameManager>
         }
         spell1Lock = false;
         gameCharacter.Spell1FX.SetActive(false);
-        spellText.text = "";
+
     }
 
 
@@ -162,7 +162,7 @@ public class InGameManager : Singleton<InGameManager>
         spell2Forward = false;
         gameCharacter.Spell2FX.GetComponent<ParticleSystem>().Stop();
         gameCharacter.Spell2FX.gameObject.SetActive(false);
-        spellText.text = "";
+
     }
     private IEnumerator Spell3Duration(int seconds)
     {
@@ -173,7 +173,7 @@ public class InGameManager : Singleton<InGameManager>
             i++;
         }
         spell3Slow = false;
-        spellText.text = "";
+
     }
 
     private IEnumerator Spell5Duration(int seconds)
@@ -185,7 +185,7 @@ public class InGameManager : Singleton<InGameManager>
             i++;
         }
         spell5Drunk = false;
-        spellText.text = "";
+
     }
 
     void Start()

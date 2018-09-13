@@ -169,12 +169,12 @@ public class InGameCharacterController : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(pointSound, transform.position);
             pointsPS.Play();
-            controllingPlayer.points++;
+            controllingPlayer.points += GameDataManager.Data.SmallPoint;
             Destroy(col.gameObject);
         }
         else if (col.gameObject.layer == LayerMask.NameToLayer("SuperPoint"))
         {
-            controllingPlayer.points = controllingPlayer.points + 5;
+            controllingPlayer.points += GameDataManager.Data.MediumPoint;
             AudioSource.PlayClipAtPoint(pointBigSound, transform.position);
             superPointsPS.Play();
             Destroy(col.gameObject);
@@ -182,7 +182,7 @@ public class InGameCharacterController : MonoBehaviour
         else if (col.gameObject.layer == LayerMask.NameToLayer("MegaPoint"))
         {
             AudioSource.PlayClipAtPoint(pointMegaSound, transform.position);
-            controllingPlayer.points = controllingPlayer.points + 20;
+            controllingPlayer.points += GameDataManager.Data.LargePoint;
             megaPointsPS.Play();
             Destroy(col.gameObject);
         }

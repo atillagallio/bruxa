@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 4561246771139976}
   - component: {fileID: 54260850969411716}
   - component: {fileID: 135842009114689984}
-  - component: {fileID: 135950876632936288}
   - component: {fileID: 65812008556535518}
   m_Layer: 13
   m_Name: Mega Points
@@ -441,18 +440,6 @@ BoxCollider:
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135842009114689984
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660072799629688}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135950876632936288
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

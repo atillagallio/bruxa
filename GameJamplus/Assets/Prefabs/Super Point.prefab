@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 4478483891425724}
   - component: {fileID: 54675610841229212}
   - component: {fileID: 135585935126807812}
-  - component: {fileID: 135973849884349792}
   - component: {fileID: 65138494330356610}
   m_Layer: 12
   m_Name: Super Point
@@ -441,18 +440,6 @@ BoxCollider:
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135585935126807812
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426233907252758}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135973849884349792
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
