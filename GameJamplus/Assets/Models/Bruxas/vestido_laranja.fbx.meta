@@ -173,7 +173,47 @@ ModelImporter:
     4300054: mesh_642188492
     4300056: mesh_1183152205
     4300058: mesh_1027712047
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_12___3743
+    second: {fileID: 2100000, guid: 359e0f31b2586654d894585f07c122b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_13___3743
+    second: {fileID: 2100000, guid: 1334588d7f7962c49af53bbe7e46715e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_14___3743
+    second: {fileID: 2100000, guid: bb8a1b95af0754349bd0980f3407cf84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_19___3743
+    second: {fileID: 2100000, guid: 1393e89c3cd71374d9ebaf52495b2590, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_20___3743
+    second: {fileID: 2100000, guid: a81923646ab0ce9478012aeab11eaed4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_21___3743
+    second: {fileID: 2100000, guid: d39e2d3e665be0e459f9f85c748fcfbf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_23___3743
+    second: {fileID: 2100000, guid: c5ca518c35edd9947be3898ac29ebe35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_6___3743
+    second: {fileID: 2100000, guid: 3c787777fdcbcc042a1963d1677e5cf0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

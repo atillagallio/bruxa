@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitForce: 0.5
   ForwardSpeed: 16
-  RotationRadius: 4
+  RotationRadius: 2
   Gravity: 25
   SlowSpellVel: 2
   BombExplosionImpulse: 40

@@ -183,7 +183,62 @@ ModelImporter:
     4300060: mesh_405875887
     4300062: mesh_440484140
     4300064: mesh_1594673936
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_12___4509
+    second: {fileID: 2100000, guid: 4928059e588b2c948930677341a71984, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_13___4509
+    second: {fileID: 2100000, guid: ba6051571c53bb1489248aed0aa7b5a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_15___4509
+    second: {fileID: 2100000, guid: a95d831aa56d7cf42b427ae193a53770, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_16___4509
+    second: {fileID: 2100000, guid: 28f63200eb1f6044da999f0c6dd88022, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_20___4509
+    second: {fileID: 2100000, guid: bbb9f9a5049ce8841a8870f8a92ffd2d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_21___4509
+    second: {fileID: 2100000, guid: 83fc6d2cfc2af774fa56c75f65a21214, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_22___4509
+    second: {fileID: 2100000, guid: b4103960f880c1248a0b244bca88eed8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_23___4509
+    second: {fileID: 2100000, guid: f5c145aa61b2c174589596803adf3840, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_5___4509
+    second: {fileID: 2100000, guid: 911d7828df2371043a4dfc8de4a2da0e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_8___4509
+    second: {fileID: 2100000, guid: 9ba2784ddd2394c4da7c818835fba0c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_9___4509
+    second: {fileID: 2100000, guid: 9a2fc1402fd10bd4ca99535877dfa1d1, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
