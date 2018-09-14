@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class MatchManager : MonoBehaviour
 {
   public bool GameStarted
@@ -50,7 +52,7 @@ public class MatchManager : MonoBehaviour
     MatchDuration = 0;
 
     Func<bool> TestForDuration = () => MatchDuration > endCondition.MatchDuration;
-    Func<bool> TestForScore = () => players.Aggregate(false, (test, p) => test || p.GetComponent<PlayerBehaviour>().points >= endCondition.ScoreToWin);
+    Func<bool> TestForScore = () => players.Aggregate(false, (test, p) => test || p.GetComponent<PlayerBehaviour>().Points >= endCondition.ScoreToWin);
     Func<bool> GameOver = () => true;
     switch (endCondition.Mode)
     {
@@ -79,19 +81,14 @@ public class MatchManager : MonoBehaviour
     string txt = "";
     foreach (var player in players)
     {
-      txt += player.name + " -> " + player.gameUiPosition + " -> " + player.points;
+      txt += player.name + " -> " + player.GameUiPosition + " -> " + player.Points;
       Debug.Log(txt);
     }
-    //endGameCanvas.SetActive(true);
-
-    foreach (var player in players)
-    {
-      EndGame.Instance.playerList.Add(player);
-    }
-
-    EndGame.Instance.FindWinner();
-    UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+    GameOverPlayerDataContainer.SetData(players);
+    UnityEngine.SceneManagement.SceneManager.LoadScene(GameOverSceneName);
     //endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;
   }
 
+  [SerializeField]
+  private string GameOverSceneName;
 }

@@ -6,42 +6,32 @@ public class PlayerBehaviour : MonoBehaviour
 {
   private Joystick playerJoystick;
   private Color playerColor;
-  public int gameUiPosition;
-  private Character characterInfo;
-  public Spell spell;
-
+  public int GameUiPosition;
+  public Character CharacterInfo { get; set; }
+  public Spell Spell;
   public bool isInControl = false;
   //private List<Spells> spells;
-  public float switchCooldown = 0;
+  public float SwitchCooldown = 0;
+  public int Points = 0;
+  public float parryCoolDown = 0;
   private bool InSwitchCooldown
   {
     get
     {
-      return switchCooldown <= GameDataManager.Data.SwitchCooldown;
+      return SwitchCooldown <= GameDataManager.Data.SwitchCooldown;
     }
   }
 
-  public float parryCoolDown = 0;
   private bool switchButton;
   private bool spellButton;
 
-  public int points = 0;
   private bool parryButton;
   // Use this for initialization
   void Start()
   {
-    switchCooldown = GameDataManager.Data.SwitchCooldown;
+    SwitchCooldown = GameDataManager.Data.SwitchCooldown;
   }
 
-  public void SetCharacterInfo(Character witch)
-  {
-    characterInfo = witch;
-  }
-
-  public Character GetCharacterInfo()
-  {
-    return characterInfo;
-  }
   void GetControls()
   {
     switchButton = Input.GetButtonDown(playerJoystick.input.Fire1);
@@ -72,7 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
     parryCoolDown += Time.deltaTime;
     if (!isInControl)
     {
-      switchCooldown += Time.deltaTime;
+      SwitchCooldown += Time.deltaTime;
     }
   }
 
@@ -85,11 +75,11 @@ public class PlayerBehaviour : MonoBehaviour
       {
         if (!InSwitchCooldown && !InGameManager.Instance.spell1Lock)
         {
-          switchCooldown = 0;
+          SwitchCooldown = 0;
           if (InGameManager.Instance.parryActive)
           {
             GameUIManager.Instance.StartBlockedAnimation();
-            Debug.Log("PLAYER UI POS ->" + gameUiPosition);
+            Debug.Log("PLAYER UI POS ->" + GameUiPosition);
             //GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
             // GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
 
@@ -115,7 +105,7 @@ public class PlayerBehaviour : MonoBehaviour
     if (spellButton && InGameManager.Instance.HasGameStarted())
     {
       print("using spell");
-      if (spell != null)
+      if (Spell != null)
       {
         InGameManager.Instance.PlayerUseSpell(this);
       }

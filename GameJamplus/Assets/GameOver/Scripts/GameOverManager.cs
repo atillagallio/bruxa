@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct GameOverPlayerData
 {
-  public PlayerInfo PlayerInfo;
+  public PlayerInfo Info;
   public PlayerGameStats GameStats;
 }
 
@@ -15,7 +15,7 @@ public struct GameOverPlayerData
 public class GameOverManager : MonoBehaviour
 {
 
-  public List<GameOverPlayerData> players;
+  private List<GameOverPlayerData> players => GameOverPlayerDataContainer.Players;
 
   public Transform WinnerPlayerReference;
   public Transform LoserPlayerReference;
@@ -27,22 +27,24 @@ public class GameOverManager : MonoBehaviour
   private HorizontalLayoutGroup scoresGroup;
 
   [SerializeField]
-
-  private Text WinnerName;
+  private Text winnerName;
 
   [SerializeField]
   private PlayerGameOverCard playerCardPrefab;
+
+  [SerializeField]
+  private Camera referenceCam;
 
   [ContextMenu("Update Players")]
   public void SetupGameOverScreen()
   {
     int playerCount = Mathf.Min(players.Count, 4);
-    var cam = Camera.main;
-    var winnerReferenceDirection = WinnerPlayerReference.position - cam.transform.position;
+    referenceCam = Camera.main;
+    var winnerReferenceDirection = WinnerPlayerReference.position - referenceCam.transform.position;
     var loserReferenceDistance = (LoserPlayerReference.position - WinnerPlayerReference.position).magnitude;
 
-    var winnerVerticalSize = deltaCorrection * 2 * winnerReferenceDirection.magnitude * Mathf.Atan(Mathf.Deg2Rad * cam.fieldOfView / 2.0f);
-    var winnerHorizontalSize = winnerVerticalSize * cam.aspect;
+    var winnerVerticalSize = deltaCorrection * 2 * winnerReferenceDirection.magnitude * Mathf.Atan(Mathf.Deg2Rad * referenceCam.fieldOfView / 2.0f);
+    var winnerHorizontalSize = winnerVerticalSize * referenceCam.aspect;
     var winnerHorizontalDelta = winnerHorizontalSize / (float)(playerCount + 1.0);
 
     var startHorizontalPosition = WinnerPlayerReference.position - Vector3.right * winnerHorizontalDelta * (((float)playerCount - 1) / 2.0f);
@@ -50,7 +52,7 @@ public class GameOverManager : MonoBehaviour
     for (int i = 0; i < playerCount; i++)
     {
       var player = players[i];
-      var playerChar = Instantiate(player.PlayerInfo.Character.GameOverRepresentation);
+      var playerChar = Instantiate(player.Info.Character.GameOverRepresentation);
       playerChar.transform.parent = transform;
       playerChar.transform.position = startHorizontalPosition + i * Vector3.right * winnerHorizontalDelta;
 
@@ -60,17 +62,17 @@ public class GameOverManager : MonoBehaviour
 
       if (!IsWinner(player))
       {
-        var direction = (playerChar.transform.position - cam.transform.position).normalized;
+        var direction = (playerChar.transform.position - referenceCam.transform.position).normalized;
         direction = Vector3.ProjectOnPlane(direction, Vector3.up);
         Vector3 pos;
-        pos = cam.transform.position + direction * loserReferenceDistance;
+        pos = referenceCam.transform.position + direction * loserReferenceDistance;
         pos.y = LoserPlayerReference.position.y;
         playerChar.transform.position = pos;
       }
       else
       {
         playerChar.SetWinner();
-        WinnerName.text = player.PlayerInfo.Character.Nome;
+        winnerName.text = player.Info.Character.Nome;
       }
     }
 
@@ -80,7 +82,7 @@ public class GameOverManager : MonoBehaviour
 
   bool IsWinner(GameOverPlayerData player)
   {
-    return !players.Aggregate(false, (winner, p) => winner || (player.GameStats.points < p.GameStats.points));
+    return !players.Aggregate(false, (winner, p) => winner || (player.GameStats.Points < p.GameStats.Points));
   }
 
   // Use this for initialization

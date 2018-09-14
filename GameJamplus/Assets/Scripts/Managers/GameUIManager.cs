@@ -24,7 +24,6 @@ public class GameUIManager : Singleton<GameUIManager>
   private List<PlayerBehaviour> playerList;
 
   [SerializeField]
-  private TextMeshProUGUI POINTS;
 
 
   // Use this for initialization
@@ -38,7 +37,7 @@ public class GameUIManager : Singleton<GameUIManager>
 
     foreach (var player in players)
     {
-      Character charInfo = player.GetComponent<PlayerBehaviour>().GetCharacterInfo();
+      Character charInfo = player.CharacterInfo;
       var thisPlayerInfo = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
       //thisPlayerInfo = curPlayerUI.GetComponent<PlayerUIInfo>();
       thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
@@ -67,7 +66,7 @@ public class GameUIManager : Singleton<GameUIManager>
   {
     Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
     //Image playerImg = playersUIs[position].GetComponent<Image>();
-    float _cd = playerList[position].GetComponent<PlayerBehaviour>().switchCooldown;
+    float _cd = playerList[position].GetComponent<PlayerBehaviour>().SwitchCooldown;
     if (_cd > GameDataManager.Data.SwitchCooldown)
       playerImg.fillAmount = 1;
     else

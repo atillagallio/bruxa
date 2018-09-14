@@ -21,6 +21,6 @@ public class PlayerUIInfo : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    Points.text = "" + Player.points;
+    Points.text = "" + Player.Points;
   }
 }
