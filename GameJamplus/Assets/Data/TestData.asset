@@ -14,7 +14,7 @@ MonoBehaviour:
   EndCondition:
     Mode: 1
     MatchDuration: 90
-    ScoreToWin: 10
+    ScoreToWin: 100
   InitialParryDelay: 0
   ParryDuration: 0.3
   ParryCooldown: 0.8

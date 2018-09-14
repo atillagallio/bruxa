@@ -40,6 +40,8 @@ public class InGameCharacterController : MonoBehaviour
       blobShadow.material.color = color;
       var m = trail.main;
       m.startColor = color;
+      var change = ChangeParticle.GetComponentInChildren<ParticleSystem>().main;
+      change.startColor = color;
     }
   }
 
@@ -155,10 +157,26 @@ public class InGameCharacterController : MonoBehaviour
       velocity = velocity.normalized * speed;
     }
     charController.Move(velocity * Time.deltaTime);
+    var planarSpeed = Vector3.ProjectOnPlane((transform.position - lastPos) / Time.deltaTime, Vector3.up);
     ySpeed = (transform.position.y - lastPos.y) / Time.deltaTime;
     lastPos = transform.position;
     isGrounded = charController.isGrounded;
+
+    if (planarSpeed.sqrMagnitude <= data.SlowSpellVel)
+    {
+      trail.Stop();
+      IsMakingTrail = false;
+    }
+    else if (!IsMakingTrail)
+    {
+      print("COMECANDO A FUMACA");
+      trail.Play();
+      IsMakingTrail = true;
+    }
+
   }
+
+  private bool IsMakingTrail = false;
 
   public bool isGrounded;
 

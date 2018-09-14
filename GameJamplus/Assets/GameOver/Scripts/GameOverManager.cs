@@ -92,7 +92,6 @@ public class GameOverManager : MonoBehaviour
   {
     SetupGameOverScreen();
     StartCoroutine(GameOverAnimationCoroutine());
-    print("aaa");
   }
 
   // Update is called once per frame
@@ -104,7 +103,6 @@ public class GameOverManager : MonoBehaviour
   private float gameOverDelay;
   IEnumerator GameOverAnimationCoroutine()
   {
-    print("aaa");
     yield return new WaitForSeconds(gameOverDelay);
     while (true)
     {
