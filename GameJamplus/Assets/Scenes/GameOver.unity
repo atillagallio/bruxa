@@ -525,6 +525,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542ab782a715d3047977e12e9a1bbc54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testPlayers:
+  - Info:
+      PlayerNumber: 0
+      Character: {fileID: 11400000, guid: 88d7ad2fa8643c146815462aad2f474c, type: 2}
+    GameStats:
+      Points: 100
+  - Info:
+      PlayerNumber: 1
+      Character: {fileID: 11400000, guid: 969833d8cf18ded41818c025c4d4d2c0, type: 2}
+    GameStats:
+      Points: 50
   WinnerPlayerReference: {fileID: 1161053370}
   LoserPlayerReference: {fileID: 1602431654}
   deltaCorrection: 1.2

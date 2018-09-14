@@ -15,7 +15,9 @@ public struct GameOverPlayerData
 public class GameOverManager : MonoBehaviour
 {
 
-  private List<GameOverPlayerData> players => GameOverPlayerDataContainer.Players;
+  [SerializeField]
+  private List<GameOverPlayerData> testPlayers;
+  private List<GameOverPlayerData> players => GameOverPlayerDataContainer.Players ?? testPlayers;
 
   public Transform WinnerPlayerReference;
   public Transform LoserPlayerReference;

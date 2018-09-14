@@ -8,7 +8,7 @@ public class GameOverPlayerDataContainer : MonoBehaviour
 {
 
   private List<GameOverPlayerData> _players;
-  public static List<GameOverPlayerData> Players => _instance._players;
+  public static List<GameOverPlayerData> Players => _instance?._players;
 
   private static GameOverPlayerDataContainer _instance;
 
