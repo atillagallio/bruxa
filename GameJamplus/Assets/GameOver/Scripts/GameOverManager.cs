@@ -89,11 +89,30 @@ public class GameOverManager : MonoBehaviour
   void Start()
   {
     SetupGameOverScreen();
+    StartCoroutine(GameOverAnimationCoroutine());
+    print("aaa");
   }
 
   // Update is called once per frame
   void Update()
   {
+  }
 
+  [SerializeField]
+  private float gameOverDelay;
+  IEnumerator GameOverAnimationCoroutine()
+  {
+    print("aaa");
+    yield return new WaitForSeconds(gameOverDelay);
+    while (true)
+    {
+
+      if (Input.GetButtonDown("Submit"))
+      {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        EventManager.OnExitGameOverScreen?.Invoke();
+      }
+      yield return null;
+    }
   }
 }

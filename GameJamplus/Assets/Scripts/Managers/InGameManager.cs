@@ -327,9 +327,14 @@ public class InGameManager : Singleton<InGameManager>
     {
       gameCharacter.controllingPlayer.SwitchCooldown = 0;
       gameCharacter.controllingPlayer.isInControl = false;
+      EventManager.OnPlayerLeavingWitch(gameCharacter.controllingPlayer);
+    }
+    else
+    {
     }
     player.SwitchCooldown = 0;
     gameCharacter.controllingPlayer = player;
+    EventManager.OnPlayerEnteringWitch(player);
     gameCharacter.joystick = player.GetJoystick();
     gameCharacter.isControlledByPlayer = true;
     gameCharacter.Color = player.GetColor();
@@ -359,6 +364,7 @@ public class InGameManager : Singleton<InGameManager>
     {
       gameCharacter.ChangeParticle.GetComponentInChildren<ParticleSystem>().Stop();
     }
+
   }
 
   private float ChangefxTime = 0.5f;

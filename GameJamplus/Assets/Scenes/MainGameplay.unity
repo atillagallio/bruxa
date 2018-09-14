@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: bd2a205fc4455a5429fcbac072ccf846,
+  m_LightingDataAsset: {fileID: 112000002, guid: da03641e04ee0bf4fbbe5b7b0348a9f2,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -408,7 +408,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0c3a1fcba15a0af43bea011ff61c46c2, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
   - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
-  POINTS: {fileID: 0}
+  grayscale: {fileID: 4800000, guid: 3c28c5e426c11e54b9eaf411ba4f2b17, type: 3}
 --- !u!1 &71587936
 GameObject:
   m_ObjectHideFlags: 0
@@ -4288,6 +4288,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1794437303082656, guid: 3eb1f6b46e06dc345afda8b82056244a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eb1f6b46e06dc345afda8b82056244a, type: 2}
   m_IsPrefabParent: 0
@@ -6057,9 +6061,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 075f5ca6c880fd444b3ca9a5c4be4b1a, type: 2}
-  m_sharedMaterial: {fileID: 21491841145559630, guid: 075f5ca6c880fd444b3ca9a5c4be4b1a,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 808aa8f1ab804104aa7d0c337a6c1481, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 808aa8f1ab804104aa7d0c337a6c1481, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6083,8 +6086,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 120
-  m_fontSizeBase: 120
+  m_fontSize: 350
+  m_fontSizeBase: 350
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

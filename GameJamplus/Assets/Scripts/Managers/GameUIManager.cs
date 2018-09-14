@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
+using System;
 
 public class GameUIManager : Singleton<GameUIManager>
 {
@@ -23,13 +24,20 @@ public class GameUIManager : Singleton<GameUIManager>
 
   private List<PlayerBehaviour> playerList;
 
-  [SerializeField]
-
+  public Shader grayscale;
 
   // Use this for initialization
   void Start()
   {
     playersUIs = new List<PlayerUIInfo>();
+    EventManager.OnPlayerLeavingWitch += LeavingWitchUIColor;
+    EventManager.OnPlayerEnteringWitch += EnteringWitchUIColor;
+  }
+
+  void OnDestroy()
+  {
+    EventManager.OnPlayerLeavingWitch -= LeavingWitchUIColor;
+    EventManager.OnPlayerEnteringWitch -= EnteringWitchUIColor;
   }
 
   public void instantiateUI(List<PlayerBehaviour> players)
@@ -37,13 +45,14 @@ public class GameUIManager : Singleton<GameUIManager>
 
     foreach (var player in players)
     {
-      Character charInfo = player.CharacterInfo;
+      Character charInfo = player.GetComponent<PlayerBehaviour>().CharacterInfo;
       var thisPlayerInfo = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
-      //thisPlayerInfo = curPlayerUI.GetComponent<PlayerUIInfo>();
       thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
+      thisPlayerInfo.HeroImg.material = new Material(grayscale);
+      thisPlayerInfo.HeroImg.material.SetFloat("_Grayscale", 1);
       thisPlayerInfo.CooldownFillImg.sprite = charInfo.UICDfill;
-      thisPlayerInfo.CooldownFillImg.color = charInfo.Color;
-      thisPlayerInfo.HeroBG.color = charInfo.Color;
+      //thisPlayerInfo.CooldownFillImg.color = charInfo.Color;
+      //thisPlayerInfo.HeroBG.color = charInfo.Color;
       thisPlayerInfo.Player = player;
       playersUIs.Add(thisPlayerInfo);
       //curPlayerUI.GetComponent<Image>().color = player.GetComponent<PlayerBehaviour>().GetColor();
@@ -62,16 +71,37 @@ public class GameUIManager : Singleton<GameUIManager>
     }
   }
 
+  public void EnteringWitchUIColor(PlayerBehaviour player)
+  {
+    int playerpos = playerList.FindInstanceID(player);
+    print(playerList.Count);
+    playersUIs[playerpos].HeroBG.color = player.CharacterInfo.Color;
+    playersUIs[playerpos].HeroImg.material.SetFloat("_Grayscale", 0);
+  }
+
+  public void LeavingWitchUIColor(PlayerBehaviour player)
+  {
+    int playerpos = playerList.FindInstanceID(player);
+    print(playerList.Count);
+    playersUIs[playerpos].HeroBG.color = Color.white;
+    playersUIs[playerpos].HeroImg.material.SetFloat("_Grayscale", 1);
+  }
+
   public void UpdateUISkillCD(int position)
   {
     Image playerImg = playersUIs[position].GetComponent<PlayerUIInfo>().CooldownFillImg;
     //Image playerImg = playersUIs[position].GetComponent<Image>();
     float _cd = playerList[position].GetComponent<PlayerBehaviour>().SwitchCooldown;
     if (_cd > GameDataManager.Data.SwitchCooldown)
+    {
       playerImg.fillAmount = 1;
+      playersUIs[position].CooldownFillImg.color = playerList[position].GetComponent<PlayerBehaviour>().CharacterInfo.Color;
+    }
     else
+    {
       playerImg.fillAmount = _cd / GameDataManager.Data.SwitchCooldown;
-
+      playersUIs[position].CooldownFillImg.color = Color.white;
+    }
   }
 
 
