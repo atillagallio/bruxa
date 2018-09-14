@@ -408,6 +408,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0c3a1fcba15a0af43bea011ff61c46c2, type: 3}
   - {fileID: 21300000, guid: 95477b16d753ebd46ab3f1ab2718840e, type: 3}
   - {fileID: 21300000, guid: 2fa459e282dfc9043841b177a12210ba, type: 3}
+  grayscale: {fileID: 4800000, guid: 3c28c5e426c11e54b9eaf411ba4f2b17, type: 3}
   POINTS: {fileID: 0}
 --- !u!1 &71587936
 GameObject:

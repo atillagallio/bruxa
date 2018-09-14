@@ -327,9 +327,14 @@ public class InGameManager : Singleton<InGameManager>
         {
             gameCharacter.controllingPlayer.switchCooldown = 0;
             gameCharacter.controllingPlayer.isInControl = false;
+            EventManager.OnPlayerLeavingWitch(gameCharacter.controllingPlayer);
+        }
+        else
+        {
         }
         player.switchCooldown = 0;
         gameCharacter.controllingPlayer = player;
+        EventManager.OnPlayerEnteringWitch(player);
         gameCharacter.joystick = player.GetJoystick();
         gameCharacter.isControlledByPlayer = true;
         gameCharacter.Color = player.GetColor();
