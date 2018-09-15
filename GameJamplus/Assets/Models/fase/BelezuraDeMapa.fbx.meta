@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: a468501fbd0e3204ebff35e834d17669
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Untitled_23_DiamondHull_geo
+    100004: Untitled_23_Icing_geo
+    100006: Untitled_23_Icing_geo 1
+    100008: Untitled_23_Icing_geo 2
+    100010: Untitled_23_Icing_geo 3
+    100012: Untitled_23_Icing_geo 4
+    100014: Untitled_23_Icing_geo 5
+    100016: Untitled_23_Icing_geo 6
+    100018: Untitled_23_MatteHull_geo
+    100020: Untitled_23_MatteHull_geo 1
+    100022: Untitled_23_MatteHull_geo 2
+    100024: Untitled_23_MatteHull_geo 3
+    100026: Untitled_23_MatteHull_geo 4
+    100028: Untitled_23_MatteHull_geo 5
+    100030: Untitled_23_MatteHull_geo 6
+    100032: Untitled_23_MatteHull_geo 7
+    100034: Untitled_23_MatteHull_geo 8
+    100036: Untitled_23_Spikes_geo
+    400000: //RootNode
+    400002: Untitled_23_DiamondHull_geo
+    400004: Untitled_23_Icing_geo
+    400006: Untitled_23_Icing_geo 1
+    400008: Untitled_23_Icing_geo 2
+    400010: Untitled_23_Icing_geo 3
+    400012: Untitled_23_Icing_geo 4
+    400014: Untitled_23_Icing_geo 5
+    400016: Untitled_23_Icing_geo 6
+    400018: Untitled_23_MatteHull_geo
+    400020: Untitled_23_MatteHull_geo 1
+    400022: Untitled_23_MatteHull_geo 2
+    400024: Untitled_23_MatteHull_geo 3
+    400026: Untitled_23_MatteHull_geo 4
+    400028: Untitled_23_MatteHull_geo 5
+    400030: Untitled_23_MatteHull_geo 6
+    400032: Untitled_23_MatteHull_geo 7
+    400034: Untitled_23_MatteHull_geo 8
+    400036: Untitled_23_Spikes_geo
+    2100000: 79348357432d47468e290e25c112e3aa_MatteHull
+    2100002: 2f212815f4d3c1a4681afeeaf9c6dc37_Icing
+    2100004: c8313697256347fc832e290f4c04b901_DiamondHull
+    2100006: cf7f00597aeb53a42b67c83d863a9ffa_Spikes
+    2300000: Untitled_23_DiamondHull_geo
+    2300002: Untitled_23_Icing_geo
+    2300004: Untitled_23_Icing_geo 1
+    2300006: Untitled_23_Icing_geo 2
+    2300008: Untitled_23_Icing_geo 3
+    2300010: Untitled_23_Icing_geo 4
+    2300012: Untitled_23_Icing_geo 5
+    2300014: Untitled_23_Icing_geo 6
+    2300016: Untitled_23_MatteHull_geo
+    2300018: Untitled_23_MatteHull_geo 1
+    2300020: Untitled_23_MatteHull_geo 2
+    2300022: Untitled_23_MatteHull_geo 3
+    2300024: Untitled_23_MatteHull_geo 4
+    2300026: Untitled_23_MatteHull_geo 5
+    2300028: Untitled_23_MatteHull_geo 6
+    2300030: Untitled_23_MatteHull_geo 7
+    2300032: Untitled_23_MatteHull_geo 8
+    2300034: Untitled_23_Spikes_geo
+    3300000: Untitled_23_DiamondHull_geo
+    3300002: Untitled_23_Icing_geo
+    3300004: Untitled_23_Icing_geo 1
+    3300006: Untitled_23_Icing_geo 2
+    3300008: Untitled_23_Icing_geo 3
+    3300010: Untitled_23_Icing_geo 4
+    3300012: Untitled_23_Icing_geo 5
+    3300014: Untitled_23_Icing_geo 6
+    3300016: Untitled_23_MatteHull_geo
+    3300018: Untitled_23_MatteHull_geo 1
+    3300020: Untitled_23_MatteHull_geo 2
+    3300022: Untitled_23_MatteHull_geo 3
+    3300024: Untitled_23_MatteHull_geo 4
+    3300026: Untitled_23_MatteHull_geo 5
+    3300028: Untitled_23_MatteHull_geo 6
+    3300030: Untitled_23_MatteHull_geo 7
+    3300032: Untitled_23_MatteHull_geo 8
+    3300034: Untitled_23_Spikes_geo
+    4300000: Untitled_23_MatteHull_geo
+    4300002: Untitled_23_MatteHull_geo
+    4300004: Untitled_23_MatteHull_geo
+    4300006: Untitled_23_MatteHull_geo
+    4300008: Untitled_23_MatteHull_geo
+    4300010: Untitled_23_MatteHull_geo
+    4300012: Untitled_23_MatteHull_geo
+    4300014: Untitled_23_MatteHull_geo
+    4300016: Untitled_23_MatteHull_geo
+    4300018: Untitled_23_Icing_geo
+    4300020: Untitled_23_Icing_geo
+    4300022: Untitled_23_Icing_geo
+    4300024: Untitled_23_Icing_geo
+    4300026: Untitled_23_Icing_geo
+    4300028: Untitled_23_Icing_geo
+    4300030: Untitled_23_Icing_geo
+    4300032: Untitled_23_DiamondHull_geo
+    4300034: Untitled_23_Spikes_geo
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
