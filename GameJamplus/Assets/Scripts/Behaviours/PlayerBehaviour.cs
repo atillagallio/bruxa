@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
   private Joystick playerJoystick;
-  private Color playerColor;
+  public Color Color => CharacterInfo.Color;
   public int GameUiPosition;
   public Character CharacterInfo { get; set; }
   public Spell Spell;
@@ -44,14 +44,9 @@ public class PlayerBehaviour : MonoBehaviour
     return playerJoystick;
   }
 
-  public Color GetColor()
-  {
-    return playerColor;
-  }
-  public void SetPlayerInfo(Joystick _joystick, Color _color)
+  public void SetJoystick(Joystick _joystick)
   {
     playerJoystick = _joystick;
-    playerColor = _color;
   }
   // Update is called once per frame
   void Update()

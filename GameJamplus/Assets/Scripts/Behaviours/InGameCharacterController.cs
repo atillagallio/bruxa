@@ -5,7 +5,11 @@ using UnityEngine;
 public class InGameCharacterController : MonoBehaviour
 {
 
-  public PlayerBehaviour controllingPlayer;
+  public PlayerBehaviour controllingPlayer
+  {
+    get;
+    set;
+  }
   public List<GameObject> bruxasGO;
   public GameObject block;
   public GameObject Spell2FX;

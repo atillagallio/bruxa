@@ -248,7 +248,7 @@ public class InGameManager : Singleton<InGameManager>
       PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
       playerController.CharacterInfo = AvailableWitches[inputPos];
       playerController.GameUiPosition = inputPos;
-      playerController.SetPlayerInfo(new Joystick(input, inputPos), colors[inputPos]);
+      playerController.SetJoystick(new Joystick(input, inputPos));
       inputPos++;
       // TODO: CHANGE TO PLAYERBEHAVIOUR
       players.Add(player);
@@ -337,7 +337,7 @@ public class InGameManager : Singleton<InGameManager>
     EventManager.OnPlayerEnteringWitch(player);
     gameCharacter.joystick = player.GetJoystick();
     gameCharacter.isControlledByPlayer = true;
-    gameCharacter.Color = player.GetColor();
+    gameCharacter.Color = player.Color;
     int i = 0;
     bool hasChar = false;
 
@@ -383,14 +383,14 @@ public class InGameManager : Singleton<InGameManager>
     Mesh planeMesh = plane.GetComponent<MeshFilter>().mesh;
     Bounds bounds = planeMesh.bounds;
 
-    float minX = plane.transform.position.x - plane.transform.localScale.x * bounds.size.x * 0.5f;
-    float minZ = plane.transform.position.z - plane.transform.localScale.z * bounds.size.z * 0.5f;
+    float minX = plane.transform.position.x - plane.transform.localScale.x * bounds.extents.x;
+    float maxX = plane.transform.position.x + plane.transform.localScale.x * bounds.extents.x;
+    float minZ = plane.transform.position.z - plane.transform.localScale.z * bounds.extents.z;
+    float maxZ = plane.transform.position.z + plane.transform.localScale.z * bounds.extents.z;
 
-    Vector3 newVec = new Vector3(Random.Range(minX * 3, -minX),
+    Vector3 newVec = new Vector3(Random.Range(minX, maxX),
                                  plane.transform.position.y + pos,
-                                 Random.Range(minZ * 3, -minZ));
+                                 Random.Range(minZ, maxX));
     return newVec;
   }
-
-
 }
