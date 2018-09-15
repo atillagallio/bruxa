@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public struct GameOverPlayerData
@@ -29,13 +30,15 @@ public class GameOverManager : MonoBehaviour
   private HorizontalLayoutGroup scoresGroup;
 
   [SerializeField]
-  private Text winnerName;
+  private TextMeshProUGUI winnerName;
 
   [SerializeField]
   private PlayerGameOverCard playerCardPrefab;
 
   [SerializeField]
   private Camera referenceCam;
+
+  public List<float> yRotationToCamera;
 
   [ContextMenu("Update Players")]
   public void SetupGameOverScreen()
@@ -55,8 +58,12 @@ public class GameOverManager : MonoBehaviour
     {
       var player = players[i];
       var playerChar = Instantiate(player.Info.Character.GameOverRepresentation);
+      playerChar.transform.Rotate(0, yRotationToCamera[i], 0);
+      //playerChar.transform.LookAt(referenceCam.transform.position, playerChar.transform.up);
+      //playerChar.transform.Rotate(0, 180f, 0);
       playerChar.transform.parent = transform;
       playerChar.transform.position = startHorizontalPosition + i * Vector3.right * winnerHorizontalDelta;
+
 
       var uiCard = Instantiate(playerCardPrefab);
       uiCard.SetPlayer(player);
