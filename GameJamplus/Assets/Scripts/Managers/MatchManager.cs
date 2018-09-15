@@ -39,8 +39,11 @@ public class MatchManager : MonoBehaviour
     {
       yield return null;
       Countdown -= Time.deltaTime;
+      if (Countdown <= 1)
+      {
+        GameStarted = true;
+      }
     }
-    GameStarted = true;
 
     StartCoroutine(MatchTimer());
   }

@@ -26,6 +26,9 @@ public class GameUIManager : Singleton<GameUIManager>
 
   public Shader grayscale;
 
+  [SerializeField]
+  private UIScore UIScore;
+
   // Use this for initialization
   void Start()
   {
@@ -59,6 +62,8 @@ public class GameUIManager : Singleton<GameUIManager>
       thisPlayerInfo.transform.SetParent(UiPositionObj.transform);
     }
     playerList = players;
+
+    UIScore.Players = players;
   }
 
   public void SetSkill(int pos, string skillName, int id = 0)

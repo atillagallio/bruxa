@@ -77,13 +77,14 @@ public class InGameManager : Singleton<InGameManager>
 
   void Update()
   {
-    if (MatchManager.GameStarted)
+    if (MatchManager.Countdown > 0)
     {
-      timerText.gameObject.SetActive(false);
+      var CountDownRemap = new List<string>() { "Go!", "Set", "Ready" };
+      timerText.text = CountDownRemap[Mathf.FloorToInt(MatchManager.Countdown)];
     }
     else
     {
-      timerText.text = Mathf.Ceil(MatchManager.Countdown).ToString();
+      timerText.gameObject.SetActive(false);
     }
   }
 
