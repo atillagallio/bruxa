@@ -75,6 +75,9 @@ public class InGameManager : Singleton<InGameManager>
     }
   }
 
+
+  public SpriteRenderer witchEffect;
+  public List<Sprite> itemIconSpriteList;
   void Update()
   {
     if (MatchManager.Countdown > 0)
@@ -100,23 +103,31 @@ public class InGameManager : Singleton<InGameManager>
   public void UseSpell1Lock()
   {
     spell1Lock = true;
+    witchEffect.sprite = itemIconSpriteList[0];
+    witchEffect.gameObject.SetActive(true);
     StartCoroutine(Spell1Duration(4));
   }
 
   public void UseSpell2Forward()
   {
     spell2Forward = true;
+    witchEffect.sprite = itemIconSpriteList[1];
+    witchEffect.gameObject.SetActive(true);
     StartCoroutine(Spell2Duration(3));
   }
 
   public void UseSpell3Slow()
   {
     spell3Slow = true;
+    witchEffect.sprite = itemIconSpriteList[2];
+    witchEffect.gameObject.SetActive(true);
     StartCoroutine(Spell3Duration(3));
   }
 
   public void UseSpell5Drunk()
   {
+    witchEffect.sprite = itemIconSpriteList[4];
+    witchEffect.gameObject.SetActive(true);
     spell5Drunk = true;
     StartCoroutine(Spell5Duration(3));
   }
@@ -131,6 +142,7 @@ public class InGameManager : Singleton<InGameManager>
     Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
     bombBehaviour.player = gameCharacter.controllingPlayer;
     Debug.Log(gameCharacter.controllingPlayer);
+
   }
 
 
@@ -144,6 +156,7 @@ public class InGameManager : Singleton<InGameManager>
       yield return new WaitForSecondsRealtime(1f);
       i++;
     }
+    witchEffect.gameObject.SetActive(false);
     spell1Lock = false;
     gameCharacter.Spell1FX.SetActive(false);
 
@@ -161,6 +174,7 @@ public class InGameManager : Singleton<InGameManager>
       i++;
     }
     spell2Forward = false;
+    witchEffect.gameObject.SetActive(false);
     gameCharacter.Spell2FX.GetComponent<ParticleSystem>().Stop();
     gameCharacter.Spell2FX.gameObject.SetActive(false);
 
@@ -173,6 +187,7 @@ public class InGameManager : Singleton<InGameManager>
       yield return new WaitForSecondsRealtime(1f);
       i++;
     }
+    witchEffect.gameObject.SetActive(false);
     spell3Slow = false;
 
   }
@@ -185,6 +200,7 @@ public class InGameManager : Singleton<InGameManager>
       yield return new WaitForSecondsRealtime(1f);
       i++;
     }
+    witchEffect.gameObject.SetActive(false);
     spell5Drunk = false;
 
   }
