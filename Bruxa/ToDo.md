@@ -4,12 +4,18 @@
 
 - [ ] 
 
+Qualidade de vida:
+=================
+- [ ] Dar toggle no box do mapa
+
+
 1o Encontro com as cartinhas das lentes:
 ========================================
 
 Bugs:
 - [ ] Bruxa fica gritando toda hora
-- [ ]
+- [ ] Colisao com itens
+- [ ] 
 
 Coisas a fazer: 
 - [ ] Zerar cooldown do block quando acerta
