@@ -145,8 +145,6 @@ public class InGameManager : Singleton<InGameManager>
     GameObject bomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
     Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
     bombBehaviour.player = gameCharacter.controllingPlayer;
-    Debug.Log(gameCharacter.controllingPlayer);
-
   }
 
 
@@ -264,7 +262,6 @@ public class InGameManager : Singleton<InGameManager>
     PopulateRealJoysticks();
     foreach (string input in realJoysticks)
     {
-      Debug.Log(input + " ->" + colors[inputPos].ToString());
       var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
       PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
       playerController.CharacterInfo = AvailableWitches[inputPos];
@@ -327,7 +324,6 @@ public class InGameManager : Singleton<InGameManager>
     {
       AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.GameUiPosition], gameCharacter.gameObject.transform.position);
       parryActive = true;
-      Debug.Log("BlockSkill");
       StartCoroutine(BlockDuration());
     }
   }

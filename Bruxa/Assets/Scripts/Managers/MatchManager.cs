@@ -51,7 +51,6 @@ public class MatchManager : MonoBehaviour
   private IEnumerator MatchTimer()
   {
     GameEndCondition endCondition = GameDataManager.Data.EndCondition;
-    Debug.Log("Match Start");
     MatchDuration = 0;
 
     Func<bool> TestForDuration = () => MatchDuration > endCondition.MatchDuration;
@@ -81,12 +80,6 @@ public class MatchManager : MonoBehaviour
     }
 
     GameFinished = true;
-    string txt = "";
-    foreach (var player in players)
-    {
-      txt += player.name + " -> " + player.GameUiPosition + " -> " + player.Points;
-      Debug.Log(txt);
-    }
     GameOverPlayerDataContainer.SetData(players);
     UnityEngine.SceneManagement.SceneManager.LoadScene(GameOverSceneName);
     //endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = txt;

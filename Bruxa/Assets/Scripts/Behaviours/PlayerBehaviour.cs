@@ -74,14 +74,12 @@ public class PlayerBehaviour : MonoBehaviour
           if (InGameManager.Instance.parryActive)
           {
             GameUIManager.Instance.StartBlockedAnimation();
-            Debug.Log("PLAYER UI POS ->" + GameUiPosition);
             //GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
             // GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
 
           }
           else
           {
-            Debug.Log("player " + playerJoystick.name + "Trying to get control");
             InGameManager.Instance.ChangeCharacterControl(this);
             //inblockChangeSkillCooldown = false;
           }
@@ -90,7 +88,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     else if (parryButton)
     {
-      print("using parry");
       if (parryCoolDown >= GameDataManager.Data.ParryCooldown)
       {
         InGameManager.Instance.UseChangeBlockSkill(this);
@@ -99,7 +96,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     if (spellButton && InGameManager.Instance.HasGameStarted())
     {
-      print("using spell");
       if (Spell != null)
       {
         InGameManager.Instance.PlayerUseSpell(this);

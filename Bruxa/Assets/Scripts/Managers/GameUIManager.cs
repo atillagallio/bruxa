@@ -79,7 +79,6 @@ public class GameUIManager : Singleton<GameUIManager>
   public void EnteringWitchUIColor(PlayerBehaviour player)
   {
     int playerpos = playerList.FindInstanceID(player);
-    print(playerList.Count);
     playersUIs[playerpos].HeroBG.color = player.CharacterInfo.Color;
     playersUIs[playerpos].HeroImg.material.SetFloat("_Grayscale", 0);
   }

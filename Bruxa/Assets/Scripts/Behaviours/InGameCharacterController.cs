@@ -173,7 +173,6 @@ public class InGameCharacterController : MonoBehaviour
     }
     else if (!IsMakingTrail)
     {
-      print("COMECANDO A FUMACA");
       trail.Play();
       IsMakingTrail = true;
     }
@@ -213,7 +212,7 @@ public class InGameCharacterController : MonoBehaviour
       AudioSource.PlayClipAtPoint(spellGetSound, transform.position);
       controllingPlayer.Spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
       GameUIManager.Instance.SetSkill(controllingPlayer.GameUiPosition, controllingPlayer.Spell.spellName, controllingPlayer.Spell.id);
-      Debug.Log(controllingPlayer.Spell.spellName);
+      //Debug.Log(controllingPlayer.Spell.spellName);
       Destroy(col.gameObject);
     }
 
