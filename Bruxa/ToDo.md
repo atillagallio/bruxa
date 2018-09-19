@@ -22,10 +22,15 @@ Coisas a fazer:
 - [ ] Zerar cooldown do block quando acerta
 - [ ] Dar pra usar a pena logo depois da pena (nao consumir a pena quando tiver na pena)
 - [ ] Fazer a mina fazer um rastro
-- [ ] Colocar pontos em lugares especificos
+- [ ] Colocar pontos em lugares especificos da fase
 - [ ] Tornar as coisas da frente transparentes
 - [ ] Tornar os pontos mais claros que sao pontos
 - [ ] Colher de cha quando pega a bruxa (eg: .2s de tempo de bruxa minimo)
+- [ ] Efeito na UI da pontuacao global
+- [ ] Chapeu dourado na bruxa que ta ganhando
+- [ ] Bolinhas flutuando em volta da bruxa
+- [ ] Character Selection Screen
+- [ ] Rewired
 - [ ]
 
 Coisas a discutir melhor:
@@ -34,7 +39,7 @@ Coisas a discutir melhor:
 - [ ] Itens serem caixinhas iquais as do mario kart
 - [ ] Estrelas pra liberar bruxa
 - [ ] Controle da bruxa e jumps
-- [ ]
+- [ ] Map selection
 - [ ]
 - [ ]
 
