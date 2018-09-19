@@ -82,8 +82,12 @@ public class InGameManager : Singleton<InGameManager>
   {
     if (MatchManager.Countdown > 0)
     {
+      // TODO: Arrumar essa gambiarra
       var CountDownRemap = new List<string>() { "Go!", "Set", "Ready" };
-      timerText.text = CountDownRemap[Mathf.FloorToInt(MatchManager.Countdown)];
+      var pos = Mathf.FloorToInt(MatchManager.Countdown);
+      pos = Mathf.Min(pos, CountDownRemap.Count - 1);
+      pos = Mathf.Max(pos, 0);
+      timerText.text = CountDownRemap[pos];
     }
     else
     {
