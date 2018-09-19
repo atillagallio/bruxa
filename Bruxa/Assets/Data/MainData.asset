@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2663c9c4f080ee047a11f111c436ad5d, type: 3}
+  m_Name: MainData
+  m_EditorClassIdentifier: 
+  EndCondition:
+    Mode: 1
+    MatchDuration: 90
+    ScoreToWin: 200
+  InitialParryDelay: 0
+  ParryDuration: 0.3
+  ParryCooldown: 0.8
+  SwitchCooldown: 5
+  Skill5DrunkType: 0
+  SmallPoint: 5
+  MediumPoint: 10
+  LargePoint: 20
