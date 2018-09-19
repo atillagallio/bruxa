@@ -10,7 +10,10 @@
 Bugs:
 - [ ] Bruxa fica gritando toda hora
 
-Coisas a fazer: 
+Coisas a fazer:
+- [ ] UI efeito na UI dos pontos
+- [ ] UI chapeu dourado na bruxa que esta ganhando
+- [ ] Circulos representando as bruxas envolta da bruxa.
 - [ ] Zerar cooldown do block quando acerta
 - [ ] Dar pra usar a pena logo depois da pena (nao consumir a pena quando tiver na pena)
 - [ ] Fazer a mina fazer um rastro
