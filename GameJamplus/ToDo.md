@@ -9,6 +9,7 @@
 
 Bugs:
 - [ ] Bruxa fica gritando toda hora
+- [ ]
 
 Coisas a fazer:
 - [ ] UI efeito na UI dos pontos
@@ -27,6 +28,4 @@ Coisas a discutir melhor:
 - [ ] Multiplicador de block
 - [ ] Inicio do jogo ter algum item pra favorecer quem aperta primeiro
 - [ ] Itens serem caixinhas iquais as do mario kart
-- [ ]
-- [ ]
 - [ ]
