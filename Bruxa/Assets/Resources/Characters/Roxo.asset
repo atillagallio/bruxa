@@ -13,9 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nome: Josepha
   Color: {r: 0.6627451, g: 0.17254902, b: 0.7843138, a: 1}
-  InGameRepresentation: {fileID: 0}
-  GameOverRepresentation: {fileID: 114049833995119246, guid: 550028f6a53794449938a3aebfd4130d,
-    type: 2}
+  InGameRepresentation: {fileID: 100102, guid: 4cf4b2cce035cd24b8ea9beaad6a837f, type: 3}
+  GameOverRepresentation: {fileID: 0}
   OrbitObject: {fileID: 0}
   UIFace: {fileID: 21300000, guid: 8e177c8c611f4fe41951a3ed6b487924, type: 3}
   UICDfill: {fileID: 21300000, guid: f7425c317d710a4489086c3db34ee877, type: 3}
