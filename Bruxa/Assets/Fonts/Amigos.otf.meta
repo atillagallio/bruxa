@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 9d8b4a79b53e6184f8e31d5af2fd5ba3
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Amigos
+  fontNames:
+  - Amigos
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 037de1e0303a6d245816daee99fe76a8, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
