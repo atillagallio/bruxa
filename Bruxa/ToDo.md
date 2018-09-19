@@ -15,6 +15,7 @@ Qualidade de vida:
 Bugs:
 - [ ] Bruxa fica gritando toda hora
 - [ ] Colisao com itens
+- [ ] UI's que nao escalam direito
 - [ ] 
 
 Coisas a fazer: 
@@ -31,4 +32,12 @@ Coisas a discutir melhor:
 - [ ] Multiplicador de block
 - [ ] Inicio do jogo ter algum item pra favorecer quem aperta primeiro
 - [ ] Itens serem caixinhas iquais as do mario kart
+- [ ] Estrelas pra liberar bruxa
+- [ ] Controle da bruxa e jumps
 - [ ]
+- [ ]
+- [ ]
+
+
+
+
