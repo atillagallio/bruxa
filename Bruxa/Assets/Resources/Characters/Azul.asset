@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nome: Morgana
   Color: {r: 0.011764707, g: 0.67058825, b: 1, a: 1}
-  InGameRepresentation: {fileID: 0}
+  InGameRepresentation: {fileID: 100068, guid: f9dd9bff76d22e54a8dd1352cb035804, type: 3}
   GameOverRepresentation: {fileID: 114435294848114494, guid: 2fba2b77e124799448d337c5a118823d,
     type: 2}
   OrbitObject: {fileID: 0}

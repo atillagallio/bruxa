@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nome: Miranda
   Color: {r: 0.3137255, g: 0.7568628, b: 0.35686275, a: 1}
-  InGameRepresentation: {fileID: 0}
+  InGameRepresentation: {fileID: 100060, guid: 3a77f98249f803a458cfe34981188984, type: 3}
   GameOverRepresentation: {fileID: 114155000499633770, guid: cfcdded356fdb6b4aab27f75212f614f,
     type: 2}
   OrbitObject: {fileID: 0}

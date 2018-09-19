@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nome: Sabrina
   Color: {r: 1, g: 0.3803922, b: 0.15294118, a: 1}
-  InGameRepresentation: {fileID: 0}
+  InGameRepresentation: {fileID: 100070, guid: f6dc413563e0fb9439dccaf7d9e02047, type: 3}
   GameOverRepresentation: {fileID: 114328488142940720, guid: 2667e1069b65d754a8f53a0e40442106,
     type: 2}
   OrbitObject: {fileID: 0}
