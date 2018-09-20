@@ -9177,7 +9177,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &498308562
 ParticleSystemRenderer:
@@ -15210,7 +15210,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &648375507
 ParticleSystemRenderer:
@@ -20236,7 +20236,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!119 &713392941
 Projector:
@@ -20577,7 +20577,7 @@ Transform:
   m_LocalScale: {x: 2.70045, y: 2.50396, z: 2.67907}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &726870287
 MeshRenderer:
@@ -20653,7 +20653,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &743691649
 ParticleSystemRenderer:
@@ -29147,7 +29147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -78.900024, y: -28.8}
+  m_AnchoredPosition: {x: -78.900024, y: -28.800049}
   m_SizeDelta: {x: 156.6, y: -316.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1041839979
@@ -31094,7 +31094,6 @@ Transform:
   m_LocalPosition: {x: 36.97, y: -44.64, z: 41.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1329544496}
   - {fileID: 743691648}
   - {fileID: 1786193557}
   - {fileID: 1610481425}
@@ -31328,6 +31327,53 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1273652611}
   m_Mesh: {fileID: 4300012, guid: f6dc413563e0fb9439dccaf7d9e02047, type: 3}
+--- !u!1 &1293714297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1293714298}
+  - component: {fileID: 1293714299}
+  m_Layer: 0
+  m_Name: OrbitManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1293714298
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1293714297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2048799854}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1293714299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1293714297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78be317dbb8143c42b9905fe93a967c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPos: {fileID: 1261679822}
+  orbitablePrefab: {fileID: 1892252134045638, guid: 466e1e9f98b75b4409c4e1a556a4d402,
+    type: 2}
+  radius: 1
+  rotationSpeed: 4
+  NoiseVelocity: 5
+  NoiseAmplitude: 0.3
 --- !u!1 &1294778788
 GameObject:
   m_ObjectHideFlags: 0
@@ -31818,46 +31864,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1325700197}
   m_Mesh: {fileID: 4300064, guid: 4cf4b2cce035cd24b8ea9beaad6a837f, type: 3}
---- !u!1 &1329544495
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1329544496}
-  - component: {fileID: 1329544497}
-  m_Layer: 15
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1329544496
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1329544495}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1261679822}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1329544497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1329544495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d1dfe1b7305b7a44bb92b5ff2c59e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1395814931
 GameObject:
   m_ObjectHideFlags: 0
@@ -32232,7 +32238,7 @@ Transform:
   m_Children:
   - {fileID: 208485264}
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1480220890
 GameObject:
@@ -33470,7 +33476,7 @@ Transform:
   m_LocalScale: {x: 2.7004492, y: 2.5039644, z: 2.67907}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1610481426
 AudioSource:
@@ -34547,7 +34553,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1686534895
 ParticleSystemRenderer:
@@ -40431,7 +40437,7 @@ Transform:
   - {fileID: 2125638933}
   - {fileID: 1317523116}
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -4.31, y: 7.3, z: 0}
 --- !u!1 &1795379667
 GameObject:
@@ -40506,7 +40512,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1795379670
 MonoBehaviour:
@@ -40892,7 +40898,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1261679822}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1832333759
 ParticleSystemRenderer:
@@ -48680,6 +48686,7 @@ Transform:
   - {fileID: 1986350222}
   - {fileID: 66016151}
   - {fileID: 1702755592}
+  - {fileID: 1293714298}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -43,7 +43,7 @@ public class GameUIManager : Singleton<GameUIManager>
     EventManager.OnPlayerEnteringWitch -= EnteringWitchUIColor;
   }
 
-  public void instantiateUI(List<PlayerBehaviour> players)
+  public void InstantiateUI(List<PlayerBehaviour> players)
   {
 
     foreach (var player in players)

@@ -215,7 +215,8 @@ public class InGameManager : Singleton<InGameManager>
     colors.Add(Color.red);
     SetSpellList();
     InstantiatePlayers();
-    GameUIManager.Instance.instantiateUI(players);
+    OrbitManager.Instance.InstantiateOrbits(players);
+    GameUIManager.Instance.InstantiateUI(players);
     InstantiatePoints(30, pointPrefab);
     InstantiatePoints(10, superPointPrefab);
     InstantiateSpells(5);
