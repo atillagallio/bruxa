@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CharacterSelectionRoxo
+  m_Controller: {fileID: 9100000, guid: d276806e71c0f96409c727ec182e54e3, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 3b6ca255cfae5df4fa0bb22cec569e98, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: ad6a80a4ac3c4b94c88fb91eb7a3df00, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: e0ef6d93bd91b3f45a71edc2dc66dfbd, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 840d0083da179a949845d942727b5606, type: 3}

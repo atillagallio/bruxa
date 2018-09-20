@@ -48,7 +48,7 @@ namespace CharacterSelectionScreen
         }
         if (State != SlotState.Free)
         {
-          CharacterNameUI.text = CurrentCharacter.Character.name;
+          CharacterNameUI.text = CurrentCharacter.Character.Nome;
           CharacterNameUI.fontStyle = CharacterFree ? FontStyles.Normal : FontStyles.Strikethrough;
           CharacterViewUI.texture = CurrentCharacter.FilmSet.Texture;
         }

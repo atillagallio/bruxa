@@ -4,6 +4,7 @@ using UnityEngine;
 public class Character : ScriptableObject
 {
   public string Nome;
+  new public string name => Nome;
   public Color Color;
   public GameObject InGameRepresentation;
   public GameOverCharacterRepresentation GameOverRepresentation;
