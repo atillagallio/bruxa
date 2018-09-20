@@ -13,6 +13,14 @@ public class HSV
     Debug.Log($"HSV({h} , {s} , {v})");
   }
 }
+
+public enum ParticleType
+{
+  SphereTrail,
+  Explosion,
+  ExplosionGlow
+
+}
 public class OrbitManager : Singleton<OrbitManager>
 {
 
@@ -31,8 +39,10 @@ public class OrbitManager : Singleton<OrbitManager>
   public float NoiseVelocity;
   public float NoiseAmplitude;
 
-  [SerializeField]
-  private List<Color> testColors;
+  [Header("Orbit Gameplay Variables")]
+  public float orbSpawnTimer;
+  public float orbControlAnimationTimer;
+
 
   // Use this for initialization
   void Start()
@@ -40,6 +50,10 @@ public class OrbitManager : Singleton<OrbitManager>
 
     playerList = new List<PlayerBehaviour>();
     orbits = new List<Orbitable>();
+
+    EventManager.OnTryingToGetControl += UsingSwitchButton;
+    EventManager.OnFailingToGetControl += FailingToGetControl;
+    EventManager.OnPlayerEnteringWitch += GettingWitchControl;
   }
 
   // Update is called once per frame
@@ -56,7 +70,7 @@ public class OrbitManager : Singleton<OrbitManager>
     //grau
     float dgSpace = 360f / players.Count;
     float currDegree = 0;
-    testColors = new List<Color>();
+
     foreach (var player in players)
     {
 
@@ -67,9 +81,12 @@ public class OrbitManager : Singleton<OrbitManager>
       orbComponent.Phase = currDegree * Mathf.Deg2Rad;
       orbComponent.FaceSpriteRenderer.sprite = charInfo.UIFace;
 
-      var colorModule = orbComponent.trailParticle.colorOverLifetime;
-
-      colorModule.color = GradientColorfy(colorModule, charInfo.Color);
+      var trailColorModule = orbComponent.trailParticle.colorOverLifetime;
+      trailColorModule.color = GradientColorfy(trailColorModule, charInfo.Color, ParticleType.SphereTrail);
+      var explosionColorModule = orbComponent.explosionParticle.colorOverLifetime;
+      explosionColorModule.color = GradientColorfy(explosionColorModule, charInfo.Color, ParticleType.Explosion);
+      var explosionGlowClorModule = orbComponent.explosionGlowParticle.colorOverLifetime;
+      explosionGlowClorModule.color = GradientColorfy(explosionColorModule, charInfo.Color, ParticleType.ExplosionGlow);
 
       orbits.Add(orbComponent);
       playerList.Add(player);
@@ -77,7 +94,24 @@ public class OrbitManager : Singleton<OrbitManager>
     }
   }
 
-  public Gradient GradientColorfy(ParticleSystem.ColorOverLifetimeModule main, Color newColor)
+  private int GetPlayerPos(PlayerBehaviour player)
+  {
+    return playerList.FindIndex(_player => _player == player);
+  }
+  public void UsingSwitchButton(PlayerBehaviour player)
+  {
+    orbits[GetPlayerPos(player)].MoveToWitch();
+  }
+
+  public void GettingWitchControl(PlayerBehaviour player)
+  {
+    orbits[GetPlayerPos(player)].GetWitchControl();
+  }
+  public void FailingToGetControl(PlayerBehaviour player)
+  {
+    orbits[GetPlayerPos(player)].GetBlockedByWitch();
+  }
+  public Gradient GradientColorfy(ParticleSystem.ColorOverLifetimeModule main, Color newColor, ParticleType pt)
   {
 
     HSV myColor = new HSV();
@@ -90,16 +124,26 @@ public class OrbitManager : Singleton<OrbitManager>
     Color myNewColorBefore = Color.HSVToRGB(myColor.h, colorBefore.s, colorBefore.v);
     Color myNewColorAfter = Color.HSVToRGB(myColor.h + hueDif[0], colorAfter.s, colorAfter.v);
 
-    return SetColorGradient(myNewColorBefore, myNewColorAfter);
+    return SetColorGradient(myNewColorBefore, myNewColorAfter, pt);
   }
 
-  public Gradient SetColorGradient(Color before, Color after)
+  public Gradient SetColorGradient(Color before, Color after, ParticleType pt)
   {
     Gradient ourGradient = new Gradient();
-    ourGradient.SetKeys(
-        new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(before, 0.49f), new GradientColorKey(after, 0.98f) },
-        new GradientAlphaKey[] { new GradientAlphaKey(1f, 0.87f), new GradientAlphaKey(0f, 1.0f) }
-        );
+    if (pt == ParticleType.Explosion || pt == ParticleType.SphereTrail)
+    {
+      ourGradient.SetKeys(
+          new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(before, 0.49f), new GradientColorKey(after, 0.98f) },
+          new GradientAlphaKey[] { new GradientAlphaKey(1f, 0.87f), new GradientAlphaKey(0f, 1.0f) }
+          );
+    }
+    if (pt == ParticleType.ExplosionGlow)
+    {
+      ourGradient.SetKeys(
+      new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(before, 0.49f), new GradientColorKey(after, 0.98f) },
+      new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(0f, 1.0f) }
+      );
+    }
     return ourGradient;
   }
 }
