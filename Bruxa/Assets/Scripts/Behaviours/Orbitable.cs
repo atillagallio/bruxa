@@ -5,9 +5,17 @@ using UnityEngine;
 public class Orbitable : MonoBehaviour
 {
 
+  public SpriteRenderer FaceSpriteRenderer;
+
+  [HideInInspector]
   public Transform playerPos;
   private float radius;
   private float rotationSpeed;
+
+  public ParticleSystem ballParticle;
+  public ParticleSystem trailParticle;
+
+  [HideInInspector]
   public float Phase
   {
     get { return _phase; }
@@ -16,20 +24,23 @@ public class Orbitable : MonoBehaviour
       StartCoroutine(PhaseLerp(value));
     }
   }
-  [SerializeField]
+
   private float _phase;
   // Use this for initialization
 
   private float randomSeed;
   private float noiseVelocity;
   private float noiseAmplitude;
+  private float sphereY;
   void Start()
   {
     var orbitManager = OrbitManager.Instance;
-    radius = orbitManager.radius;
-    rotationSpeed = orbitManager.rotationSpeed;
+    radius = orbitManager.Radius;
+    rotationSpeed = orbitManager.RotationSpeed;
     noiseVelocity = orbitManager.NoiseVelocity;
     noiseAmplitude = orbitManager.NoiseAmplitude;
+    sphereY = orbitManager.SphereY;
+    playerPos = orbitManager.playerPos;
 
     randomSeed = Random.Range(0f, 1f);
   }
@@ -39,7 +50,7 @@ public class Orbitable : MonoBehaviour
   {
 
     var obtTransform = gameObject.transform;
-    obtTransform.position = playerPos.position + new Vector3(Noise(radius) * Mathf.Cos(rotationSpeed * Time.time + _phase), 0, radius * Mathf.Sin(rotationSpeed * Time.time + _phase));
+    obtTransform.position = playerPos.position + new Vector3(Noise(radius) * Mathf.Cos(rotationSpeed * Time.time + _phase), sphereY, radius * Mathf.Sin(rotationSpeed * Time.time + _phase));
 
   }
 
