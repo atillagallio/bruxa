@@ -9,6 +9,9 @@ public class Character : ScriptableObject
   public GameOverCharacterRepresentation GameOverRepresentation;
   public GameObject OrbitObject;
 
+  [Header("Character Selection")]
+  public GameObject CharacterSelectionRepresentation;
+
   [Header("UI Imgs")]
   public Sprite UIFace;
   public Sprite UICDfill;

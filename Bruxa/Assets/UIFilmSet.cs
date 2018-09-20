@@ -6,7 +6,11 @@ public class UIFilmSet : MonoBehaviour
 {
   [SerializeField]
   private Camera camera;
-  public RenderTexture Texture;
+
+  [SerializeField]
+  private CharacterSelectionModel model;
+  public RenderTexture Texture
+  { get; private set; }
 
   void Awake()
   {
@@ -19,8 +23,28 @@ public class UIFilmSet : MonoBehaviour
     Texture.Release();
   }
 
-  void Update()
+  public void SetCharacter(Character c)
   {
-
+    var cc = Instantiate(c.CharacterSelectionRepresentation, model.transform);
+    SetLayerRecursively(cc, gameObject.layer);
   }
+  void SetLayerRecursively(GameObject obj, int newLayer)
+  {
+    if (null == obj)
+    {
+      return;
+    }
+
+    obj.layer = newLayer;
+
+    foreach (Transform child in obj.transform)
+    {
+      if (null == child)
+      {
+        continue;
+      }
+      SetLayerRecursively(child.gameObject, newLayer);
+    }
+  }
+
 }

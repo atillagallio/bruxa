@@ -17,6 +17,8 @@ MonoBehaviour:
   GameOverRepresentation: {fileID: 114435294848114494, guid: 2fba2b77e124799448d337c5a118823d,
     type: 2}
   OrbitObject: {fileID: 0}
+  CharacterSelectionRepresentation: {fileID: 100000, guid: 3b6ca255cfae5df4fa0bb22cec569e98,
+    type: 3}
   UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
   UICDfill: {fileID: 21300000, guid: f7425c317d710a4489086c3db34ee877, type: 3}
   UIBG: {fileID: 0}

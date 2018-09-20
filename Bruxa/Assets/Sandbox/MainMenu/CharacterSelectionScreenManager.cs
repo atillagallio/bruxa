@@ -14,9 +14,10 @@ namespace CharacterSelectionScreen
 
     public UIFilmSet FilmSet;
 
-    public CharacterSelection(Character c)
+    public CharacterSelection(Character c, UIFilmSet filmSet)
     {
       Character = c;
+      FilmSet = filmSet;
     }
   }
 
@@ -27,8 +28,11 @@ namespace CharacterSelectionScreen
 
     private List<CharacterSelection> Characters;
 
+    [Header("Film Set")]
     [SerializeField]
     private UIFilmSet FilmSetPrefab;
+    [SerializeField]
+    private float Offset;
 
     [Header("UI")]
     [SerializeField]
@@ -40,14 +44,26 @@ namespace CharacterSelectionScreen
     // Use this for initialization
     void Awake()
     {
-      var rawCharacters = Resources.LoadAll<Character>("Characters");
-      Characters = rawCharacters.Select((r) => new CharacterSelection(r)).ToList();
+      {
+        var rawCharacters = Resources.LoadAll<Character>("Characters");
+        int i = 0;
+        Characters = rawCharacters.Select((r) =>
+        {
+          var filmSet = Instantiate(FilmSetPrefab, transform);
+          filmSet.transform.position += i * Offset * Vector3.right;
+          filmSet.SetCharacter(r);
+          i++;
+          return new CharacterSelection(r, filmSet);
+
+        }).ToList();
+      }
 
       for (int i = 0; i < playerSlots.Length; i++)
       {
         var slot = Instantiate(SlotPrefab, CharactersSlotsUI);
         slot.SlotNum = i;
         slot.Characters = Characters;
+        playerSlots[i] = slot;
       }
     }
 
