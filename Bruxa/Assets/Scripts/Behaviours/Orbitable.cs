@@ -18,7 +18,7 @@ public class Orbitable : MonoBehaviour
   public ParticleSystem fullExplosion;
   public ParticleSystem explosionParticle;
   public ParticleSystem explosionGlowParticle;
-
+  public ParticleSystem destroySphereParticle;
   [HideInInspector]
   public float Phase
   {
@@ -42,9 +42,13 @@ public class Orbitable : MonoBehaviour
 
   private Vector3 startAnimationPos;
 
+  [Header("ParticleTimers")]
+  public float desapearSphereTime;
+
   public AnimationCurve MoveToWitchCurve;
   void Start()
   {
+    FaceSpriteRenderer.color = Color.white;
     GetComponent<Rigidbody>().isKinematic = true;
     var orbitManager = OrbitManager.Instance;
     radius = orbitManager.Radius;
@@ -83,7 +87,7 @@ public class Orbitable : MonoBehaviour
 
   public void GetBlockedByWitch()
   {
-    StartCoroutine(BlockedAnimation(5f));
+    StartCoroutine(BlockedAnimation(desapearSphereTime));
   }
 
   float Noise(float radius)
@@ -118,6 +122,7 @@ public class Orbitable : MonoBehaviour
   {
     if (transform.parent == null)
     {
+      FaceSpriteRenderer.color = Color.white;
       GetComponent<Rigidbody>().isKinematic = true;
       transform.SetParent(witchTransform);
     }
@@ -155,11 +160,16 @@ public class Orbitable : MonoBehaviour
     GetComponent<Rigidbody>().isKinematic = false;
     GetComponent<Rigidbody>().AddForce(startAnimationPos.normalized * 5f, ForceMode.VelocityChange);
     transform.parent = null;
-    yield return CoroutineHelpers.InterpolateByTime(time, (k =>
-        {
-          //transform.position = Vector3.Lerp(initialPos, new Vector3(initialPos.x * -1.05f, initialPos.y * -1.05f, initialPos.z), k);
-        }));
+    yield return new WaitForSeconds(time);
+    foreach (ParticleSystem pt in GetComponentsInChildren<ParticleSystem>())
+    {
+      pt.Stop();
+    }
+    FaceSpriteRenderer.color = Color.clear;
+    destroySphereParticle.Play();
+    yield return new WaitForSeconds(1f);
     isBeingBlocked = false;
+    gameObject.SetActive(false);
 
   }
 

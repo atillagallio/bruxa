@@ -33006,23 +33006,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1509239699}
   m_Mesh: {fileID: 4300110, guid: e4cda12ebfb302745ae54d84baff3ded, type: 3}
---- !u!1 &1521375434 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1336427486162982, guid: 466e1e9f98b75b4409c4e1a556a4d402,
-    type: 2}
-  m_PrefabInternal: {fileID: 1682893080}
---- !u!135 &1521375437
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1521375434}
-  m_Material: {fileID: 13400000, guid: 823f01429c9e22348b9d845675616ebc, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1522635156
 GameObject:
   m_ObjectHideFlags: 0
@@ -34584,15 +34567,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1336427486162982, guid: 466e1e9f98b75b4409c4e1a556a4d402, type: 2}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54867131463431878, guid: 466e1e9f98b75b4409c4e1a556a4d402,
-        type: 2}
-      propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 65443470720385156, guid: 466e1e9f98b75b4409c4e1a556a4d402, type: 2}
+    - target: {fileID: 1270432448272798, guid: 466e1e9f98b75b4409c4e1a556a4d402, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 466e1e9f98b75b4409c4e1a556a4d402, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1686534893

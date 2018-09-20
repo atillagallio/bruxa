@@ -18,7 +18,8 @@ public enum ParticleType
 {
   SphereTrail,
   Explosion,
-  ExplosionGlow
+  ExplosionGlow,
+  DestroySphere,
 
 }
 public class OrbitManager : Singleton<OrbitManager>
@@ -81,12 +82,15 @@ public class OrbitManager : Singleton<OrbitManager>
       orbComponent.Phase = currDegree * Mathf.Deg2Rad;
       orbComponent.FaceSpriteRenderer.sprite = charInfo.UIFace;
 
-      var trailColorModule = orbComponent.trailParticle.colorOverLifetime;
-      trailColorModule.color = GradientColorfy(trailColorModule, charInfo.Color, ParticleType.SphereTrail);
       var explosionColorModule = orbComponent.explosionParticle.colorOverLifetime;
-      explosionColorModule.color = GradientColorfy(explosionColorModule, charInfo.Color, ParticleType.Explosion);
-      var explosionGlowClorModule = orbComponent.explosionGlowParticle.colorOverLifetime;
-      explosionGlowClorModule.color = GradientColorfy(explosionColorModule, charInfo.Color, ParticleType.ExplosionGlow);
+
+      List<Color> colorList = GetColors(explosionColorModule, charInfo.Color);
+      foreach (ParticleSystem ptSystem in orbComponent.GetComponentsInChildren<ParticleSystem>())
+      {
+        var destroySphereModule = ptSystem.colorOverLifetime;
+        destroySphereModule.color = GradientReplace(destroySphereModule.color.gradient, colorList);
+
+      }
 
       orbits.Add(orbComponent);
       playerList.Add(player);
@@ -111,9 +115,9 @@ public class OrbitManager : Singleton<OrbitManager>
   {
     orbits[GetPlayerPos(player)].GetBlockedByWitch();
   }
-  public Gradient GradientColorfy(ParticleSystem.ColorOverLifetimeModule main, Color newColor, ParticleType pt)
-  {
 
+  public List<Color> GetColors(ParticleSystem.ColorOverLifetimeModule main, Color newColor)
+  {
     HSV myColor = new HSV();
     HSV colorBefore = new HSV();
     HSV colorAfter = new HSV();
@@ -124,26 +128,35 @@ public class OrbitManager : Singleton<OrbitManager>
     Color myNewColorBefore = Color.HSVToRGB(myColor.h, colorBefore.s, colorBefore.v);
     Color myNewColorAfter = Color.HSVToRGB(myColor.h + hueDif[0], colorAfter.s, colorAfter.v);
 
-    return SetColorGradient(myNewColorBefore, myNewColorAfter, pt);
+    return new List<Color> {
+      myNewColorBefore,
+      myNewColorAfter,
+      };
   }
-
-  public Gradient SetColorGradient(Color before, Color after, ParticleType pt)
+  public Gradient GradientReplace(Gradient gradBefore, List<Color> colors)
   {
-    Gradient ourGradient = new Gradient();
-    if (pt == ParticleType.Explosion || pt == ParticleType.SphereTrail)
+
+    int i = 0;
+    int z = 0;
+    GradientColorKey[] newColorKeyArray = new GradientColorKey[gradBefore.colorKeys.Length];
+    foreach (var keyGrad in gradBefore.colorKeys)
     {
-      ourGradient.SetKeys(
-          new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(before, 0.49f), new GradientColorKey(after, 0.98f) },
-          new GradientAlphaKey[] { new GradientAlphaKey(1f, 0.87f), new GradientAlphaKey(0f, 1.0f) }
-          );
+      if (keyGrad.color != Color.white && z <= gradBefore.colorKeys.Length)
+      {
+        GradientColorKey newColorKey = new GradientColorKey(colors[z], keyGrad.time);
+        gradBefore.colorKeys[i].color = colors[z];
+        z++;
+        newColorKeyArray[i] = newColorKey;
+      }
+      else
+      {
+        newColorKeyArray[i] = keyGrad;
+      }
+
+      i++;
     }
-    if (pt == ParticleType.ExplosionGlow)
-    {
-      ourGradient.SetKeys(
-      new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(before, 0.49f), new GradientColorKey(after, 0.98f) },
-      new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(0f, 1.0f) }
-      );
-    }
-    return ourGradient;
+    gradBefore.SetKeys(newColorKeyArray, gradBefore.alphaKeys);
+    return gradBefore;
+
   }
 }
