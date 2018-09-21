@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6f34b4c8a92e84b9b25e5477946dde, type: 3}
   m_Name: Azul
   m_EditorClassIdentifier: 
-  Nome: Morgana
+  Nome: Magda
   Color: {r: 0.011764707, g: 0.67058825, b: 1, a: 1}
   InGameRepresentation: {fileID: 100068, guid: f9dd9bff76d22e54a8dd1352cb035804, type: 3}
   GameOverRepresentation: {fileID: 114435294848114494, guid: 2fba2b77e124799448d337c5a118823d,
     type: 2}
   OrbitObject: {fileID: 0}
-  CharacterSelectionRepresentation: {fileID: 100000, guid: 3b6ca255cfae5df4fa0bb22cec569e98,
-    type: 3}
+  CharacterSelectionRepresentation: {fileID: 114796533784888386, guid: 0811b1d74cdaf91429c5b5b586bbdb28,
+    type: 2}
   UIFace: {fileID: 21300000, guid: aa083a7a11bdfeb4e981062ddcfe906c, type: 3}
   UICDfill: {fileID: 21300000, guid: f7425c317d710a4489086c3db34ee877, type: 3}
   UIBG: {fileID: 0}

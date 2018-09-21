@@ -1,16 +1,13 @@
-﻿Shader "Custom/GrayscaledSprite"
+﻿Shader "Hidden/SelectedChar"
 {
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Grayscale("GrayScale", float) = 0
 	}
 	SubShader
 	{
-		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		// No culling or depth
-		Cull Off ZWrite On ZTest Always
-		Blend SrcAlpha OneMinusSrcAlpha
+		Cull Off ZWrite Off ZTest Always
 
 		Pass
 		{
@@ -42,18 +39,14 @@
 			
 			sampler2D _MainTex;
 
-			uniform float _Grayscale;
-
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
-				half brightness = dot(col.rgb, half3(0.3, 0.59, 0.11));
-				half3 gray = brightness;
 				// just invert the colors
-				return fixed4(lerp(col.rgb, brightness, _Grayscale), col.a);
+				col.rgb = 0;
+				return col;
 			}
 			ENDCG
 		}
-
 	}
 }

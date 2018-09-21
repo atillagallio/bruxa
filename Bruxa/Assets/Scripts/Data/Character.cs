@@ -1,4 +1,5 @@
 using UnityEngine;
+using CharacterSelectionScreen;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Characters/New Character", order = 1)]
 public class Character : ScriptableObject
@@ -11,7 +12,7 @@ public class Character : ScriptableObject
   public GameObject OrbitObject;
 
   [Header("Character Selection")]
-  public GameObject CharacterSelectionRepresentation;
+  public CharacterSelectionRepresentation CharacterSelectionRepresentation;
 
   [Header("UI Imgs")]
   public Sprite UIFace;

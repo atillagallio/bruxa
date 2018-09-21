@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 using System.Linq;
+using UnityEngine.UI;
 
 namespace CharacterSelectionScreen
 {
@@ -12,22 +13,33 @@ namespace CharacterSelectionScreen
     public Character Character;
     public bool Selected = false;
 
-    public UIFilmSet FilmSet;
+    public UIFilmSet FilmSetSelecting;
+    public UIFilmSet FilmSetSelected;
 
-    public CharacterSelection(Character c, UIFilmSet filmSet)
+    public CharacterSelection(Character c, UIFilmSet selecting, UIFilmSet selected)
     {
       Character = c;
-      FilmSet = filmSet;
+      FilmSetSelecting = selecting;
+      FilmSetSelected = selected;
     }
   }
 
   internal class CharacterSelectionScreenManager : MonoBehaviour
   {
     public const int MAX_PLAYERS = 4;
+    public const int MIN_PLAYERS = 2;
     private CharacterSelectSlot[] playerSlots = new CharacterSelectSlot[MAX_PLAYERS];
+    private bool AllPlayersReady =>
+      playerSlots.Where((p) => p.State == SlotState.Joined).Count() == 0 &&
+      playerSlots.Where((p) => p.State == SlotState.Ready).Count() >= MIN_PLAYERS;
+
+    private float MaxPressTime =>
+      playerSlots.Where(p => p.RewiredPlayerId != -1).Select(p => ReInput.players.GetPlayer(p.RewiredPlayerId).GetButtonTimePressed(RewiredConsts.Action.UISubmit)).Max();
 
     private List<CharacterSelection> Characters;
 
+    [SerializeField]
+    private float holdToStartTime;
     [Header("Film Set")]
     [SerializeField]
     private UIFilmSet FilmSetPrefab;
@@ -40,6 +52,8 @@ namespace CharacterSelectionScreen
 
     [SerializeField]
     private RectTransform CharactersSlotsUI;
+    [SerializeField]
+    private Image StartTimerUI;
 
     // Use this for initialization
     void Awake()
@@ -49,11 +63,19 @@ namespace CharacterSelectionScreen
         int i = 0;
         Characters = rawCharacters.Select((r) =>
         {
-          var filmSet = Instantiate(FilmSetPrefab, transform);
-          filmSet.transform.position += i * Offset * Vector3.right;
-          filmSet.SetCharacter(r);
+          var filmSetSelecting = Instantiate(FilmSetPrefab, transform);
+          filmSetSelecting.transform.position += i * Offset * Vector3.right;
+          filmSetSelecting.SetCharacter(r);
+          filmSetSelecting.SetCameraEffect(false);
+
+          var filmSetSelected = Instantiate(FilmSetPrefab, transform);
+          filmSetSelected.transform.position += i * Offset * Vector3.right;
+          filmSetSelected.transform.position += Offset * Vector3.up;
+          filmSetSelected.SetCharacter(r);
+          filmSetSelected.SetCameraEffect(true);
+
           i++;
-          return new CharacterSelection(r, filmSet);
+          return new CharacterSelection(r, filmSetSelecting, filmSetSelected);
 
         }).ToList();
       }
@@ -80,6 +102,9 @@ namespace CharacterSelectionScreen
       }
     }
 
+
+    //private IEnumerator HoldToStart
+
     void Update()
     {
       { // Joining Logic
@@ -102,6 +127,16 @@ namespace CharacterSelectionScreen
             PlayerLeave(slot.RewiredPlayerId);
           }
         }*/
+        if (AllPlayersReady)
+        {
+          StartTimerUI.gameObject.SetActive(true);
+          var k = MaxPressTime / holdToStartTime;
+          StartTimerUI.fillAmount = k;
+        }
+        else
+        {
+          StartTimerUI.gameObject.SetActive(false);
+        }
       }
     }
 

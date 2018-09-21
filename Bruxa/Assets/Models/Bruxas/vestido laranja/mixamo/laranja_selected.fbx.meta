@@ -1,271 +1,79 @@
 fileFormatVersion: 2
-guid: 27458324c31c7674f90e9b40a02a544d
+guid: 9d68cfcaa39b44b47a47a5d4ae2fbe83
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: group_1135834796
-    100002: group_126857355
-    100004: group_498153724
-    100006: group_679503135
-    100008: group_716586716
-    100010: //RootNode
-    100012: mesh_1000178090
-    100014: mesh_1002630772
-    100016: mesh_1027712047
-    100018: mesh_1048387580
-    100020: mesh_1156962290
-    100022: mesh_1183152205
-    100024: mesh_1200989416
-    100026: mesh_1329135212
-    100028: mesh_1396466070
-    100030: mesh_1446257340
-    100032: mesh_1578784431
-    100034: mesh_1659125635
-    100036: mesh_1849202478
-    100038: mesh_1862793094
-    100040: mesh_1943079638
-    100042: mesh_2016225535
-    100044: mesh_2131015978
-    100046: mesh_335801502
-    100048: mesh_336926872
-    100050: mesh_401778640
-    100052: mesh_40286823
-    100054: mesh_529203722
-    100056: mesh_53570931
-    100058: mesh_565172216
-    100060: mesh_583303980
-    100062: mesh_590662989
-    100064: mesh_635817200
-    100066: mesh_639352373
-    100068: mesh_753822590
-    100070: mesh_823977337
-    100072: mesh_848080403
-    100074: mesh_861110284
-    100076: mesh_911839692
-    100078: mesh_960511270
-    100080: mixamorig:Head
-    100082: mixamorig:HeadTop_End
-    100084: mixamorig:Hips
-    100086: mixamorig:LeftArm
-    100088: mixamorig:LeftFoot
-    100090: mixamorig:LeftForeArm
-    100092: mixamorig:LeftHand
-    100094: mixamorig:LeftHandIndex1
-    100096: mixamorig:LeftHandIndex2
-    100098: mixamorig:LeftHandIndex3
-    100100: mixamorig:LeftHandIndex4
-    100102: mixamorig:LeftLeg
-    100104: mixamorig:LeftShoulder
-    100106: mixamorig:LeftToe_End
-    100108: mixamorig:LeftToeBase
-    100110: mixamorig:LeftUpLeg
-    100112: mixamorig:Neck
-    100114: mixamorig:RightArm
-    100116: mixamorig:RightFoot
-    100118: mixamorig:RightForeArm
-    100120: mixamorig:RightHand
-    100122: mixamorig:RightHandIndex1
-    100124: mixamorig:RightHandIndex2
-    100126: mixamorig:RightHandIndex3
-    100128: mixamorig:RightHandIndex4
-    100130: mixamorig:RightLeg
-    100132: mixamorig:RightShoulder
-    100134: mixamorig:RightToe_End
-    100136: mixamorig:RightToeBase
-    100138: mixamorig:RightUpLeg
-    100140: mixamorig:Spine
-    100142: mixamorig:Spine1
-    100144: mixamorig:Spine2
-    100146: left
-    400000: group_1135834796
-    400002: group_126857355
-    400004: group_498153724
-    400006: group_679503135
-    400008: group_716586716
-    400010: //RootNode
-    400012: mesh_1000178090
-    400014: mesh_1002630772
-    400016: mesh_1027712047
-    400018: mesh_1048387580
-    400020: mesh_1156962290
-    400022: mesh_1183152205
-    400024: mesh_1200989416
-    400026: mesh_1329135212
-    400028: mesh_1396466070
-    400030: mesh_1446257340
-    400032: mesh_1578784431
-    400034: mesh_1659125635
-    400036: mesh_1849202478
-    400038: mesh_1862793094
-    400040: mesh_1943079638
-    400042: mesh_2016225535
-    400044: mesh_2131015978
-    400046: mesh_335801502
-    400048: mesh_336926872
-    400050: mesh_401778640
-    400052: mesh_40286823
-    400054: mesh_529203722
-    400056: mesh_53570931
-    400058: mesh_565172216
-    400060: mesh_583303980
-    400062: mesh_590662989
-    400064: mesh_635817200
-    400066: mesh_639352373
-    400068: mesh_753822590
-    400070: mesh_823977337
-    400072: mesh_848080403
-    400074: mesh_861110284
-    400076: mesh_911839692
-    400078: mesh_960511270
-    400080: mixamorig:Head
-    400082: mixamorig:HeadTop_End
-    400084: mixamorig:Hips
-    400086: mixamorig:LeftArm
-    400088: mixamorig:LeftFoot
-    400090: mixamorig:LeftForeArm
-    400092: mixamorig:LeftHand
-    400094: mixamorig:LeftHandIndex1
-    400096: mixamorig:LeftHandIndex2
-    400098: mixamorig:LeftHandIndex3
-    400100: mixamorig:LeftHandIndex4
-    400102: mixamorig:LeftLeg
-    400104: mixamorig:LeftShoulder
-    400106: mixamorig:LeftToe_End
-    400108: mixamorig:LeftToeBase
-    400110: mixamorig:LeftUpLeg
-    400112: mixamorig:Neck
-    400114: mixamorig:RightArm
-    400116: mixamorig:RightFoot
-    400118: mixamorig:RightForeArm
-    400120: mixamorig:RightHand
-    400122: mixamorig:RightHandIndex1
-    400124: mixamorig:RightHandIndex2
-    400126: mixamorig:RightHandIndex3
-    400128: mixamorig:RightHandIndex4
-    400130: mixamorig:RightLeg
-    400132: mixamorig:RightShoulder
-    400134: mixamorig:RightToe_End
-    400136: mixamorig:RightToeBase
-    400138: mixamorig:RightUpLeg
-    400140: mixamorig:Spine
-    400142: mixamorig:Spine1
-    400144: mixamorig:Spine2
-    400146: left
-    2000000: left
-    2100000: material_6___7350
-    2100002: material_21___7350
-    2100004: material_14___7350
-    2100006: material_20___7350
-    2100008: material_12___7350
-    2100010: material_23___7350
-    2100012: material_13___7350
-    4300000: mesh_335801502
-    4300002: mesh_1659125635
-    4300004: mesh_1200989416
-    4300006: mesh_960511270
-    4300008: mesh_590662989
-    4300010: mesh_583303980
-    4300012: mesh_1849202478
-    4300014: mesh_1048387580
-    4300016: mesh_911839692
-    4300018: mesh_565172216
-    4300020: mesh_1446257340
-    4300022: mesh_401778640
-    4300024: mesh_1862793094
-    4300026: mesh_1396466070
-    4300028: mesh_1000178090
-    4300030: mesh_1578784431
-    4300032: mesh_53570931
-    4300034: mesh_861110284
-    4300036: mesh_848080403
-    4300038: mesh_1329135212
-    4300040: mesh_753822590
-    4300042: mesh_823977337
-    4300044: mesh_1183152205
-    4300046: mesh_1027712047
-    4300048: mesh_336926872
-    4300050: mesh_2016225535
-    4300052: mesh_2131015978
-    4300054: mesh_40286823
-    4300056: mesh_1002630772
-    4300058: mesh_529203722
-    4300060: mesh_1943079638
-    4300062: mesh_639352373
-    4300064: mesh_1156962290
-    4300066: mesh_635817200
-    7400000: laranja tpose
+    100000: //RootNode
+    100002: mixamorig:Head
+    100004: mixamorig:HeadTop_End
+    100006: mixamorig:Hips
+    100008: mixamorig:LeftArm
+    100010: mixamorig:LeftFoot
+    100012: mixamorig:LeftForeArm
+    100014: mixamorig:LeftHand
+    100016: mixamorig:LeftHandIndex1
+    100018: mixamorig:LeftHandIndex2
+    100020: mixamorig:LeftHandIndex3
+    100022: mixamorig:LeftHandIndex4
+    100024: mixamorig:LeftLeg
+    100026: mixamorig:LeftShoulder
+    100028: mixamorig:LeftToe_End
+    100030: mixamorig:LeftToeBase
+    100032: mixamorig:LeftUpLeg
+    100034: mixamorig:Neck
+    100036: mixamorig:RightArm
+    100038: mixamorig:RightFoot
+    100040: mixamorig:RightForeArm
+    100042: mixamorig:RightHand
+    100044: mixamorig:RightHandIndex1
+    100046: mixamorig:RightHandIndex2
+    100048: mixamorig:RightHandIndex3
+    100050: mixamorig:RightHandIndex4
+    100052: mixamorig:RightLeg
+    100054: mixamorig:RightShoulder
+    100056: mixamorig:RightToe_End
+    100058: mixamorig:RightToeBase
+    100060: mixamorig:RightUpLeg
+    100062: mixamorig:Spine
+    100064: mixamorig:Spine1
+    100066: mixamorig:Spine2
+    400000: //RootNode
+    400002: mixamorig:Head
+    400004: mixamorig:HeadTop_End
+    400006: mixamorig:Hips
+    400008: mixamorig:LeftArm
+    400010: mixamorig:LeftFoot
+    400012: mixamorig:LeftForeArm
+    400014: mixamorig:LeftHand
+    400016: mixamorig:LeftHandIndex1
+    400018: mixamorig:LeftHandIndex2
+    400020: mixamorig:LeftHandIndex3
+    400022: mixamorig:LeftHandIndex4
+    400024: mixamorig:LeftLeg
+    400026: mixamorig:LeftShoulder
+    400028: mixamorig:LeftToe_End
+    400030: mixamorig:LeftToeBase
+    400032: mixamorig:LeftUpLeg
+    400034: mixamorig:Neck
+    400036: mixamorig:RightArm
+    400038: mixamorig:RightFoot
+    400040: mixamorig:RightForeArm
+    400042: mixamorig:RightHand
+    400044: mixamorig:RightHandIndex1
+    400046: mixamorig:RightHandIndex2
+    400048: mixamorig:RightHandIndex3
+    400050: mixamorig:RightHandIndex4
+    400052: mixamorig:RightLeg
+    400054: mixamorig:RightShoulder
+    400056: mixamorig:RightToe_End
+    400058: mixamorig:RightToeBase
+    400060: mixamorig:RightUpLeg
+    400062: mixamorig:Spine
+    400064: mixamorig:Spine1
+    400066: mixamorig:Spine2
+    7400000: laranja selected
     9500000: //RootNode
-    13700000: mesh_1000178090
-    13700002: mesh_1002630772
-    13700004: mesh_1027712047
-    13700006: mesh_1048387580
-    13700008: mesh_1156962290
-    13700010: mesh_1183152205
-    13700012: mesh_1200989416
-    13700014: mesh_1329135212
-    13700016: mesh_1396466070
-    13700018: mesh_1446257340
-    13700020: mesh_1578784431
-    13700022: mesh_1659125635
-    13700024: mesh_1849202478
-    13700026: mesh_1862793094
-    13700028: mesh_1943079638
-    13700030: mesh_2016225535
-    13700032: mesh_2131015978
-    13700034: mesh_335801502
-    13700036: mesh_336926872
-    13700038: mesh_401778640
-    13700040: mesh_40286823
-    13700042: mesh_529203722
-    13700044: mesh_53570931
-    13700046: mesh_565172216
-    13700048: mesh_583303980
-    13700050: mesh_590662989
-    13700052: mesh_635817200
-    13700054: mesh_639352373
-    13700056: mesh_753822590
-    13700058: mesh_823977337
-    13700060: mesh_848080403
-    13700062: mesh_861110284
-    13700064: mesh_911839692
-    13700066: mesh_960511270
-    2186277476908879412: ImportLogs
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_12___7350
-    second: {fileID: 2100000, guid: 0a33044255cd60d4ca58d3848c3f1800, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_13___7350
-    second: {fileID: 2100000, guid: 461863371e5300440b4a927f4e190eeb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_14___7350
-    second: {fileID: 2100000, guid: 861b5a666bd1b66438abcac7f3cf5f3b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_20___7350
-    second: {fileID: 2100000, guid: dceeec363f405b742a4fcbdf431c20f5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_21___7350
-    second: {fileID: 2100000, guid: 6383c79ddfce43a4f951c652b9dbc7bb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_23___7350
-    second: {fileID: 2100000, guid: 38fdca09d992e26498b2eeda3df3c67c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: material_6___7350
-    second: {fileID: 2100000, guid: 3b083140540c62349b49442aea1d1fab, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -294,10 +102,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: laranja tpose
+      name: laranja selected
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 99
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -305,10 +113,10 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -350,7 +158,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human:
@@ -957,7 +765,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 27458324c31c7674f90e9b40a02a544d,
+    type: 3}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 0

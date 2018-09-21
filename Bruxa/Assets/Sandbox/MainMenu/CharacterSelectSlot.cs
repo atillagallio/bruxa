@@ -25,7 +25,6 @@ namespace CharacterSelectionScreen
     [HideInInspector]
     public List<CharacterSelection> Characters;
 
-
     [Header("UI Elements")]
     [SerializeField]
     private TextMeshProUGUI CharacterNameUI;
@@ -48,9 +47,11 @@ namespace CharacterSelectionScreen
         }
         if (State != SlotState.Free)
         {
+          var displaySelected = (!CurrentCharacter.Selected || State == SlotState.Ready);
           CharacterNameUI.text = CurrentCharacter.Character.Nome;
-          CharacterNameUI.fontStyle = CharacterFree ? FontStyles.Normal : FontStyles.Strikethrough;
-          CharacterViewUI.texture = CurrentCharacter.FilmSet.Texture;
+          CharacterNameUI.fontStyle = displaySelected ? FontStyles.Normal : FontStyles.Strikethrough;
+          var set = displaySelected ? CurrentCharacter.FilmSetSelecting : CurrentCharacter.FilmSetSelected;
+          CharacterViewUI.texture = set.Texture;
         }
       }
 
@@ -65,6 +66,7 @@ namespace CharacterSelectionScreen
           // Ready
           ChangeState(SlotState.Ready);
           CurrentCharacter.Selected = true;
+          CurrentCharacter.FilmSetSelecting.ToggleSelect();
         }
 
         if (State == SlotState.Joined)
@@ -92,6 +94,7 @@ namespace CharacterSelectionScreen
             // UnReady
             ChangeState(SlotState.Joined);
             CurrentCharacter.Selected = false;
+            CurrentCharacter.FilmSetSelecting.ToggleSelect();
           }
         }
 
