@@ -40,17 +40,22 @@ public class Orbitable : MonoBehaviour
   private bool isMovingToWitch = false;
   private bool isBeingBlocked = false;
 
+  private float cdTime;
+
   private Vector3 startAnimationPos;
 
   [Header("ParticleTimers")]
   public float desapearSphereTime;
 
   public AnimationCurve MoveToWitchCurve;
+
+  private OrbitManager orbitManager;
+  private bool isInCD = false;
   void Start()
   {
+    orbitManager = OrbitManager.Instance;
     FaceSpriteRenderer.color = Color.white;
     GetComponent<Rigidbody>().isKinematic = true;
-    var orbitManager = OrbitManager.Instance;
     radius = orbitManager.Radius;
     rotationSpeed = orbitManager.RotationSpeed;
     noiseVelocity = orbitManager.NoiseVelocity;
@@ -72,7 +77,14 @@ public class Orbitable : MonoBehaviour
       var obtTransform = gameObject.transform;
       obtTransform.position = playerPos.position + new Vector3(Noise(radius) * Mathf.Cos(rotationSpeed * Time.time + _phase), sphereY, radius * Mathf.Sin(rotationSpeed * Time.time + _phase));
     }
+    if (cdTime + orbitManager.orbSpawnTimer >= GameDataManager.Data.SwitchCooldown && isInCD)
+    {
+      StartCoroutine(SpawnOrb(orbitManager.orbSpawnTimer));
+      isInCD = false;
+    }
+    cdTime += Time.deltaTime;
   }
+
 
   public void MoveToWitch()
   {
@@ -120,6 +132,8 @@ public class Orbitable : MonoBehaviour
 
   IEnumerator MoveToWitch(Transform witchTransform, float time)
   {
+    cdTime = 0;
+    isInCD = true;
     if (transform.parent == null)
     {
       FaceSpriteRenderer.color = Color.white;
@@ -139,12 +153,16 @@ public class Orbitable : MonoBehaviour
   }
   IEnumerator GettingControl()
   {
-    while (isMovingToWitch)
+    float time = 0f;
+    while (time <= 0.08f)
     {
+      time += Time.deltaTime;
       yield return null;
+
     }
+    DeleteSphere();
     //yield return new WaitForSeconds(time);
-    this.gameObject.SetActive(false);
+    //this.gameObject.SetActive(false);
 
   }
   IEnumerator BlockedAnimation(float time)
@@ -161,20 +179,32 @@ public class Orbitable : MonoBehaviour
     GetComponent<Rigidbody>().AddForce(startAnimationPos.normalized * 5f, ForceMode.VelocityChange);
     transform.parent = null;
     yield return new WaitForSeconds(time);
+    DeleteSphere();
+    destroySphereParticle.Play();
+    yield return new WaitForSeconds(1f);
+    isBeingBlocked = false;
+    //gameObject.SetActive(false);
+
+  }
+
+  void DeleteSphere()
+  {
     foreach (ParticleSystem pt in GetComponentsInChildren<ParticleSystem>())
     {
       pt.Stop();
     }
     FaceSpriteRenderer.color = Color.clear;
-    destroySphereParticle.Play();
-    yield return new WaitForSeconds(1f);
-    isBeingBlocked = false;
-    gameObject.SetActive(false);
-
   }
 
   IEnumerator SpawnOrb(float time)
   {
+    FaceSpriteRenderer.color = Color.white;
+    GetComponent<Rigidbody>().isKinematic = true;
+    transform.SetParent(playerPos);
+    foreach (ParticleSystem pt in GetComponentsInChildren<ParticleSystem>())
+    {
+      pt.Play();
+    }
 
     yield return CoroutineHelpers.InterpolateByTime(time, (k =>
     {
