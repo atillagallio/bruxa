@@ -55,11 +55,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
       if (switchButton)
       {
+
         if (!InSwitchCooldown && !InGameManager.Instance.spell1Lock)
         {
+          EventManager.OnTryingToGetControl(this);
           SwitchCooldown = 0;
           if (InGameManager.Instance.parryActive)
           {
+            EventManager.OnFailingToGetControl(this);
             GameUIManager.Instance.StartBlockedAnimation();
             //GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
             // GameUIManager.Instance.UpdateUISkillCD(gameUiPosition);
@@ -85,6 +88,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
       if (Spell != null)
       {
+        EventManager.OnPlayerUsingItem(this);
         InGameManager.Instance.PlayerUseSpell(this);
       }
     }

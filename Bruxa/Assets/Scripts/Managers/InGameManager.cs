@@ -210,7 +210,8 @@ public class InGameManager : Singleton<InGameManager>
   void Start()
   {
     SetSpellList();
-    GameUIManager.Instance.instantiateUI(players);
+    OrbitManager.Instance.InstantiateOrbits(players);
+    GameUIManager.Instance.InstantiateUI(players);
     InstantiatePoints(30, pointPrefab);
     InstantiatePoints(10, superPointPrefab);
     InstantiateSpells(5);
