@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nome: Sabrina
   Color: {r: 0.31966034, g: 0.8584906, b: 0.31181023, a: 1}
-  InGameRepresentation: {fileID: 100060, guid: 3a77f98249f803a458cfe34981188984, type: 3}
+  InGameRepresentation: {fileID: 114259531841899072, guid: 0b21692d3622a6d4293b940570aa947c,
+    type: 2}
   GameOverRepresentation: {fileID: 114155000499633770, guid: cfcdded356fdb6b4aab27f75212f614f,
     type: 2}
-  OrbitObject: {fileID: 0}
   CharacterSelectionRepresentation: {fileID: 114120215710566748, guid: 2872e98ba1813164bbd535cbed1b96f4,
     type: 2}
   UIFace: {fileID: 21300000, guid: 953074b7b9a32ed4f82aeeeefa6eca7a, type: 3}

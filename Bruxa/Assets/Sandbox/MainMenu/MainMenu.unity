@@ -210,30 +210,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!21 &112335576
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Hidden/SelectedChar
-  m_Shader: {fileID: 4800000, guid: ff218cb392f5b7341a4bb61199de2430, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors: []
 --- !u!1 &211194694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8ce6ebe344137459a0100cfe4d3c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneAfterCharacterSelectionName: MainGameplay
   holdToStartTime: 1
   FilmSetPrefab: {fileID: 602420436}
   Offset: 2
@@ -1289,6 +1266,30 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 573475459}
   m_Script: {fileID: 11500000, guid: 581b3e3c96df0ef42aef16b63b27b87f, type: 3}
+--- !u!21 &1533700307
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Hidden/SelectedChar
+  m_Shader: {fileID: 4800000, guid: ff218cb392f5b7341a4bb61199de2430, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors: []
 --- !u!1 &1591908278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1366,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1656484385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1656484387}
+  - component: {fileID: 1656484386}
+  m_Layer: 0
+  m_Name: PlayersContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1656484386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1656484385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c0a93922ebab746aa7da50048e5892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _players: []
+--- !u!4 &1656484387
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1656484385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 286.8, y: 72, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1748626591
 GameObject:
@@ -1579,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bf860b7939683428a265925925f58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 112335576}
+  mat: {fileID: 1533700307}
   shader: {fileID: 4800000, guid: ff218cb392f5b7341a4bb61199de2430, type: 3}
   IsSelected: 0
   cam: {fileID: 2019354526}

@@ -10,7 +10,7 @@ public class InGameCharacterController : MonoBehaviour
     get;
     set;
   }
-  public List<GameObject> bruxasGO;
+
   public GameObject block;
   public GameObject Spell2FX;
   public GameObject Spell1FX;
@@ -20,7 +20,6 @@ public class InGameCharacterController : MonoBehaviour
   private bool isSliding = false;
 
   public bool isControlledByPlayer = false;
-  public Joystick joystick;
   [SerializeField]
   private ParticleSystem trail;
   [SerializeField]
@@ -49,6 +48,8 @@ public class InGameCharacterController : MonoBehaviour
     }
   }
 
+  public InGameCharacterRepresentation BruxaView { get; internal set; }
+
   public GameObject ChangeParticle;
 
   private bool isStunned = false;
@@ -71,7 +72,6 @@ public class InGameCharacterController : MonoBehaviour
   // Use this for initialization
   void Start()
   {
-    joystick = new Joystick();
     //targetRotation = transform.rotation;
     //horizontalInput = verticalInput = 0;
     charController = GetComponent<CharacterController>();
@@ -84,6 +84,8 @@ public class InGameCharacterController : MonoBehaviour
   Vector3 GetInput()
   {
     float horizontalInput = 0, verticalInput = 0;
+    horizontalInput = controllingPlayer.HorizontalInput;
+    verticalInput = controllingPlayer.VerticalInput;
     if (InGameManager.Instance.spell5Drunk)
     {
       switch (GameDataManager.Data.Skill5DrunkType)
@@ -91,14 +93,15 @@ public class InGameCharacterController : MonoBehaviour
         case DrunknessType.Direction:
           {
 
-            horizontalInput = -Input.GetAxis(joystick.input.Horizontal);
-            verticalInput = -Input.GetAxis(joystick.input.Vertical);
+            horizontalInput = -horizontalInput;
+            verticalInput = -verticalInput;
             break;
           }
         case DrunknessType.Orientation:
           {
-            horizontalInput = Input.GetAxis(joystick.input.Vertical);
-            verticalInput = Input.GetAxis(joystick.input.Horizontal);
+            var aux = horizontalInput;
+            horizontalInput = verticalInput;
+            verticalInput = aux;
             break;
           }
         default:
@@ -108,16 +111,12 @@ public class InGameCharacterController : MonoBehaviour
           }
       }
     }
-    else
-    {
-      horizontalInput = Input.GetAxis(joystick.input.Horizontal);
-      verticalInput = Input.GetAxis(joystick.input.Vertical);
-    }
     return new Vector3(horizontalInput, 0, verticalInput).normalized;
   }
 
   void FixedUpdate()
   {
+    if (controllingPlayer == null) return;
     var input = GetInput();
     bool canMove = (isControlledByPlayer && !isStunned);
     var speed = canMove ? data.ForwardSpeed : 0;
@@ -270,6 +269,45 @@ public class InGameCharacterController : MonoBehaviour
     {
       ps.Stop();
     }
-    InGameManager.Instance.ChangeCharacterControl(player);
+    ChangeCharacterControl(player);
+  }
+
+  public void ChangeCharacterControl(PlayerBehaviour player)
+  {
+    //MOVE TO PLAYER
+    if (controllingPlayer != null)
+    {
+      controllingPlayer.SwitchCooldown = 0;
+      controllingPlayer.isInControl = false;
+      EventManager.OnPlayerLeavingWitch(controllingPlayer);
+    }
+    else
+    {
+    }
+    player.SwitchCooldown = 0;
+    controllingPlayer = player;
+    EventManager.OnPlayerEnteringWitch(player);
+    isControlledByPlayer = true;
+    Color = player.Color;
+
+    bool hasChar = false;
+
+    player.isInControl = true;
+    player.parryCoolDown = GameDataManager.Data.ParryCooldown - GameDataManager.Data.InitialParryDelay; ;
+
+    // TODO: move audio to audio place
+    AudioSource.PlayClipAtPoint(witchesLaughter[player.GameUiPosition], gameObject.transform.position);
+
+    if (BruxaView != null)
+    {
+      Destroy(BruxaView.gameObject);
+    }
+    BruxaView = Instantiate(player.CharacterInfo.InGameRepresentation, this.transform);
+
+    // TODO: O QUE ISSO FAZ?
+    if (!hasChar)
+    {
+      ChangeParticle.GetComponentInChildren<ParticleSystem>().Stop();
+    }
   }
 }

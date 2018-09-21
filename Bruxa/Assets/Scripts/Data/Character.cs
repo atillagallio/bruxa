@@ -7,9 +7,8 @@ public class Character : ScriptableObject
   public string Nome;
   new public string name => Nome;
   public Color Color;
-  public GameObject InGameRepresentation;
+  public InGameCharacterRepresentation InGameRepresentation;
   public GameOverCharacterRepresentation GameOverRepresentation;
-  public GameObject OrbitObject;
 
   [Header("Character Selection")]
   public CharacterSelectionRepresentation CharacterSelectionRepresentation;

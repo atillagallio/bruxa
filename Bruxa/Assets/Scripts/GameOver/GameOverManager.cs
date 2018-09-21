@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Rewired;
 
 [System.Serializable]
 public struct GameOverPlayerData
@@ -113,11 +114,20 @@ public class GameOverManager : MonoBehaviour
     yield return new WaitForSeconds(gameOverDelay);
     while (true)
     {
-
-      if (Input.GetButtonDown("Submit"))
+      // TODO: Change to UI
+      var rematch = JoinedPlayersContainer.Players.Any(p => p.RewiredPlayer.GetButtonDown(RewiredConsts.Action.UISubmit));
+      var reselect = JoinedPlayersContainer.Players.Any(p => p.RewiredPlayer.GetButtonDown(RewiredConsts.Action.UICancel));
+      if (rematch)
+      {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainGameplay");
+        EventManager.OnExitGameOverScreen?.Invoke();
+        yield break;
+      }
+      else if (reselect)
       {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         EventManager.OnExitGameOverScreen?.Invoke();
+        yield break;
       }
       yield return null;
     }

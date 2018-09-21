@@ -48,7 +48,7 @@ public class GameUIManager : Singleton<GameUIManager>
 
     foreach (var player in players)
     {
-      Character charInfo = player.GetComponent<PlayerBehaviour>().CharacterInfo;
+      Character charInfo = player.CharacterInfo;
       var thisPlayerInfo = Instantiate(Uiprefab, Vector3.zero, Quaternion.identity);
       thisPlayerInfo.HeroImg.sprite = charInfo.UIFace;
       thisPlayerInfo.HeroImg.material = new Material(grayscale);

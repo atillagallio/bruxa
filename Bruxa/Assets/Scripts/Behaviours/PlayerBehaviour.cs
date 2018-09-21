@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-  private Joystick playerJoystick;
+  public Player RewiredPlayer;
   public Color Color => CharacterInfo.Color;
   public int GameUiPosition;
   public Character CharacterInfo { get; set; }
@@ -22,38 +23,24 @@ public class PlayerBehaviour : MonoBehaviour
     }
   }
 
-  private bool switchButton;
-  private bool spellButton;
+  private bool switchButton => RewiredPlayer.GetButtonDown(RewiredConsts.Action.Switch);
+  private bool itemButton => RewiredPlayer.GetButtonDown(RewiredConsts.Action.Item);
+  private bool parryButton => RewiredPlayer.GetButtonDown(RewiredConsts.Action.Parry);
+  public float VerticalInput => RewiredPlayer.GetAxis(RewiredConsts.Action.MoveVertical);
+  public float HorizontalInput => RewiredPlayer.GetAxis(RewiredConsts.Action.MoveHorizontal);
 
-  private bool parryButton;
   // Use this for initialization
   void Start()
   {
     SwitchCooldown = GameDataManager.Data.SwitchCooldown;
   }
 
-  void GetControls()
-  {
-    switchButton = Input.GetButtonDown(playerJoystick.input.Fire1);
-    spellButton = Input.GetButtonDown(playerJoystick.input.Fire3);
-    parryButton = Input.GetButtonDown(playerJoystick.input.Fire1);
-  }
 
-  public Joystick GetJoystick()
-  {
-    return playerJoystick;
-  }
-
-  public void SetJoystick(Joystick _joystick)
-  {
-    playerJoystick = _joystick;
-  }
   // Update is called once per frame
   void Update()
   {
-    GetControls();
+    print(RewiredPlayer.id);
     CheckButtonPress();
-
     parryCoolDown += Time.deltaTime;
     if (!isInControl)
     {
@@ -80,7 +67,7 @@ public class PlayerBehaviour : MonoBehaviour
           }
           else
           {
-            InGameManager.Instance.ChangeCharacterControl(this);
+            InGameManager.Instance.gameCharacter.ChangeCharacterControl(this);
             //inblockChangeSkillCooldown = false;
           }
         }
@@ -94,7 +81,7 @@ public class PlayerBehaviour : MonoBehaviour
         parryCoolDown = 0;
       }
     }
-    if (spellButton && InGameManager.Instance.HasGameStarted())
+    if (itemButton && InGameManager.Instance.HasGameStarted())
     {
       if (Spell != null)
       {

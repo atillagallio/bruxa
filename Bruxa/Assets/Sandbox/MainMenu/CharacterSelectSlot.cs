@@ -15,9 +15,10 @@ namespace CharacterSelectionScreen
     public int SlotNum;
     public bool Occupied = false;
     private int TotalWitches => Characters.Count;
-    private CharacterSelection CurrentCharacter => Characters[currentCharacterIndex];
+    public CharacterSelection CurrentCharacter => Characters[currentCharacterIndex];
     private bool CharacterFree => !Characters[currentCharacterIndex].Selected;
     private int currentCharacterIndex = 0;
+    public Player Player => ReInput.players.GetPlayer(RewiredPlayerId);
 
     [HideInInspector]
     public SlotState State;
@@ -58,10 +59,10 @@ namespace CharacterSelectionScreen
       // Input Update
       {
         if (State == SlotState.Free) return;
-        var player = ReInput.players.GetPlayer(RewiredPlayerId);
 
 
-        if (player.GetButtonDown(RewiredConsts.Action.UISubmit) && CharacterFree)
+
+        if (Player.GetButtonDown(RewiredConsts.Action.UISubmit) && CharacterFree)
         {
           // Ready
           ChangeState(SlotState.Ready);
@@ -71,15 +72,15 @@ namespace CharacterSelectionScreen
 
         if (State == SlotState.Joined)
         {
-          if (player.GetButtonDown(RewiredConsts.Action.UIHorizontal))
+          if (Player.GetButtonDown(RewiredConsts.Action.UIHorizontal))
           {
             currentCharacterIndex = (currentCharacterIndex + TotalWitches + 1) % TotalWitches;
           }
-          if (player.GetNegativeButtonDown(RewiredConsts.Action.UIHorizontal))
+          if (Player.GetNegativeButtonDown(RewiredConsts.Action.UIHorizontal))
           {
             currentCharacterIndex = (currentCharacterIndex + TotalWitches - 1) % TotalWitches;
           }
-          if (player.GetButtonDown(RewiredConsts.Action.UICancel))
+          if (Player.GetButtonDown(RewiredConsts.Action.UICancel))
           {
             // Leave
             RewiredPlayerId = -1;
@@ -89,7 +90,7 @@ namespace CharacterSelectionScreen
 
         if (State == SlotState.Ready)
         {
-          if (player.GetButtonDown(RewiredConsts.Action.UICancel))
+          if (Player.GetButtonDown(RewiredConsts.Action.UICancel))
           {
             // UnReady
             ChangeState(SlotState.Joined);
@@ -107,7 +108,7 @@ namespace CharacterSelectionScreen
     {
       RewiredPlayerId = rewiredId;
       ChangeState(SlotState.Joined);
-      print($"O player {rewiredId} deu join no slot {SlotNum}");
+      currentCharacterIndex = SlotNum;
     }
 
     void ChangeState(SlotState nextState)

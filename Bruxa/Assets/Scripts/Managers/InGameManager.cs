@@ -17,6 +17,7 @@ public class InGameManager : Singleton<InGameManager>
 
 
   //Prefabs
+  [SerializeField]
   public InGameCharacterController gameCharacter;
   [SerializeField]
   private PlayerBehaviour playerPrefab;
@@ -27,7 +28,6 @@ public class InGameManager : Singleton<InGameManager>
   public bool GameFinished => MatchManager.GameFinished;
 
   public int matchDuration = 0;
-  public List<Color> colors;
   public TextMeshProUGUI timerText;
 
   [SerializeField]
@@ -57,13 +57,7 @@ public class InGameManager : Singleton<InGameManager>
   public List<Spell> spellList;
 
   [HideInInspector]
-  public List<string> realJoysticks;
-
-  [HideInInspector]
   public bool parryActive = false;
-
-  [SerializeField]
-  private List<Character> AvailableWitches;
 
   private MatchManager _matchManager;
   private MatchManager MatchManager
@@ -78,6 +72,7 @@ public class InGameManager : Singleton<InGameManager>
 
   public SpriteRenderer witchEffect;
   public List<Sprite> itemIconSpriteList;
+
   void Update()
   {
     if (MatchManager.Countdown > 0)
@@ -207,14 +202,14 @@ public class InGameManager : Singleton<InGameManager>
 
   }
 
+  void Awake()
+  {
+    InstantiatePlayers();
+  }
+
   void Start()
   {
-    colors.Add(Color.blue);
-    colors.Add(Color.green);
-    colors.Add(Color.cyan);
-    colors.Add(Color.red);
     SetSpellList();
-    InstantiatePlayers();
     GameUIManager.Instance.instantiateUI(players);
     InstantiatePoints(30, pointPrefab);
     InstantiatePoints(10, superPointPrefab);
@@ -246,29 +241,20 @@ public class InGameManager : Singleton<InGameManager>
     return GameStarted;
   }
 
-  void PopulateRealJoysticks()
-  {
-    realJoysticks = new List<string>();
-    foreach (string name in Input.GetJoystickNames())
-    {
-      if (name != "")
-        realJoysticks.Add(name);
-    }
-  }
   void InstantiatePlayers()
   {
     players = new List<PlayerBehaviour>();
     int inputPos = 0;
-    PopulateRealJoysticks();
-    foreach (string input in realJoysticks)
+    foreach (var playerData in JoinedPlayersContainer.Players)
     {
       var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
       PlayerBehaviour playerController = player.GetComponent<PlayerBehaviour>();
-      playerController.CharacterInfo = AvailableWitches[inputPos];
+      playerController.CharacterInfo = playerData.CharacterInfo;
+      playerController.RewiredPlayer = playerData.RewiredPlayer;
+
       playerController.GameUiPosition = inputPos;
-      playerController.SetJoystick(new Joystick(input, inputPos));
       inputPos++;
-      // TODO: CHANGE TO PLAYERBEHAVIOUR
+
       players.Add(player);
     }
   }
@@ -337,52 +323,7 @@ public class InGameManager : Singleton<InGameManager>
   }
 
 
-  public void ChangeCharacterControl(PlayerBehaviour player)
-  {
-    //MOVE TO PLAYER
-    if (gameCharacter.controllingPlayer != null)
-    {
-      gameCharacter.controllingPlayer.SwitchCooldown = 0;
-      gameCharacter.controllingPlayer.isInControl = false;
-      EventManager.OnPlayerLeavingWitch(gameCharacter.controllingPlayer);
-    }
-    else
-    {
-    }
-    player.SwitchCooldown = 0;
-    gameCharacter.controllingPlayer = player;
-    EventManager.OnPlayerEnteringWitch(player);
-    gameCharacter.joystick = player.GetJoystick();
-    gameCharacter.isControlledByPlayer = true;
-    gameCharacter.Color = player.Color;
-    int i = 0;
-    bool hasChar = false;
 
-    player.isInControl = true;
-    player.parryCoolDown = GameDataManager.Data.ParryCooldown - GameDataManager.Data.InitialParryDelay; ;
-    AudioSource.PlayClipAtPoint(gameCharacter.witchesLaughter[player.GameUiPosition], gameCharacter.gameObject.transform.position);
-    foreach (var playerObj in players)
-    {
-
-      if (playerObj == player)
-      {
-        hasChar = true;
-        StartCoroutine(changeWitchParticle(gameCharacter.ChangeParticle.gameObject.GetComponentInChildren<ParticleSystem>()));
-        // TODO: REMOVER GET CHILD
-        gameCharacter.bruxasGO[i].SetActive(true);
-      }
-      else
-        gameCharacter.bruxasGO[i].SetActive(false);
-      i++;
-
-    }
-    // TODO: O QUE ISSO FAZ?
-    if (!hasChar)
-    {
-      gameCharacter.ChangeParticle.GetComponentInChildren<ParticleSystem>().Stop();
-    }
-
-  }
 
   private float ChangefxTime = 0.5f;
   private IEnumerator changeWitchParticle(ParticleSystem particle)

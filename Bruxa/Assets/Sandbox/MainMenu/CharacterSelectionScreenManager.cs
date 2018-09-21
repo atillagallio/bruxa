@@ -37,6 +37,8 @@ namespace CharacterSelectionScreen
       playerSlots.Where(p => p.RewiredPlayerId != -1).Select(p => ReInput.players.GetPlayer(p.RewiredPlayerId).GetButtonTimePressed(RewiredConsts.Action.UISubmit)).Max();
 
     private List<CharacterSelection> Characters;
+    [SerializeField]
+    private string SceneAfterCharacterSelectionName;
 
     [SerializeField]
     private float holdToStartTime;
@@ -131,7 +133,19 @@ namespace CharacterSelectionScreen
         {
           StartTimerUI.gameObject.SetActive(true);
           var k = MaxPressTime / holdToStartTime;
-          StartTimerUI.fillAmount = k;
+          StartTimerUI.fillAmount = Mathf.Clamp01(k);
+          if (!startedGame && k > 1)
+          {
+            // Start Game
+            startedGame = true;
+            JoinedPlayersContainer.SetPlayingPlayers(
+              playerSlots
+                .Where(p => p.State == SlotState.Ready)
+                .Select(p => new JoinedPlayerData(p.Player, p.CurrentCharacter.Character))
+                .ToList()
+            );
+            UnityEngine.SceneManagement.SceneManager.LoadScene(SceneAfterCharacterSelectionName);
+          }
         }
         else
         {
@@ -139,6 +153,8 @@ namespace CharacterSelectionScreen
         }
       }
     }
+
+    private bool startedGame;
 
     void PlayerJoin(int rewired)
     {
