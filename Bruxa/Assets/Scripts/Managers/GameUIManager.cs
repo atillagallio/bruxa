@@ -86,7 +86,6 @@ public class GameUIManager : Singleton<GameUIManager>
   public void LeavingWitchUIColor(PlayerBehaviour player)
   {
     int playerpos = playerList.FindInstanceID(player);
-    print(playerList.Count);
     playersUIs[playerpos].HeroBG.color = Color.white;
     playersUIs[playerpos].HeroImg.material.SetFloat("_Grayscale", 1);
   }

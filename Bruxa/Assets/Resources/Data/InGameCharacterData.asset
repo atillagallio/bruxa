@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: InGameCharacterData
   m_EditorClassIdentifier: 
   HitForce: 0.5
-  ForwardSpeed: 0
+  ForwardSpeed: 16
   RotationRadius: 2
   Gravity: 25
   SlowSpellVel: 2

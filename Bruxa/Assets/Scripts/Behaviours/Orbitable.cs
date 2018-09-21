@@ -110,7 +110,6 @@ public class Orbitable : MonoBehaviour
   public void MoveToWitch()
   {
     StartCoroutine(MoveToWitch(playerPos, OrbitManager.Instance.orbControlAnimationTimer));
-
   }
 
   public void GetWitchControl()

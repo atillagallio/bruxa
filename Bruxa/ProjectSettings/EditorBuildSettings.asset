@@ -5,16 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+  - enabled: 0
+    path: Assets/Scenes/MainMenu - RUIM/MainMenu.unity
     guid: 3ffa9b4ed2ee73242a61188f5ef1d8a7
   - enabled: 1
     path: Assets/Scenes/MainGameplay.unity
     guid: 73680ebc93005d248b399f226320f24b
   - enabled: 0
-    path: Assets/Scenes/GameOverOld.unity
-    guid: df74215c233230d4eb498bb136f08b8a
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: f9c0fa7693ade2d4cb78209c4a11c055
+  - enabled: 1
+    path: Assets/Sandbox/MainMenu/MainMenu.unity
+    guid: 6476e867dff1c21479f2b4090736e833
   m_configObjects: {}

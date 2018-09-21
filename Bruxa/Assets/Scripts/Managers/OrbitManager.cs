@@ -25,7 +25,7 @@ public enum ParticleType
 public class OrbitManager : Singleton<OrbitManager>
 {
 
-  private List<PlayerBehaviour> playerList;
+  private List<PlayerBehaviour> playerList => InGameManager.Players;
   private List<Orbitable> orbits;
   [Header("Player Info")]
   public Transform playerPos;
@@ -48,10 +48,7 @@ public class OrbitManager : Singleton<OrbitManager>
   // Use this for initialization
   void Start()
   {
-
-    playerList = new List<PlayerBehaviour>();
     orbits = new List<Orbitable>();
-
     EventManager.OnTryingToGetControl += UsingSwitchButton;
     EventManager.OnFailingToGetControl += FailingToGetControl;
     EventManager.OnPlayerEnteringWitch += GettingWitchControl;
@@ -59,11 +56,18 @@ public class OrbitManager : Singleton<OrbitManager>
     EventManager.OnPlayerUsingItem += UsingItem;
   }
 
+  void OnDestroy()
+  {
+    EventManager.OnTryingToGetControl -= UsingSwitchButton;
+    EventManager.OnFailingToGetControl -= FailingToGetControl;
+    EventManager.OnPlayerEnteringWitch -= GettingWitchControl;
+    EventManager.OnPlayerLeavingWitch -= LosingWitchControl;
+    EventManager.OnPlayerUsingItem -= UsingItem;
+  }
+
   // Update is called once per frame
   void Update()
   {
-
-
   }
 
 
@@ -74,6 +78,7 @@ public class OrbitManager : Singleton<OrbitManager>
     float dgSpace = 360f / players.Count;
     float currDegree = 0;
 
+    orbits = new List<Orbitable>();
     foreach (var player in players)
     {
 
@@ -97,7 +102,6 @@ public class OrbitManager : Singleton<OrbitManager>
       }
 
       orbits.Add(orbComponent);
-      playerList.Add(player);
       currDegree += dgSpace;
     }
   }

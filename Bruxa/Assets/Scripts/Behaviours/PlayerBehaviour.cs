@@ -39,7 +39,6 @@ public class PlayerBehaviour : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    print(RewiredPlayer.id);
     CheckButtonPress();
     parryCoolDown += Time.deltaTime;
     if (!isInControl)

@@ -20,7 +20,7 @@ public class MatchManager : MonoBehaviour
   public float Countdown { get; private set; }
   public float MatchDuration { get; private set; }
 
-  private List<PlayerBehaviour> players => InGameManager.Instance.players;
+  private List<PlayerBehaviour> players => InGameManager.Players;
 
   private bool startedCountdown;
   public void StartMatch()

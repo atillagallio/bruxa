@@ -31,10 +31,9 @@ public class InGameManager : Singleton<InGameManager>
   public TextMeshProUGUI timerText;
 
   [SerializeField]
-  public List<PlayerBehaviour> players
-  {
-    get; private set;
-  }
+  private List<PlayerBehaviour> players;
+
+  public static List<PlayerBehaviour> Players => Instance.players;
   public GameObject plane;
   public GameObject pointPrefab;
   public GameObject bombPrefab;

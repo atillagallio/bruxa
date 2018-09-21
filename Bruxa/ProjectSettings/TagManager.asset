@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - item
   layers:
   - Default
   - TransparentFX
@@ -13,16 +15,16 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PostProcessing
+  - Ground
+  - SlidingArea
+  - Point
+  - SuperPoint
+  - MegaPoint
+  - Spell
+  - Player
+  - Bomb
+  - Sphere
   - 
   - 
   - 
