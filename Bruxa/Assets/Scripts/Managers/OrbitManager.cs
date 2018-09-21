@@ -56,6 +56,7 @@ public class OrbitManager : Singleton<OrbitManager>
     EventManager.OnFailingToGetControl += FailingToGetControl;
     EventManager.OnPlayerEnteringWitch += GettingWitchControl;
     EventManager.OnPlayerLeavingWitch += LosingWitchControl;
+    EventManager.OnPlayerUsingItem += UsingItem;
   }
 
   // Update is called once per frame
@@ -86,9 +87,11 @@ public class OrbitManager : Singleton<OrbitManager>
       var explosionColorModule = orbComponent.explosionParticle.colorOverLifetime;
 
       List<Color> colorList = GetColors(explosionColorModule, charInfo.Color);
+      print("GRADIENTREPLACE");
       foreach (ParticleSystem ptSystem in orbComponent.GetComponentsInChildren<ParticleSystem>())
       {
         var destroySphereModule = ptSystem.colorOverLifetime;
+
         destroySphereModule.color = GradientReplace(destroySphereModule.color.gradient, colorList);
 
       }
@@ -102,6 +105,14 @@ public class OrbitManager : Singleton<OrbitManager>
   private int GetPlayerPos(PlayerBehaviour player)
   {
     return playerList.FindIndex(_player => _player == player);
+  }
+
+  public void UsingItem(PlayerBehaviour player)
+  {
+    if (!orbits[GetPlayerPos(player)].IsControllingWitch)
+    {
+      orbits[GetPlayerPos(player)].UseItemEffect();
+    }
   }
   public void UsingSwitchButton(PlayerBehaviour player)
   {

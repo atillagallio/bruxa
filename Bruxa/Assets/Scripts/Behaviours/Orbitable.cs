@@ -19,6 +19,8 @@ public class Orbitable : MonoBehaviour
   public ParticleSystem explosionParticle;
   public ParticleSystem explosionGlowParticle;
   public ParticleSystem destroySphereParticle;
+
+  public ParticleSystem usingItemParticle;
   [HideInInspector]
   public float Phase
   {
@@ -87,6 +89,23 @@ public class Orbitable : MonoBehaviour
     cdTime += Time.deltaTime;
   }
 
+  public void UseItemEffect()
+  {
+    StartCoroutine(KeepLokingAt(playerPos, usingItemParticle.main.duration));
+    //usingItemParticle.Play();
+  }
+
+  IEnumerator KeepLokingAt(Transform obj, float duration)
+  {
+    float time = 0f;
+    while (time <= duration)
+    {
+      time += Time.deltaTime;
+      this.gameObject.transform.LookAt(obj);
+      yield return null;
+
+    }
+  }
 
   public void MoveToWitch()
   {

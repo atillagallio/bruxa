@@ -10,4 +10,5 @@ public static class EventManager
   public static PlayerRelatedCallback OnFailingToGetControl;
   public static PlayerRelatedCallback OnPlayerEnteringWitch;
   public static PlayerRelatedCallback OnPlayerLeavingWitch;
+  public static PlayerRelatedCallback OnPlayerUsingItem;
 }

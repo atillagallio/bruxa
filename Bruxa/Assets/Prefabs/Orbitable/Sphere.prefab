@@ -774,7 +774,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561601903591294}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0, b: 1, a: 1}
@@ -870,6 +870,9 @@ MonoBehaviour:
   explosionParticle: {fileID: 198160351698814474}
   explosionGlowParticle: {fileID: 198091515409250376}
   destroySphereParticle: {fileID: 198753629130392492}
+  usingItemParticle: {fileID: 0}
+  IsControllingWitch: 0
+  cdTime: 0
   desapearSphereTime: 1
   MoveToWitchCurve:
     serializedVersion: 2

@@ -101,6 +101,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
       if (Spell != null)
       {
+        EventManager.OnPlayerUsingItem(this);
         InGameManager.Instance.PlayerUseSpell(this);
       }
     }
