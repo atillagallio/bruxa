@@ -55,6 +55,7 @@ public class OrbitManager : Singleton<OrbitManager>
     EventManager.OnTryingToGetControl += UsingSwitchButton;
     EventManager.OnFailingToGetControl += FailingToGetControl;
     EventManager.OnPlayerEnteringWitch += GettingWitchControl;
+    EventManager.OnPlayerLeavingWitch += LosingWitchControl;
   }
 
   // Update is called once per frame
@@ -109,8 +110,16 @@ public class OrbitManager : Singleton<OrbitManager>
 
   public void GettingWitchControl(PlayerBehaviour player)
   {
+    orbits[GetPlayerPos(player)].IsControllingWitch = true;
     orbits[GetPlayerPos(player)].GetWitchControl();
   }
+
+  public void LosingWitchControl(PlayerBehaviour player)
+  {
+    orbits[GetPlayerPos(player)].IsControllingWitch = false;
+    orbits[GetPlayerPos(player)].cdTime = 0;
+  }
+
   public void FailingToGetControl(PlayerBehaviour player)
   {
     orbits[GetPlayerPos(player)].GetBlockedByWitch();

@@ -40,7 +40,9 @@ public class Orbitable : MonoBehaviour
   private bool isMovingToWitch = false;
   private bool isBeingBlocked = false;
 
-  private float cdTime;
+  public bool IsControllingWitch = false;
+
+  public float cdTime;
 
   private Vector3 startAnimationPos;
 
@@ -77,7 +79,7 @@ public class Orbitable : MonoBehaviour
       var obtTransform = gameObject.transform;
       obtTransform.position = playerPos.position + new Vector3(Noise(radius) * Mathf.Cos(rotationSpeed * Time.time + _phase), sphereY, radius * Mathf.Sin(rotationSpeed * Time.time + _phase));
     }
-    if (cdTime + orbitManager.orbSpawnTimer >= GameDataManager.Data.SwitchCooldown && isInCD)
+    if (cdTime + orbitManager.orbSpawnTimer >= GameDataManager.Data.SwitchCooldown && isInCD && !IsControllingWitch)
     {
       StartCoroutine(SpawnOrb(orbitManager.orbSpawnTimer));
       isInCD = false;
