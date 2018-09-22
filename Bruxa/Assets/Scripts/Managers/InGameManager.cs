@@ -72,6 +72,8 @@ public class InGameManager : Singleton<InGameManager>
   public SpriteRenderer witchEffect;
   public List<Sprite> itemIconSpriteList;
 
+  IEnumerator spellCorroutine;
+
   void Update()
   {
     if (MatchManager.Countdown > 0)
@@ -103,7 +105,10 @@ public class InGameManager : Singleton<InGameManager>
     spell1Lock = true;
     witchEffect.sprite = itemIconSpriteList[0];
     witchEffect.gameObject.SetActive(true);
-    StartCoroutine(Spell1Duration(4));
+    if (spellCorroutine != null)
+      StopCoroutine(spellCorroutine);
+    spellCorroutine = Spell1Duration(4);
+    StartCoroutine(spellCorroutine);
   }
 
   public void UseSpell2Forward()
@@ -200,6 +205,7 @@ public class InGameManager : Singleton<InGameManager>
     spell5Drunk = false;
 
   }
+
 
   void Awake()
   {
