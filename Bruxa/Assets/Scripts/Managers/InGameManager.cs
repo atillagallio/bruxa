@@ -72,7 +72,8 @@ public class InGameManager : Singleton<InGameManager>
   public SpriteRenderer witchEffect;
   public List<Sprite> itemIconSpriteList;
 
-  IEnumerator spellCorroutine;
+  IEnumerator spell1Corroutine;
+  IEnumerator spell4Corroutine;
 
   void Update()
   {
@@ -105,10 +106,10 @@ public class InGameManager : Singleton<InGameManager>
     spell1Lock = true;
     witchEffect.sprite = itemIconSpriteList[0];
     witchEffect.gameObject.SetActive(true);
-    if (spellCorroutine != null)
-      StopCoroutine(spellCorroutine);
-    spellCorroutine = Spell1Duration(4);
-    StartCoroutine(spellCorroutine);
+    if (spell1Corroutine != null)
+      StopCoroutine(spell1Corroutine);
+    spell1Corroutine = Spell1Duration(4);
+    StartCoroutine(spell1Corroutine);
   }
 
   public void UseSpell2Forward()
@@ -137,13 +138,10 @@ public class InGameManager : Singleton<InGameManager>
 
   public void UseSpell4Bomb()
   {
-
-    AudioClip mine = gameCharacter.mineSetSound;
-    AudioSource.PlayClipAtPoint(mine, gameCharacter.transform.position);
-    Vector3 bombPos = new Vector3(gameCharacter.transform.position.x, gameCharacter.transform.position.y + 3, gameCharacter.transform.position.z);
-    GameObject bomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
-    Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
-    bombBehaviour.player = gameCharacter.controllingPlayer;
+    if (spell4Corroutine != null)
+      StopCoroutine(spell4Corroutine);
+    spell4Corroutine = Spell4Duration(4);
+    StartCoroutine(spell4Corroutine);
   }
 
 
@@ -163,7 +161,32 @@ public class InGameManager : Singleton<InGameManager>
 
   }
 
+  private IEnumerator Spell4Duration(int seconds)
+  {
+    float i = 0;
+    float x = 0;
 
+    while (i < seconds)
+    {
+      print(i % 0.25f);
+      if (x >= 0.25f)
+      {
+        AudioClip mine = gameCharacter.mineSetSound;
+        AudioSource.PlayClipAtPoint(mine, gameCharacter.transform.position);
+        Vector3 bombPos = new Vector3(gameCharacter.transform.position.x, gameCharacter.transform.position.y + 1.5f, gameCharacter.transform.position.z);
+        GameObject bomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
+        Spell4BombBehaviour bombBehaviour = bomb.GetComponent<Spell4BombBehaviour>();
+        bombBehaviour.player = gameCharacter.controllingPlayer;
+        x = 0;
+
+      }
+      x += Time.deltaTime;
+      i += Time.deltaTime;
+      yield return null;
+    }
+
+
+  }
   private IEnumerator Spell2Duration(int seconds)
   {
     int i = 0;
