@@ -47,6 +47,10 @@ public class PlayerBehaviour : MonoBehaviour
     }
   }
 
+  public void ResetParry()
+  {
+    parryCoolDown = GameDataManager.Data.ParryCooldown - 0.2f;
+  }
   void CheckButtonPress()
   {
     if (!InGameManager.Instance.HasGameStarted()) return;

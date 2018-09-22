@@ -76,6 +76,17 @@ public class InGameCharacterController : MonoBehaviour
     //horizontalInput = verticalInput = 0;
     charController = GetComponent<CharacterController>();
     lastPos = transform.position;
+    EventManager.OnFailingToGetControl += ResetPlayerParry;
+  }
+
+  void OnDestroy()
+  {
+    EventManager.OnFailingToGetControl -= ResetPlayerParry;
+  }
+
+  void ResetPlayerParry(PlayerBehaviour p = null)
+  {
+    controllingPlayer.ResetParry();
   }
 
 
