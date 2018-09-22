@@ -102,7 +102,7 @@ public class Orbitable : MonoBehaviour
   {
     if (itemSprite)
     {
-      if (faceTime <= 0.5f)
+      if (faceTime <= 1f)
       {
         FaceSpriteRenderer.sprite = faceSprite;
       }
@@ -110,6 +110,11 @@ public class Orbitable : MonoBehaviour
       {
         FaceSpriteRenderer.sprite = itemSprite;
       }
+    }
+    else
+    {
+      if (FaceSpriteRenderer.sprite != faceSprite)
+        FaceSpriteRenderer.sprite = faceSprite;
     }
     if (faceTime > 2)
     {
