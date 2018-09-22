@@ -89,6 +89,7 @@ namespace CharacterSelectionScreen
         slot.Characters = Characters;
         playerSlots[i] = slot;
       }
+      SlotPrefab.gameObject.SetActive(false);
     }
 
     bool HasPlayerJoined(int rewired)
