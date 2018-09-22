@@ -44,6 +44,9 @@ public class Orbitable : MonoBehaviour
 
   public bool IsControllingWitch = false;
 
+  private Sprite itemSprite;
+  private Sprite faceSprite;
+
   public float cdTime;
 
   private Vector3 startAnimationPos;
@@ -52,13 +55,17 @@ public class Orbitable : MonoBehaviour
   public float desapearSphereTime;
 
   public AnimationCurve MoveToWitchCurve;
+  public AnimationCurve ItemOnWitchCurve;
 
   private OrbitManager orbitManager;
   private bool isInCD = false;
+
+  private float faceTime;
   void Start()
   {
     orbitManager = OrbitManager.Instance;
     FaceSpriteRenderer.color = Color.white;
+    faceSprite = FaceSpriteRenderer.sprite;
     GetComponent<Rigidbody>().isKinematic = true;
     radius = orbitManager.Radius;
     rotationSpeed = orbitManager.RotationSpeed;
@@ -75,6 +82,7 @@ public class Orbitable : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    SwitchFaceSprite();
 
     if (!isMovingToWitch && !isBeingBlocked)
     {
@@ -87,12 +95,38 @@ public class Orbitable : MonoBehaviour
       isInCD = false;
     }
     cdTime += Time.deltaTime;
+    faceTime += Time.deltaTime;
   }
 
+  void SwitchFaceSprite()
+  {
+    if (itemSprite)
+    {
+      if (faceTime <= 0.5f)
+      {
+        FaceSpriteRenderer.sprite = faceSprite;
+      }
+      else
+      {
+        FaceSpriteRenderer.sprite = itemSprite;
+      }
+    }
+    if (faceTime > 2)
+    {
+      faceTime = 0;
+    }
+  }
+  public void SetItemOnSphere(Sprite sp)
+  {
+    itemSprite = sp;
+
+  }
   public void UseItemEffect()
   {
+    itemSprite = null;
+    StartCoroutine(UseCurseOnWitch(playerPos, 0.5f));
     StartCoroutine(KeepLokingAt(playerPos, usingItemParticle.main.duration));
-    //usingItemParticle.Play();
+
   }
 
   IEnumerator KeepLokingAt(Transform obj, float duration)
@@ -171,6 +205,26 @@ public class Orbitable : MonoBehaviour
     isMovingToWitch = false;
 
   }
+  IEnumerator UseCurseOnWitch(Transform witchTransform, float time)
+  {
+    var obj = Instantiate(usingItemParticle.gameObject, transform.position, Quaternion.identity);
+    obj.SetActive(true);
+    obj.transform.SetParent(witchTransform);
+    obj.GetComponent<ParticleSystem>().Play();
+    var currPos = transform.localPosition;
+    yield return CoroutineHelpers.InterpolateByTime(time, (k =>
+        {
+          var ev = ItemOnWitchCurve.Evaluate(k);
+          obj.transform.localPosition = Vector3.LerpUnclamped(currPos, Vector3.zero, ev);
+        }));
+    var explosion = Instantiate(destroySphereParticle.gameObject, transform.position, Quaternion.identity);
+    explosion.transform.SetParent(witchTransform);
+    explosion.transform.localPosition = Vector3.zero;
+    explosion.GetComponent<ParticleSystem>().Play();
+    Destroy(obj);
+    yield return new WaitForSeconds(1f);
+    Destroy(explosion);
+  }
   IEnumerator GettingControl()
   {
     float time = 0f;
@@ -181,8 +235,7 @@ public class Orbitable : MonoBehaviour
 
     }
     DeleteSphere();
-    //yield return new WaitForSeconds(time);
-    //this.gameObject.SetActive(false);
+
 
   }
   IEnumerator BlockedAnimation(float time)
@@ -203,7 +256,7 @@ public class Orbitable : MonoBehaviour
     destroySphereParticle.Play();
     yield return new WaitForSeconds(1f);
     isBeingBlocked = false;
-    //gameObject.SetActive(false);
+
 
   }
 

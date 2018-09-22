@@ -210,6 +210,7 @@ public class InGameCharacterController : MonoBehaviour
     {
       AudioSource.PlayClipAtPoint(spellGetSound, transform.position);
       controllingPlayer.Spell = col.gameObject.GetComponent<GetSpellBehaviour>().spell;
+      EventManager.OnPlayerGettingItem(controllingPlayer);
       GameUIManager.Instance.SetSkill(controllingPlayer.GameUiPosition, controllingPlayer.Spell.spellName, controllingPlayer.Spell.id);
       //Debug.Log(controllingPlayer.Spell.spellName);
       Destroy(col.gameObject);

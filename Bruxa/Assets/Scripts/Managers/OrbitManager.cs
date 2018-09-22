@@ -54,6 +54,7 @@ public class OrbitManager : Singleton<OrbitManager>
     EventManager.OnPlayerEnteringWitch += GettingWitchControl;
     EventManager.OnPlayerLeavingWitch += LosingWitchControl;
     EventManager.OnPlayerUsingItem += UsingItem;
+    EventManager.OnPlayerGettingItem += PlayerGotItem;
   }
 
   void OnDestroy()
@@ -63,6 +64,7 @@ public class OrbitManager : Singleton<OrbitManager>
     EventManager.OnPlayerEnteringWitch -= GettingWitchControl;
     EventManager.OnPlayerLeavingWitch -= LosingWitchControl;
     EventManager.OnPlayerUsingItem -= UsingItem;
+    EventManager.OnPlayerGettingItem -= PlayerGotItem;
   }
 
   // Update is called once per frame
@@ -71,6 +73,10 @@ public class OrbitManager : Singleton<OrbitManager>
   }
 
 
+  public void PlayerGotItem(PlayerBehaviour player)
+  {
+    orbits[GetPlayerPos(player)].SetItemOnSphere(player.Spell.spellIcon);
+  }
 
   public void InstantiateOrbits(List<PlayerBehaviour> players)
   {
@@ -88,11 +94,8 @@ public class OrbitManager : Singleton<OrbitManager>
       var orbComponent = obj.GetComponent<Orbitable>();
       orbComponent.Phase = currDegree * Mathf.Deg2Rad;
       orbComponent.FaceSpriteRenderer.sprite = charInfo.UIFace;
-
       var explosionColorModule = orbComponent.explosionParticle.colorOverLifetime;
-
       List<Color> colorList = GetColors(explosionColorModule, charInfo.Color);
-      print("GRADIENTREPLACE");
       foreach (ParticleSystem ptSystem in orbComponent.GetComponentsInChildren<ParticleSystem>())
       {
         var destroySphereModule = ptSystem.colorOverLifetime;
@@ -100,6 +103,8 @@ public class OrbitManager : Singleton<OrbitManager>
         destroySphereModule.color = GradientReplace(destroySphereModule.color.gradient, colorList);
 
       }
+      orbComponent.usingItemParticle.gameObject.SetActive(false);
+
 
       orbits.Add(orbComponent);
       currDegree += dgSpace;
@@ -113,6 +118,7 @@ public class OrbitManager : Singleton<OrbitManager>
 
   public void UsingItem(PlayerBehaviour player)
   {
+    print("using Item");
     if (!orbits[GetPlayerPos(player)].IsControllingWitch)
     {
       orbits[GetPlayerPos(player)].UseItemEffect();
@@ -163,14 +169,19 @@ public class OrbitManager : Singleton<OrbitManager>
     int i = 0;
     int z = 0;
     GradientColorKey[] newColorKeyArray = new GradientColorKey[gradBefore.colorKeys.Length];
+    GradientColorKey[] auxColorKey = gradBefore.colorKeys;
+
     foreach (var keyGrad in gradBefore.colorKeys)
     {
-      if (keyGrad.color != Color.white && z <= gradBefore.colorKeys.Length)
+      if (keyGrad.color != Color.white && keyGrad.color != Color.black && z <= gradBefore.colorKeys.Length)
       {
-        GradientColorKey newColorKey = new GradientColorKey(colors[z], keyGrad.time);
-        gradBefore.colorKeys[i].color = colors[z];
-        z++;
-        newColorKeyArray[i] = newColorKey;
+        if (z < colors.Count)
+        {
+          GradientColorKey newColorKey = new GradientColorKey(colors[z], keyGrad.time);
+          gradBefore.colorKeys[i].color = colors[z];
+          newColorKeyArray[i] = newColorKey;
+          z++;
+        }
       }
       else
       {
@@ -178,6 +189,10 @@ public class OrbitManager : Singleton<OrbitManager>
       }
 
       i++;
+    }
+    if (newColorKeyArray.Length <= 1)
+    {
+      newColorKeyArray = auxColorKey;
     }
     gradBefore.SetKeys(newColorKeyArray, gradBefore.alphaKeys);
     return gradBefore;
