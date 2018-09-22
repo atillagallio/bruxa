@@ -19,18 +19,18 @@ Bugs:
 - [ ] 
 
 Coisas a fazer: 
-- [ ] Zerar cooldown do block quando acerta
-- [ ] Dar pra usar a pena logo depois da pena (nao consumir a pena quando tiver na pena)
-- [ ] Fazer a mina fazer um rastro
+- [x] Zerar cooldown do block quando acerta
+- [x] Dar pra usar a pena logo depois da pena (nao consumir a pena quando tiver na pena)
+- [x] Fazer a mina fazer um rastro
 - [ ] Colocar pontos em lugares especificos da fase
 - [ ] Tornar as coisas da frente transparentes
 - [ ] Tornar os pontos mais claros que sao pontos
-- [ ] Colher de cha quando pega a bruxa (eg: .2s de tempo de bruxa minimo)
+- [~] Colher de cha quando pega a bruxa (eg: .2s de tempo de bruxa minimo)
 - [ ] Efeito na UI da pontuacao global
-- [ ] Chapeu dourado na bruxa que ta ganhando
-- [ ] Bolinhas flutuando em volta da bruxa
-- [ ] Character Selection Screen
-- [ ] Rewired
+- [~] Chapeu dourado na bruxa que ta ganhando
+- [x] Bolinhas flutuando em volta da bruxa
+- [x] Character Selection Screen
+- [x] Rewired
 - [ ]
 
 Coisas a discutir melhor:
